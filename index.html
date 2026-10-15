@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Deutsch-Heft</title>
+<meta name="description" content="Личная тетрадь по немецкому: словарь, спряжения, грамматика.">
+<meta name="theme-color" content="#f4f6f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11161c" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Heft">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a school notebook on Karopapier. Header + scrolling sheet + bottom tab bar; edits open in full-height sheets. */
+:root{
+  --paper:#f4f6f8; --grid:#e3e8ee; --card:#ffffff; --ink:#18212b; --muted:#5b6876; --line:#d4dce5;
+  --btn:#18212b; --btn-ink:#ffffff;
+  --der:#2360c4; --die:#c3383b; --das:#1d8449; --pl:#a5620a;
+  --der-bg:#e8effb; --die-bg:#fbeaea; --das-bg:#e6f4ec; --pl-bg:#f8efe2;
+  --mark:#fbe48c; --mark-ink:#4d3b00; --ok:#1d8449; --bad:#c3383b;
+  --font-de:"Literata",Georgia,"Times New Roman",serif;
+  --font-ui:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11161c; --grid:#1a2129; --card:#18202a; --ink:#e6ebf0; --muted:#97a3b0; --line:#2a3440;
+  --btn:#e6ebf0; --btn-ink:#11161c;
+  --der:#79a8ff; --die:#ff8285; --das:#5fd292; --pl:#f0b25c;
+  --der-bg:#1b2840; --die-bg:#3a1d21; --das-bg:#163024; --pl-bg:#33261a;
+  --mark:#5c4c12; --mark-ink:#fbe48c; --ok:#5fd292; --bad:#ff8285; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#11161c; --grid:#1a2129; --card:#18202a; --ink:#e6ebf0; --muted:#97a3b0; --line:#2a3440;
+  --btn:#e6ebf0; --btn-ink:#11161c;
+  --der:#79a8ff; --die:#ff8285; --das:#5fd292; --pl:#f0b25c;
+  --der-bg:#1b2840; --die-bg:#3a1d21; --das-bg:#163024; --pl-bg:#33261a;
+  --mark:#5c4c12; --mark-ink:#fbe48c; --ok:#5fd292; --bad:#ff8285; color-scheme:dark }
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font:15px/1.5 var(--font-ui);display:flex;flex-direction:column;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px}
+*{box-sizing:border-box}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--der);outline-offset:2px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{flex:none;background:var(--paper);border-bottom:1px solid var(--line);padding-block:12px 10px}
+.top-row{display:flex;align-items:center;gap:12px;max-width:760px;margin:0 auto}
+.top h1{font:700 22px/1.1 var(--font-de);margin:0;flex:1;letter-spacing:-.01em}
+.top h1 small{display:block;font:500 12px var(--font-ui);color:var(--muted);letter-spacing:.02em;margin-top:3px}
+.icon-btn{border:1px solid var(--line);background:var(--card);border-radius:10px;height:38px;min-width:38px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;font-size:14px}
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.wrap{max-width:760px;margin:0 auto;padding-block:14px 28px;display:flex;flex-direction:column;gap:12px}
+nav.tabs{flex:none;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.tabs button{flex:1;border:0;background:none;padding:9px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:12px;font-weight:500}
+nav.tabs button b{font:700 17px/1 var(--font-de);color:inherit}
+nav.tabs button[aria-selected="true"]{color:var(--ink)}
+nav.tabs button[aria-selected="true"] b{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px;text-decoration-color:var(--mark)}
+
+.search{display:flex;gap:8px}
+.search input{flex:1;min-width:0;height:44px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:0 14px;font-size:16px}
+.btn{height:44px;border-radius:12px;border:0;background:var(--btn);color:var(--btn-ink);padding:0 16px;font-weight:600;white-space:nowrap}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.small{height:34px;border-radius:9px;padding:0 12px;font-size:14px}
+.btn.danger{background:none;color:var(--bad);border:1px solid var(--line)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.chip.der[aria-pressed="true"]{background:var(--der);border-color:var(--der);color:#fff}
+.chip.die[aria-pressed="true"]{background:var(--die);border-color:var(--die);color:#fff}
+.chip.das[aria-pressed="true"]{background:var(--das);border-color:var(--das);color:#fff}
+.chip.chk[aria-pressed="true"]{background:var(--mark);border-color:var(--mark);color:var(--mark-ink)}
+.meta{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+
+.list{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.row{display:grid;grid-template-columns:4px 1fr auto;gap:0 12px;align-items:center;padding:10px 12px 10px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;width:100%}
+.row:last-child{border-bottom:0}
+.row .bar{align-self:stretch;border-radius:0 3px 3px 0;background:var(--line)}
+.row.g-der .bar{background:var(--der)} .row.g-die .bar{background:var(--die)} .row.g-das .bar{background:var(--das)} .row.g-pl .bar{background:var(--pl)}
+.row .main{min-width:0}
+.de{font-family:var(--font-de);font-weight:500;font-size:18px;line-height:1.25}
+.art{font-weight:700}
+.a-der{color:var(--der)} .a-die{color:var(--die)} .a-das{color:var(--das)} .a-pl{color:var(--pl)}
+.row .sub{font-size:13.5px;color:var(--muted);overflow-wrap:anywhere}
+.row .sub .plf{font-family:var(--font-de)}
+.flag{display:inline-block;background:var(--mark);color:var(--mark-ink);font-size:11px;font-weight:600;border-radius:5px;padding:1px 6px;vertical-align:2px;margin-left:6px;letter-spacing:.02em}
+.tag{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 6px;white-space:nowrap}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:22px 18px;text-align:center;color:var(--muted)}
+.empty strong{display:block;color:var(--ink);font:700 18px var(--font-de);margin-bottom:4px}
+
+.train-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.train-bar button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 8px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.train-bar b{font:700 15px var(--font-de)}
+.train-bar span{font-size:12px;color:var(--muted)}
+
+/* sheets */
+.sheet{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;background:var(--paper)}
+.sheet-head{flex:none;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:var(--paper);padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:10px}
+.sheet-head h2{flex:1;margin:0;font:700 19px var(--font-de);min-width:0;overflow-wrap:anywhere}
+.sheet-body{flex:1;overflow-y:auto}
+.sheet-body .wrap{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label,.lbl{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.field input,.field select,.field textarea{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;font-size:16px;min-width:0;width:100%}
+.field textarea{min-height:120px;resize:vertical;font-family:var(--font-mono);font-size:14px;line-height:1.55}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.seg button{flex:1;border:0;background:none;padding:9px 4px;font-weight:600;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink)}
+.seg button.der[aria-pressed="true"]{background:var(--der);color:#fff}
+.seg button.die[aria-pressed="true"]{background:var(--die);color:#fff}
+.seg button.das[aria-pressed="true"]{background:var(--das);color:#fff}
+.seg button.pl[aria-pressed="true"]{background:var(--pl);color:#fff}
+.check{display:flex;align-items:center;gap:10px;font-weight:500}
+.check input{width:20px;height:20px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.actions .grow{flex:1}
+.hint{font-size:13px;color:var(--muted)}
+.note-box{background:var(--mark);color:var(--mark-ink);border-radius:10px;padding:10px 12px;font-size:14px}
+
+/* word detail */
+.word-hero{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.word-hero .de{font-size:30px}
+.word-hero.g-der{background:var(--der-bg)} .word-hero.g-die{background:var(--die-bg)} .word-hero.g-das{background:var(--das-bg)} .word-hero.g-pl{background:var(--pl-bg)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;overflow-wrap:anywhere}
+
+/* verbs */
+.conj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.conj-grid{grid-template-columns:1fr}}
+.conj{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0}
+.conj h3{margin:0 0 6px;font:600 12px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.conj table{border-collapse:collapse;width:100%}
+.conj td{padding:3px 0;font-size:15px;vertical-align:top}
+.conj td:first-child{color:var(--muted);width:6.5em;font-size:13.5px;padding-top:5px}
+.conj td.f{font-family:var(--font-de)}
+.conj td.irr{font-weight:700}
+.conj td.irr::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pl);margin-left:6px;vertical-align:2px}
+.legend{font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pl);margin-right:6px;vertical-align:2px}
+.formtable{width:100%;border-collapse:collapse}
+.formtable th{font-size:12px;color:var(--muted);text-align:left;font-weight:600;padding:4px}
+.formtable td{padding:3px}
+.formtable td:first-child{font-size:13px;color:var(--muted);white-space:nowrap}
+.formtable input{width:100%;min-width:0;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 8px;font-family:var(--font-de);font-size:15px}
+.scroll-x{overflow-x:auto}
+
+/* grammar */
+.rule-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-align:left;width:100%;display:flex;flex-direction:column;gap:6px}
+.rule-card h3{margin:0;font:700 17px/1.3 var(--font-de);text-wrap:balance}
+.rule-card p{margin:0;font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.md{font-size:15.5px;line-height:1.6;max-width:68ch}
+.md h2{font:700 21px/1.3 var(--font-de);margin:18px 0 6px;text-wrap:balance}
+.md h3{font:600 13px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+.md p{margin:6px 0}
+.md ul{margin:6px 0;padding-left:20px}
+.md li{margin:3px 0}
+.md code{font-family:var(--font-mono);font-size:.9em;background:var(--grid);padding:1px 5px;border-radius:4px}
+.md .ex{border-left:3px solid var(--mark);background:var(--card);padding:8px 12px;margin:8px 0;border-radius:0 8px 8px 0;font-family:var(--font-de)}
+.md .tw{overflow-x:auto;margin:10px 0;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.md table{border-collapse:collapse;min-width:100%;font-variant-numeric:tabular-nums}
+.md th,.md td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left;white-space:nowrap;font-size:14.5px}
+.md th{font-family:var(--font-ui);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:var(--paper)}
+.md td{font-family:var(--font-de)}
+.md tr:last-child td{border-bottom:0}
+.md .m{color:var(--der);font-weight:700} .md .f{color:var(--die);font-weight:700} .md .n{color:var(--das);font-weight:700} .md .p{color:var(--pl);font-weight:700}
+.md mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:3px}
+
+/* training */
+.stage{display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.progress{height:6px;background:var(--grid);border-radius:3px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--ink);transition:width .2s}
+.flash{min-height:230px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;width:100%}
+.flash .de{font-size:32px}
+.flash .ru{font-size:20px}
+.flash.g-der{background:var(--der-bg)} .flash.g-die{background:var(--die-bg)} .flash.g-das{background:var(--das-bg)} .flash.g-pl{background:var(--pl-bg)}
+.big3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.big3 button{height:64px;border-radius:14px;border:0;font:700 22px var(--font-de);color:#fff}
+.big3 .der{background:var(--der)} .big3 .die{background:var(--die)} .big3 .das{background:var(--das)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 14px;text-align:left;font-family:var(--font-de);font-size:17px}
+.opts button.right{border-color:var(--ok);box-shadow:inset 0 0 0 2px var(--ok)}
+.opts button.wrong{border-color:var(--bad);box-shadow:inset 0 0 0 2px var(--bad)}
+.verdict{font-weight:600;text-align:center;min-height:1.5em}
+.verdict.ok{color:var(--ok)} .verdict.no{color:var(--bad)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two .btn{height:52px}
+.score{font:700 44px var(--font-de);text-align:center}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--btn);color:var(--btn-ink);padding:9px 16px;border-radius:10px;font-size:14px;z-index:40;max-width:calc(100% - 32px)}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--die-bg);border-radius:10px;padding:10px 12px}
+.tr-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.tr-box .search input{background:var(--paper)}
+.tr-item{display:grid;grid-template-columns:4px 1fr;gap:0 12px;border-top:1px solid var(--line);padding-top:10px}
+.tr-item .bar{border-radius:3px;background:var(--line)}
+.tr-item.g-der .bar{background:var(--der)} .tr-item.g-die .bar{background:var(--die)} .tr-item.g-das .bar{background:var(--das)} .tr-item.g-pl .bar{background:var(--pl)}
+.tr-item .body{min-width:0;display:flex;flex-direction:column;gap:4px}
+.tr-item .ex{font-family:var(--font-de);font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.tr-item .vforms{font-size:13px;color:var(--muted);font-family:var(--font-de)}
+.tr-item .why{font-size:13px;background:var(--mark);color:var(--mark-ink);border-radius:6px;padding:3px 8px;align-self:flex-start}
+.done{font-size:14px;font-weight:600;color:var(--ok)}
+.err{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html{padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<header class="top gut">
+  <div class="top-row">
+    <h1 id="hdr">Wörter<small id="hdr-sub">Словарь</small></h1>
+    <button class="icon-btn" id="btn-settings" aria-label="Данные и резервная копия">Данные</button>
+  </div>
+</header>
+<main id="main" class="gut"><div class="wrap" id="view"></div></main>
+<nav class="tabs" role="tablist">
+  <button role="tab" data-tab="words" aria-selected="true"><b>Wörter</b>Словарь</button>
+  <button role="tab" data-tab="verbs" aria-selected="false"><b>Verben</b>Спряжения</button>
+  <button role="tab" data-tab="rules" aria-selected="false"><b>Grammatik</b>Правила</button>
+</nav>
+<div id="sheets"></div>
+<div id="toast" class="toast" hidden></div>
+
+<script src="seed.js"></script>
+<script>
+"use strict";
+/* ---------- helpers ---------- */
+const $ = (s, el=document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const norm = s => String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ß/g,"ss");
+const ARTS = ["der","die","das"];
+const PERS = ["ich","du","er/sie/es","wir","ihr","sie/Sie"];
+const POS = {n:"сущ.", v:"глагол", adj:"прил.", adv:"нареч.", phr:"выражение", other:"другое"};
+let toastT;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2200); }
+function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch{ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} }
+
+/* ---------- storage: page database if available, else this browser ---------- */
+const COLLS = ["words","verbs","rules"];
+const S = { words:new Map(), verbs:new Map(), rules:new Map() };
+let dbReady = true, readOnly = false;
+const LS_KEY = "heft-local";
+function loadLocal(){
+  const d = lsGet(LS_KEY);
+  if (!d) return false;
+  for (const c of COLLS) S[c] = new Map((d[c]||[]).map(x=>[x.id,x]));
+  return true;
+}
+function persistLocal(){
+  const out = {}; for (const c of COLLS) out[c] = [...S[c].values()];
+  try { localStorage.setItem(LS_KEY, JSON.stringify(out)); return true; }
+  catch { toast("Не удалось сохранить на устройстве. Сделай резервную копию"); return false; }
+}
+function initStore(){
+  if (!loadLocal() && window.HEFT_SEED) {
+    for (const c of COLLS) S[c] = new Map((window.HEFT_SEED[c]||[]).map(x=>[x.id,x]));
+    persistLocal();
+  }
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch {}
+  render();
+}
+async function save(c, obj){
+  const data = {...obj}; delete data.id;
+  data.updated = Date.now();
+  S[c].set(obj.id, {...data, id:obj.id});
+  persistLocal(); scheduleRender();
+}
+async function del(c, id){
+  S[c].delete(id); persistLocal(); scheduleRender();
+}
+
+/* ---------- verb forms ---------- */
+const INSEP = /^(be|ge|er|ver|zer|ent|emp|miss|über|unter|hinter|wider)/;
+function weakForms(inf, sep=""){
+  const b = sep && inf.startsWith(sep) ? inf.slice(sep.length) : inf;
+  let stem, sp = "";
+  if (b.endsWith("eln")) { stem=b.slice(0,-1); sp="eln"; }
+  else if (b.endsWith("ern")) { stem=b.slice(0,-1); sp="ern"; }
+  else if (b.endsWith("en")) stem=b.slice(0,-2);
+  else if (b.endsWith("n")) stem=b.slice(0,-1);
+  else stem=b;
+  const needE = !sp && (/[td]$/.test(stem) || /[^aeiouäöülrhmn][mn]$/.test(stem));
+  const sib = /(s|ß|z|x)$/.test(stem);
+  const e = needE ? "e" : "";
+  let pr = sp==="eln" ? [stem.slice(0,-2)+"le", stem+"st", stem+"t", b, stem+"t", b]
+         : sp==="ern" ? [stem+"e", stem+"st", stem+"t", b, stem+"t", b]
+         : [stem+"e", stem+(sib ? "t" : e+"st"), stem+e+"t", b, stem+e+"t", b];
+  const t = stem+e+"te";
+  let pt = [t, t+"st", t, t+"n", t+"t", t+"n"];
+  if (sep) { pr = pr.map(x=>x+" "+sep); pt = pt.map(x=>x+" "+sep); }
+  const insep = INSEP.test(b) || /ieren$/.test(b);
+  return { praes:pr, praet:pt, p2:(sep||"")+(insep?"":"ge")+stem+e+"t" };
+}
+const AUX = { haben:["habe","hast","hat","haben","habt","haben"], sein:["bin","bist","ist","sind","seid","sind"] };
+const WUERDE = ["würde","würdest","würde","würden","würdet","würden"];
+function k2Forms(v){ return (v.k2 && v.k2.some(Boolean)) ? v.k2 : WUERDE.map(w=>w+" "+v.inf); }
+
+/* ---------- state ---------- */
+const st = { tab:"words", q:"", filter:"all", vq:"", rq:"", tq:"", tr:{busy:false, err:"", items:[]} };
+let rT; function scheduleRender(){ cancelAnimationFrame(rT); rT=requestAnimationFrame(render); }
+const tabMeta = { words:["Wörter","Словарь"], verbs:["Verben","Спряжения"], rules:["Grammatik","Правила"] };
+
+function render(){
+  $("#hdr").innerHTML = esc(tabMeta[st.tab][0]) + "<small>" + esc(tabMeta[st.tab][1]) + "</small>";
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===st.tab));
+  const v = $("#view");
+  const keepFocus = document.activeElement && document.activeElement.id;
+  const pos = keepFocus && document.activeElement.selectionStart;
+  if (st.tab==="words") v.innerHTML = viewWords();
+  else if (st.tab==="verbs") v.innerHTML = viewVerbs();
+  else v.innerHTML = viewRules();
+  if (keepFocus) { const el = document.getElementById(keepFocus); if (el && el.closest("#view")) { el.focus(); try{ el.setSelectionRange(pos,pos);}catch{} } }
+  refreshOpenSheet();
+}
+function loadingOrEmpty(what, how){
+  if (!dbReady) return `<div class="empty"><strong>Открываю тетрадь…</strong>Загружаю ${what}.</div>`;
+  return `<div class="empty"><strong>Пока пусто</strong>${how}</div>`;
+}
+
+/* ---------- words ---------- */
+function gClass(w){ return w.art==="der"||w.art==="die"||w.art==="das" ? "g-"+w.art : (w.art==="pl" ? "g-pl" : (w.art==="der/das" ? "g-der" : "")); }
+function artHTML(w){
+  if (!w.art) return "";
+  if (w.art==="pl") return `<span class="art a-pl">die</span> `;
+  if (w.art.includes("/")) return w.art.split("/").map(a=>`<span class="art a-${a}">${a}</span>`).join("/")+" ";
+  return `<span class="art a-${w.art}">${w.art}</span> `;
+}
+function plText(w){
+  if (w.pos!=="n") return "";
+  if (w.art==="pl") return "только мн. ч.";
+  if (!w.pl) return "";
+  if (w.pl==="—") return "без мн. ч.";
+  return "die " + w.pl;
+}
+function wordsFiltered(){
+  const q = norm(st.q.trim());
+  let list = [...S.words.values()];
+  if (st.filter==="check") list = list.filter(w=>w.check);
+  else if (ARTS.includes(st.filter)) list = list.filter(w=>(w.art||"").split("/").includes(st.filter));
+  else if (st.filter==="other") list = list.filter(w=>w.pos!=="n");
+  if (q) list = list.filter(w => norm(w.w).includes(q) || norm(w.ru).includes(q) || norm(w.pl).includes(q) || norm(w.src).includes(q));
+  return list.sort((a,b)=> norm(a.w).localeCompare(norm(b.w),"de"));
+}
+function viewWords(){
+  const all = [...S.words.values()];
+  const nCheck = all.filter(w=>w.check).length;
+  const list = wordsFiltered();
+  const chip = (id,label,cls="") => `<button class="chip ${cls}" data-filter="${id}" aria-pressed="${st.filter===id}">${label}</button>`;
+  let h = viewTranslator() + `<div class="search"><input id="q" type="search" placeholder="Поиск: слово или перевод" value="${esc(st.q)}" autocomplete="off"><button class="btn" data-act="add-word">+ Слово</button></div>
+  <div class="chips">${chip("all","Все")}${chip("der","der","der")}${chip("die","die","die")}${chip("das","das","das")}${chip("other","Глаголы и др.")}${nCheck?chip("check","Проверить · "+nCheck,"chk"):""}</div>`;
+  if (all.length) h += `<div class="train-bar">
+      <button data-train="cards"><b>Карточки</b><span>слово → перевод</span></button>
+      <button data-train="article"><b>der/die/das</b><span>угадай артикль</span></button>
+      <button data-train="translate"><b>Тест</b><span>перевод → слово</span></button></div>`;
+  if (!all.length) return h + loadingOrEmpty("слова", "Добавь первое слово кнопкой «+ Слово» или загрузи резервную копию в разделе «Данные».");
+  h += `<div class="meta"><span>${list.length} из ${all.length}</span>${st.filter!=="all"||st.q?`<span>тренировка возьмёт этот список</span>`:""}</div>`;
+  if (!list.length) return h + `<div class="empty">Ничего не нашлось.</div>`;
+  h += `<div class="list">` + list.map(w => `<button class="row ${gClass(w)}" data-word="${esc(w.id)}">
+      <span class="bar"></span>
+      <span class="main"><span class="de">${artHTML(w)}${esc(w.w)}</span>${w.check?'<span class="flag">проверить</span>':""}
+      <span class="sub" style="display:block">${esc(w.ru)}${plText(w)?` · <span class="plf">${esc(plText(w))}</span>`:""}</span></span>
+      <span class="tag">${esc(POS[w.pos]||"")}</span></button>`).join("") + `</div>`;
+  return h;
+}
+
+/* ---------- translator (asks Claude, saves to the notebook) ---------- */
+let trCtl = null;
+function findWord(w){ const k = norm(w); return [...S.words.values()].find(x => norm(x.w) === k); }
+function findVerb(inf){ const k = norm(inf); return [...S.verbs.values()].find(x => norm(x.inf) === k); }
+function viewTranslator(){
+  const t = st.tr;
+  let h = `<div class="tr-box"><span class="lbl">Перевести и сохранить</span>
+    <div class="search"><input id="tq" type="text" enterkeyhint="go" placeholder="Kühlschrank, сковородка, sich erholen" value="${esc(st.tq)}" autocomplete="off" autocapitalize="off">
+    ${t.busy ? `<button class="btn ghost" data-act="tr-stop">Стоп</button>` : `<button class="btn" data-act="translate">Перевести</button>`}</div>`;
+  if (t.busy) h += `<span class="hint">Ищу в Викисловаре…</span>`;
+  else if (!t.items.length && !t.err) h += `<span class="hint">Немецкое или русское слово, можно несколько через запятую. Найду в Викисловаре артикль, мн. число, перевод и пример, а у глаголов формы. Нужен интернет.</span>`;
+  if (t.err) h += `<span class="hint err">${esc(t.err)}</span>`;
+  t.items.forEach((it, i) => {
+    const dup = !it._saved && findWord(it.w);
+    const v = it.verb;
+    h += `<div class="tr-item ${gClass(it)}"><span class="bar"></span><div class="body">
+      <span class="de">${artHTML(it)}${esc(it.w)}${it.input && norm(it.input)!==norm(it.w) ? ` <span class="hint" style="font-family:var(--font-ui)">← ${esc(it.input)}</span>` : ""}</span>
+      <span>${esc(it.ru)}${plText(it) ? ` · <span class="hint" style="font-family:var(--font-de)">${esc(plText(it))}</span>` : ""}</span>
+      ${it.note ? `<span class="ex">${esc(it.note)}</span>` : ""}
+      ${v ? `<span class="vforms">${esc(v.praes[2]||"")} · ${esc(v.praet[2]||"")} · ${esc(AUX[v.aux][2])} ${esc(v.p2)}${v.strong?" · неправ.":""}</span>` : ""}
+      ${it.check ? `<span class="why">проверить: ${esc(it.checkNote||"не уверена")}</span>` : ""}
+      <div class="actions">${it._saved ? `<span class="done">Сохранено</span><button class="btn small ghost" data-act="tr-open" data-i="${i}">Открыть</button>`
+        : dup ? `<span class="hint">Уже есть в словаре</span><button class="btn small ghost" data-act="tr-open" data-i="${i}">Открыть</button><button class="btn small ghost" data-act="tr-save" data-i="${i}">Всё равно добавить</button>`
+        : `<button class="btn small" data-act="tr-save" data-i="${i}">Сохранить</button><button class="btn small ghost" data-act="tr-edit" data-i="${i}">Изменить</button>`}
+        <span class="grow"></span><button class="btn small ghost" data-act="tr-drop" data-i="${i}" aria-label="Убрать из списка">✕</button></div>
+    </div></div>`;
+  });
+  const left = t.items.filter(it => !it._saved && !findWord(it.w)).length;
+  if (t.items.length > 1 && left) h += `<div class="actions"><button class="btn" data-act="tr-save-all">Сохранить все новые (${left})</button></div>`;
+  return h + `</div>`;
+}
+function cleanForms(a){ return Array.isArray(a) && a.length === 6 ? a.map(x => String(x||"").trim()) : null; }
+function cleanItem(r){
+  if (!r || typeof r !== "object" || !r.w) return null;
+  const pos = POS[r.pos] ? r.pos : "other";
+  const art = ["der","die","das","pl","der/die","der/das","die/das"].includes(r.art) ? r.art : "";
+  const it = { input:String(r.input||""), w:String(r.w).trim(), art: pos==="n" ? art : "", pl: pos==="n" ? String(r.pl||"").trim() : "",
+    ru:String(r.ru||"").trim(), pos, note:String(r.note||"").trim(), check:!!r.check, checkNote:String(r.checkNote||"").trim() };
+  const v = r.verb;
+  if (pos === "v" && v && typeof v === "object") {
+    const praes = cleanForms(v.praes), praet = cleanForms(v.praet);
+    if (praes && praet && v.p2) it.verb = { praes, praet, p2:String(v.p2).trim(), aux: v.aux==="sein" ? "sein" : "haben", strong:!!v.strong, sep:String(v.sep||"").trim(), k2: cleanForms(v.k2) };
+  }
+  return it;
+}
+/* Wiktionary (de) for gender, plural, verb forms, Russian translation, example.
+   MyMemory for Russian → German and as a fallback. Both are free and need no key. */
+const WIKI = "https://de.wiktionary.org/w/api.php";
+async function wikiText(title, signal){
+  const u = WIKI + "?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&origin=*&page=" + encodeURIComponent(title);
+  const r = await fetch(u, {signal});
+  if (!r.ok) return null;
+  const j = await r.json();
+  return (j && j.parse && j.parse.wikitext) || null;
+}
+async function myMemory(q, pair, signal){
+  try {
+    const r = await fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(q) + "&langpair=" + pair, {signal});
+    if (!r.ok) return "";
+    const j = await r.json();
+    const t = j && j.responseData && j.responseData.translatedText || "";
+    return /MYMEMORY WARNING|INVALID/i.test(t) ? "" : t.trim();
+  } catch(e) { if (e && e.name==="AbortError") throw e; return ""; }
+}
+function germanSection(t){
+  const m = t.match(/^==[^=].*\{\{Sprache\|Deutsch\}\}.*$/m);
+  if (!m) return null;
+  const rest = t.slice(m.index + m[0].length);
+  const next = rest.search(/^==[^=]/m);
+  return next === -1 ? rest : rest.slice(0, next);
+}
+function tplParams(sec, name){
+  const i = sec.indexOf("{{" + name); if (i < 0) return null;
+  let depth = 0, j = i;
+  for (; j < sec.length - 1; j++) {
+    if (sec[j]==="{" && sec[j+1]==="{") { depth++; j++; }
+    else if (sec[j]==="}" && sec[j+1]==="}") { depth--; j++; if (depth===0) break; }
+  }
+  const p = {};
+  sec.slice(i+2, j-1).split(/\n\s*\|/).slice(1).forEach(x => { const k = x.indexOf("="); if (k > 0) p[x.slice(0,k).trim()] = cleanWiki(x.slice(k+1)); });
+  return p;
+}
+function cleanWiki(v){
+  return String(v||"").replace(/<ref[^>]*\/>/g,"").replace(/<ref[\s\S]*?<\/ref>/g,"").replace(/<[^>]+>/g,"")
+    .replace(/\{\{[^{}]*\}\}/g,"").replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g,"$1").replace(/'{2,}/g,"").replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();
+}
+const REFL = new Set(["mich","dich","sich","uns","euch"]);
+function stripRefl(f){ return f.split(" ").filter(x => !REFL.has(x)).join(" "); }
+function praetForms(p){
+  if (p.endsWith("e")) return [p, p+"st", p, p+"n", p+"t", p+"n"];
+  return [p, p+(/[sßzxtd]$/.test(p)?"est":"st"), p, p+"en", p+(/[td]$/.test(p)?"et":"t"), p+"en"];
+}
+function parseEntry(title, wt){
+  const sec = germanSection(wt); if (!sec) return null;
+  const base = sec.match(/\{\{Grundformverweis[^|}]*\|([^}|]+)/);
+  const wa = (sec.match(/\{\{Wortart\|([^|}]+)\|Deutsch\}\}/) || [])[1] || "";
+  if (base && !/Substantiv|Verb|Adjektiv|Adverb/.test(wa)) return {redirect: base[1].trim()};
+  const pos = /Substantiv|Eigenname/.test(wa) ? "n" : /Verb/.test(wa) ? "v" : /Adjektiv|Partizip/.test(wa) ? "adj" : /Adverb/.test(wa) ? "adv" : /Redewendung|Wortverbindung/.test(wa) ? "phr" : "other";
+  const it = { w:title, art:"", pl:"", pos, ru:"", note:"", check:false, checkNote:"" };
+  const ru = []; const re = /\{\{Ü\|ru\|([^}|]+)(?:\|([^}]+))?\}\}/g; let m;
+  while ((m = re.exec(sec)) && ru.length < 4) { const v = (m[2] || m[1]).normalize("NFD").replace(/\u0301/g,"").normalize("NFC").trim(); if (v && !ru.includes(v)) ru.push(v); }
+  it.ru = ru.join(", ");
+  const ex = sec.match(/\{\{Beispiele\}\}\s*\n:\s*(?:\[[^\]]*\])?\s*(.+)/);
+  if (ex) { const e = cleanWiki(ex[1]); if (e.length > 3 && e.length < 160) it.note = e; }
+  if (pos === "n") {
+    const p = tplParams(sec, "Deutsch Substantiv Übersicht") || {};
+    const g = [p["Genus"], p["Genus 1"], p["Genus 2"]].filter(Boolean);
+    const arts = [...new Set(g.map(x => ({m:"der", f:"die", n:"das"})[x]).filter(Boolean))];
+    const sg = p["Nominativ Singular"] || p["Nominativ Singular 1"] || "";
+    if (/^[—–-]$/.test(sg) || g.includes("0") || (!arts.length && /Pluraletantum|pl\./i.test(wa))) it.art = "pl";
+    else it.art = arts.join("/");
+    const pl = p["Nominativ Plural"] || p["Nominativ Plural 1"] || "";
+    it.pl = it.art === "pl" ? title : (!pl || /^[—–-]$/.test(pl) ? "—" : pl);
+    if (!it.art) { it.check = true; it.checkNote = "род не найден"; }
+  }
+  if (pos === "v") {
+    const p = tplParams(sec, "Deutsch Verb Übersicht") || {};
+    const ich = stripRefl(p["Präsens_ich"] || ""), du = stripRefl(p["Präsens_du"] || ""), er = stripRefl(p["Präsens_er, sie, es"] || "");
+    const pt = stripRefl(p["Präteritum_ich"] || "");
+    if (ich && er && pt && p["Partizip II"]) {
+      const parts = ich.split(" "); const sep = parts.length > 1 ? parts[parts.length-1] : "";
+      const core = title.startsWith(sep) ? title.slice(sep.length) : title;
+      const add = x => sep ? x + " " + sep : x;
+      const wf = weakForms(title, sep);
+      const ptCore = pt.split(" ")[0];
+      const praet = praetForms(ptCore).map(add);
+      const aux = /sein/.test(p["Hilfsverb"]||"") && !/haben/.test(p["Hilfsverb"]||"") ? "sein" : "haben";
+      it.verb = { praes:[ich, du, er, add(core), wf.praes[4], add(core)], praet, p2:p["Partizip II"].split(/[,;]/)[0].trim(), aux,
+                  strong: praet[0] !== wf.praet[0] || p["Partizip II"].indexOf(wf.p2) !== 0, sep, k2:null };
+      if (/sein/.test(p["Hilfsverb"]||"") && /haben/.test(p["Hilfsverb"]||"")) it.note = (it.note ? it.note + " · " : "") + "Perfekt с haben и с sein";
+    }
+  }
+  return it;
+}
+async function lookup(term, signal){
+  let t = term.trim().replace(/\s+/g," ");
+  let refl = false, fromRu = "";
+  if (/[а-яё]/i.test(t)) {
+    fromRu = t;
+    const de = await myMemory(t, "ru|de", signal);
+    if (!de) return { input:term, w:t, art:"", pl:"", pos:"other", ru:t, note:"", check:true, checkNote:"автопереводчик не ответил, впиши немецкое слово сама" };
+    t = de.replace(/[.!?]$/,"");
+  }
+  const am = t.match(/^(der|die|das)\s+(.+)$/i); if (am) t = am[2];
+  if (/^sich\s+/i.test(t)) { refl = true; t = t.replace(/^sich\s+/i,""); }
+  const tries = [...new Set([t, t[0].toUpperCase()+t.slice(1), t[0].toLowerCase()+t.slice(1)])];
+  let it = null;
+  for (let title of tries) {
+    let wt = await wikiText(title, signal); if (!wt) continue;
+    let e = parseEntry(title, wt);
+    if (e && e.redirect) { title = e.redirect; wt = await wikiText(title, signal); e = wt ? parseEntry(title, wt) : null; }
+    if (e && !e.redirect) { it = e; break; }
+  }
+  if (!it) {
+    const ru = fromRu || await myMemory(t, "de|ru", signal);
+    return { input:term, w:t, art:"", pl:"", pos: /\s/.test(t) ? "phr" : "other", ru, note:"", check:true, checkNote:"в Викисловаре не нашлось: артикль и формы впиши сама" };
+  }
+  it.input = term;
+  if (refl) it.note = "sich " + it.w + (it.note ? " · " + it.note : "");
+  if (fromRu) { it.check = true; it.checkNote = "немецкое слово подобрал автопереводчик, проверь, что это то значение"; if (!it.ru) it.ru = fromRu; }
+  if (!it.ru) { it.ru = await myMemory(it.w, "de|ru", signal); it.check = true; it.checkNote = it.checkNote || "перевод из автопереводчика"; }
+  return it;
+}
+async function translate(){
+  const raw = st.tq.trim();
+  if (!raw) { toast("Впиши слово"); return; }
+  if (navigator.onLine === false) { st.tr.err = "Нет интернета. Перевод работает только онлайн, а словарь и тренировки доступны всегда."; render(); return; }
+  const terms = raw.split(/[,;\n]+/).map(s => s.trim()).filter(Boolean).slice(0, 15);
+  st.tr = { busy:true, err:"", items: st.tr.items };
+  render();
+  trCtl = new AbortController();
+  const found = [];
+  try {
+    for (const term of terms) { found.push(await lookup(term, trCtl.signal)); }
+    st.tq = "";
+    st.tr = { busy:false, err:"", items:[...found, ...st.tr.items.filter(x => !x._saved)].slice(0, 30) };
+  } catch (e) {
+    st.tr = { busy:false, err: e && e.name==="AbortError" ? "" : "Не получилось связаться со словарём. Проверь интернет и попробуй ещё раз.", items:[...found, ...st.tr.items] };
+  }
+  render();
+}
+async function saveTrItem(it){
+  const src = "перевод " + new Date().toLocaleDateString("ru-RU");
+  const w = { w:it.w, art:it.art, pl:it.pl, ru:it.ru, pos:it.pos, note:it.note, src, check:it.check, added:Date.now(), box:0, id:uid("w") };
+  if (it.check && it.checkNote) w.checkNote = it.checkNote;
+  await save("words", w);
+  if (it.verb && !findVerb(it.w)) {
+    await save("verbs", { id:uid("v"), inf:it.w, ru:it.ru, ...it.verb, note: it.note, check: it.check, ...(it.check && it.checkNote ? {checkNote:it.checkNote} : {}) });
+  }
+  it._saved = w.id;
+}
+
+/* ---------- verbs ---------- */
+function viewVerbs(){
+  const all = [...S.verbs.values()];
+  const q = norm(st.vq.trim());
+  const list = all.filter(v=>!q || norm(v.inf).includes(q) || norm(v.ru).includes(q) || norm(v.p2).includes(q))
+                  .sort((a,b)=>norm(a.inf).localeCompare(norm(b.inf),"de"));
+  let h = `<div class="search"><input id="vq" type="search" placeholder="Поиск глагола" value="${esc(st.vq)}" autocomplete="off"><button class="btn" data-act="add-verb">+ Глагол</button></div>`;
+  if (!all.length) return h + loadingOrEmpty("глаголы","Добавь глагол: обычные формы я заполню по правилу, неправильные впишешь сама.");
+  h += `<div class="meta"><span>${list.length} глаголов</span><span>● неправильная форма</span></div>`;
+  h += `<div class="list">` + list.map(v=>`<button class="row ${v.strong?"g-pl":""}" data-verb="${esc(v.id)}">
+     <span class="bar"></span>
+     <span class="main"><span class="de">${esc(v.inf)}</span>${v.check?'<span class="flag">проверить</span>':""}
+     <span class="sub" style="display:block">${esc(v.ru)} · <span class="plf">${esc(AUX[v.aux||"haben"][2])} ${esc(v.p2||"")}</span></span></span>
+     <span class="tag">${v.strong?"неправ.":"правильный"}</span></button>`).join("") + `</div>`;
+  return h;
+}
+
+/* ---------- rules ---------- */
+function plainOf(md){ return String(md||"").replace(/^\|.*$/gm,"").replace(/[#>*`|\-]/g," ").replace(/\{[mfnp]:([^}]*)\}/g,"$1").replace(/\s+/g," ").trim(); }
+function viewRules(){
+  const all = [...S.rules.values()];
+  const q = norm(st.rq.trim());
+  const list = all.filter(r=>!q || norm(r.title).includes(q) || norm(r.body).includes(q) || (r.tags||[]).some(t=>norm(t).includes(q)))
+                  .sort((a,b)=>(a.order??999)-(b.order??999) || norm(a.title).localeCompare(norm(b.title)));
+  let h = `<div class="search"><input id="rq" type="search" placeholder="Поиск по правилам" value="${esc(st.rq)}" autocomplete="off"><button class="btn" data-act="add-rule">+ Правило</button></div>`;
+  if (!all.length) return h + loadingOrEmpty("правила","Добавь своё первое правило: заголовок, объяснение, таблица и примеры.");
+  h += list.map(r=>`<button class="rule-card" data-rule="${esc(r.id)}"><h3>${esc(r.title)}${r.check?'<span class="flag">проверить</span>':""}</h3>
+      <p>${esc(plainOf(r.body).slice(0,180))}</p>
+      ${(r.tags||[]).length?`<span class="tags">${r.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</span>`:""}</button>`).join("");
+  return h;
+}
+
+/* ---------- mini markdown ---------- */
+function inline(s){
+  return esc(s)
+    .replace(/\{(m|f|n|p):([^}]*)\}/g,'<span class="$1">$2</span>')
+    .replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>")
+    .replace(/==([^=]+)==/g,"<mark>$1</mark>")
+    .replace(/(^|[^*])\*([^*\s][^*]*)\*/g,"$1<em>$2</em>")
+    .replace(/`([^`]+)`/g,"<code>$1</code>");
+}
+function md(src){
+  const lines = String(src||"").replace(/\r/g,"").split("\n");
+  let out = "", i = 0;
+  while (i < lines.length) {
+    const l = lines[i];
+    if (/^\s*$/.test(l)) { i++; continue; }
+    if (/^### /.test(l)) { out += `<h3>${inline(l.slice(4))}</h3>`; i++; continue; }
+    if (/^## /.test(l)) { out += `<h2>${inline(l.slice(3))}</h2>`; i++; continue; }
+    if (/^# /.test(l)) { out += `<h2>${inline(l.slice(2))}</h2>`; i++; continue; }
+    if (/^\s*\|/.test(l)) {
+      const rows = [];
+      while (i < lines.length && /^\s*\|/.test(lines[i])) { rows.push(lines[i]); i++; }
+      const cells = r => r.trim().replace(/^\||\|$/g,"").split("|").map(c=>c.trim());
+      const body = rows.filter(r=>!/^\s*\|[\s:\-|]+\|\s*$/.test(r));
+      const [head, ...rest] = body;
+      out += `<div class="tw"><table><thead><tr>${cells(head).map(c=>`<th>${inline(c)}</th>`).join("")}</tr></thead><tbody>` +
+        rest.map(r=>`<tr>${cells(r).map(c=>`<td>${inline(c)}</td>`).join("")}</tr>`).join("") + `</tbody></table></div>`;
+      continue;
+    }
+    if (/^\s*[-•] /.test(l)) {
+      out += "<ul>";
+      while (i < lines.length && /^\s*[-•] /.test(lines[i])) { out += `<li>${inline(lines[i].replace(/^\s*[-•] /,""))}</li>`; i++; }
+      out += "</ul>"; continue;
+    }
+    if (/^> ?/.test(l)) {
+      const ex = [];
+      while (i < lines.length && /^> ?/.test(lines[i])) { ex.push(inline(lines[i].replace(/^> ?/,""))); i++; }
+      out += `<div class="ex">${ex.join("<br>")}</div>`; continue;
+    }
+    const p = [];
+    while (i < lines.length && !/^\s*$/.test(lines[i]) && !/^(#|\s*\||\s*[-•] |> ?)/.test(lines[i])) { p.push(inline(lines[i])); i++; }
+    out += `<p>${p.join("<br>")}</p>`;
+  }
+  return out;
+}
+
+/* ---------- sheets ---------- */
+let sheet = null; // {kind, id, ...}
+function openSheet(s){ sheet = s; drawSheet(); }
+function closeSheet(){ sheet = null; $("#sheets").innerHTML = ""; }
+function refreshOpenSheet(){ if (sheet && (sheet.kind==="word" || sheet.kind==="verb" || sheet.kind==="rule")) drawSheet(); }
+function shell(title, body, extra=""){
+  return `<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+    <div class="sheet-head gut"><button class="icon-btn" data-act="close" aria-label="Закрыть">← Назад</button><h2>${esc(title)}</h2>${extra}</div>
+    <div class="sheet-body gut"><div class="wrap">${body}</div></div></div>`;
+}
+function drawSheet(){
+  const s = sheet; if (!s) return;
+  const host = $("#sheets");
+  const scroller = host.querySelector(".sheet-body"); const top = scroller ? scroller.scrollTop : 0;
+  let html = "";
+  if (s.kind==="word") {
+    const w = S.words.get(s.id); if (!w) return closeSheet();
+    const conf = s.confirmDel ? `<div class="confirm"><span class="grow">Удалить «${esc(w.w)}»?</span><button class="btn small danger" data-act="del-word-yes">Удалить</button><button class="btn small ghost" data-act="del-no">Отмена</button></div>` : "";
+    html = shell(w.w, `
+      <div class="word-hero ${gClass(w)}"><span class="de">${artHTML(w)}${esc(w.w)}</span>
+        <span style="font-size:19px">${esc(w.ru)}</span></div>
+      ${w.check?`<div class="note-box"><strong>Проверь:</strong> ${esc(w.checkNote||"я не уверена в этой записи")}</div>`:""}
+      <dl class="kv">
+        ${w.pos==="n"?`<dt>Мн. число</dt><dd class="de" style="font-size:16px">${esc(plText(w)||"—")}</dd>`:""}
+        <dt>Часть речи</dt><dd>${esc(POS[w.pos]||"")}</dd>
+        ${w.note?`<dt>Заметка</dt><dd>${esc(w.note)}</dd>`:""}
+        ${w.src?`<dt>Источник</dt><dd>${esc(w.src)}</dd>`:""}
+        <dt>Знаю</dt><dd>${"●".repeat(w.box||0)}${"○".repeat(5-(w.box||0))}</dd>
+      </dl>
+      <div class="actions">${w.check?`<button class="btn" data-act="confirm-word">Всё верно</button>`:""}<button class="btn ghost" data-act="edit-word">Изменить</button><span class="grow"></span><button class="btn danger" data-act="del-word">Удалить</button></div>${conf}`);
+  } else if (s.kind==="word-edit") {
+    html = shell(s.id ? "Изменить слово" : "Новое слово", wordForm(s.draft));
+  } else if (s.kind==="verb") {
+    const v = S.verbs.get(s.id); if (!v) return closeSheet();
+    html = shell(v.inf, verbDetail(v) + (s.confirmDel?`<div class="confirm"><span class="grow">Удалить «${esc(v.inf)}»?</span><button class="btn small danger" data-act="del-verb-yes">Удалить</button><button class="btn small ghost" data-act="del-no">Отмена</button></div>`:""));
+  } else if (s.kind==="verb-edit") {
+    html = shell(s.id ? "Изменить глагол" : "Новый глагол", verbForm(s.draft));
+  } else if (s.kind==="rule") {
+    const r = S.rules.get(s.id); if (!r) return closeSheet();
+    html = shell(r.title, `${r.check?`<div class="note-box"><strong>Проверь:</strong> ${esc(r.checkNote||"собрано по фото, сверь с конспектом")}</div>`:""}
+      <div class="md">${md(r.body)}</div>
+      ${(r.tags||[]).length?`<div class="tags">${r.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>`:""}
+      <div class="actions">${r.check?`<button class="btn" data-act="confirm-rule">Всё верно</button>`:""}<button class="btn ghost" data-act="edit-rule">Редактировать</button><span class="grow"></span><button class="btn danger" data-act="del-rule">Удалить</button></div>
+      ${s.confirmDel?`<div class="confirm"><span class="grow">Удалить правило?</span><button class="btn small danger" data-act="del-rule-yes">Удалить</button><button class="btn small ghost" data-act="del-no">Отмена</button></div>`:""}`);
+  } else if (s.kind==="rule-edit") {
+    html = shell(s.id ? "Редактировать правило" : "Новое правило", ruleForm(s.draft));
+  } else if (s.kind==="train") {
+    html = shell(s.title, trainBody(s));
+  } else if (s.kind==="data") {
+    html = shell("Данные", dataBody(s));
+  }
+  host.innerHTML = html;
+  const sc = host.querySelector(".sheet-body"); if (sc && s.keepScroll) sc.scrollTop = top;
+  s.keepScroll = true;
+}
+
+/* ---------- word form ---------- */
+function wordForm(d){
+  const segA = ["der","die","das","pl",""].map(a=>`<button type="button" class="${a}" data-art="${a}" aria-pressed="${(d.art||"")===a}">${a==="pl"?"мн.":a||"—"}</button>`).join("");
+  return `<div class="field"><label for="f-quick">Быстрый ввод</label><input id="f-quick" placeholder="der Tisch, -e — стол" autocomplete="off"><span class="hint">Напиши строку целиком и нажми «Разобрать», или заполни поля ниже.</span><div><button type="button" class="btn small ghost" data-act="parse">Разобрать</button></div></div>
+  <div class="field"><span class="lbl">Артикль</span><div class="seg">${segA}</div></div>
+  <div class="field"><label for="f-w">Слово</label><input id="f-w" value="${esc(d.w)}" autocomplete="off" autocapitalize="off"></div>
+  <div class="grid2">
+    <div class="field"><label for="f-pl">Мн. число</label><input id="f-pl" value="${esc(d.pl)}" placeholder="Tische или —"></div>
+    <div class="field"><label for="f-pos">Часть речи</label><select id="f-pos">${Object.entries(POS).map(([k,v])=>`<option value="${k}" ${d.pos===k?"selected":""}>${v}</option>`).join("")}</select></div>
+  </div>
+  <div class="field"><label for="f-ru">Перевод</label><input id="f-ru" value="${esc(d.ru)}"></div>
+  <div class="field"><label for="f-note">Заметка или пример</label><input id="f-note" value="${esc(d.note)}"></div>
+  <div class="field"><label for="f-src">Источник</label><input id="f-src" value="${esc(d.src)}" placeholder="урок 15.10, KB S. 88"></div>
+  <label class="check"><input type="checkbox" id="f-check" ${d.check?"checked":""}> Нужно проверить</label>
+  <div class="actions"><button class="btn" data-act="save-word">Сохранить</button><button class="btn ghost" data-act="close">Отмена</button></div>`;
+}
+function readWordForm(){
+  const d = sheet.draft;
+  d.w = $("#f-w").value.trim(); d.pl = $("#f-pl").value.trim(); d.pos = $("#f-pos").value;
+  d.ru = $("#f-ru").value.trim(); d.note = $("#f-note").value.trim(); d.src = $("#f-src").value.trim(); d.check = $("#f-check").checked;
+  return d;
+}
+function parseQuick(str){
+  const out = {};
+  let s = str.trim(); if (!s) return out;
+  const parts = s.split(/\s+[—–-]\s+|\s*=\s*/);
+  let de = parts[0]; if (parts.length>1) out.ru = parts.slice(1).join(" — ").trim();
+  const m = de.match(/^(der|die|das|r|e|s)\s+(.+)$/i);
+  if (m) { out.art = ({r:"der",e:"die",s:"das"})[m[1].toLowerCase()] || m[1].toLowerCase(); de = m[2]; out.pos="n"; }
+  const [word, pl] = de.split(/\s*,\s*/);
+  out.w = word.trim();
+  if (pl !== undefined) {
+    const p = pl.trim();
+    if (p==="-" || p==="–") out.pl = out.w;
+    else if (/^-?$|^—$|^x$/i.test(p)) out.pl = "—";
+    else if (/^-/.test(p)) out.pl = out.w + p.slice(1);
+    else out.pl = p;
+  }
+  if (!m && /^[a-zäöüß]/.test(out.w)) out.pos = /en$|ern$|eln$/.test(out.w) ? "v" : "adj";
+  return out;
+}
+
+/* ---------- verb detail/form ---------- */
+function verbDetail(v){
+  const wf = weakForms(v.inf, v.sep||"");
+  const tbl = (title, forms, ref) => `<div class="conj"><h3>${title}</h3><table>${PERS.map((p,i)=>`<tr><td>${p}</td><td class="f ${ref && forms[i] && ref[i]!==forms[i] ? "irr":""}">${esc(forms[i]||"")}</td></tr>`).join("")}</table></div>`;
+  const aux = AUX[v.aux||"haben"];
+  const perf = aux.map(a=>a+" "+(v.p2||""));
+  const p2irr = v.p2 && v.p2 !== wf.p2;
+  return `<div class="word-hero ${v.strong?"g-pl":""}"><span class="de">${esc(v.inf)}</span><span style="font-size:18px">${esc(v.ru)}</span>
+    <span class="hint">Partizip II: <strong class="de" style="font-size:16px">${esc(v.p2||"")}</strong>${p2irr?" ●":""} · вспом. глагол <strong>${esc(v.aux||"haben")}</strong>${v.sep?` · отделяемая приставка <strong>${esc(v.sep)}-</strong>`:""}</span></div>
+    ${v.check?`<div class="note-box"><strong>Проверь:</strong> ${esc(v.checkNote||"сверь формы")}</div>`:""}
+    ${v.note?`<p class="hint">${esc(v.note)}</p>`:""}
+    <div class="conj-grid">${tbl("Präsens", v.praes||[], wf.praes)}${tbl("Präteritum", v.praet||[], wf.praet)}${tbl("Perfekt", perf, null)}${tbl("Konjunktiv II", k2Forms(v), null)}</div>
+    <p class="legend"><i></i>форма отличается от обычного правила</p>
+    <div class="actions">${v.check?`<button class="btn" data-act="confirm-verb">Всё верно</button>`:""}<button class="btn ghost" data-act="edit-verb">Изменить</button><span class="grow"></span><button class="btn danger" data-act="del-verb">Удалить</button></div>`;
+}
+function verbForm(d){
+  const row = (i) => `<tr><td>${PERS[i]}</td>${["praes","praet","k2"].map(k=>`<td><input id="f-${k}-${i}" value="${esc((d[k]||[])[i]||"")}" autocapitalize="off" autocomplete="off"></td>`).join("")}</tr>`;
+  return `<div class="grid2"><div class="field"><label for="f-inf">Инфинитив</label><input id="f-inf" value="${esc(d.inf)}" autocapitalize="off" autocomplete="off"></div>
+    <div class="field"><label for="f-sep">Отдел. приставка</label><input id="f-sep" value="${esc(d.sep)}" placeholder="ab, auf…" autocapitalize="off"></div></div>
+  <div class="field"><label for="f-vru">Перевод</label><input id="f-vru" value="${esc(d.ru)}"></div>
+  <div class="actions"><button class="btn small ghost" data-act="gen-weak">Заполнить по правилу</button><span class="hint">для правильных глаголов; неправильные формы поправь вручную</span></div>
+  <div class="grid2"><div class="field"><label for="f-aux">Perfekt с</label><select id="f-aux"><option value="haben" ${d.aux!=="sein"?"selected":""}>haben</option><option value="sein" ${d.aux==="sein"?"selected":""}>sein</option></select></div>
+    <div class="field"><label for="f-p2">Partizip II</label><input id="f-p2" value="${esc(d.p2)}" autocapitalize="off"></div></div>
+  <div class="scroll-x"><table class="formtable"><thead><tr><th></th><th>Präsens</th><th>Präteritum</th><th>Konj. II</th></tr></thead><tbody>${PERS.map((_,i)=>row(i)).join("")}</tbody></table></div>
+  <p class="hint">Konjunktiv II можно оставить пустым: тогда покажу «würde + инфинитив».</p>
+  <div class="field"><label for="f-vnote">Заметка</label><input id="f-vnote" value="${esc(d.note)}"></div>
+  <label class="check"><input type="checkbox" id="f-strong" ${d.strong?"checked":""}> Неправильный (сильный) глагол</label>
+  <label class="check"><input type="checkbox" id="f-vcheck" ${d.check?"checked":""}> Нужно проверить</label>
+  <div class="actions"><button class="btn" data-act="save-verb">Сохранить</button><button class="btn ghost" data-act="close">Отмена</button></div>`;
+}
+function readVerbForm(){
+  const d = sheet.draft;
+  d.inf = $("#f-inf").value.trim(); d.sep = $("#f-sep").value.trim().replace(/-$/,""); d.ru = $("#f-vru").value.trim();
+  d.aux = $("#f-aux").value; d.p2 = $("#f-p2").value.trim(); d.note = $("#f-vnote").value.trim();
+  d.strong = $("#f-strong").checked; d.check = $("#f-vcheck").checked;
+  for (const k of ["praes","praet","k2"]) d[k] = PERS.map((_,i)=>$(`#f-${k}-${i}`).value.trim());
+  return d;
+}
+
+/* ---------- rule form ---------- */
+function ruleForm(d){
+  return `<div class="field"><label for="f-rt">Заголовок</label><input id="f-rt" value="${esc(d.title)}"></div>
+  <div class="field"><label for="f-rb">Текст правила</label><textarea id="f-rb" rows="14">${esc(d.body)}</textarea>
+  <span class="hint">## заголовок · - пункт списка · &gt; пример · **жирный** · ==выделить== · таблица: | Kasus | m | f | · цвет рода: {m:der} {f:die} {n:das} {p:die}</span></div>
+  <div class="field"><label for="f-rtags">Теги через запятую</label><input id="f-rtags" value="${esc((d.tags||[]).join(", "))}"></div>
+  <label class="check"><input type="checkbox" id="f-rcheck" ${d.check?"checked":""}> Нужно проверить</label>
+  <div class="actions"><button class="btn" data-act="save-rule">Сохранить</button><button class="btn ghost" data-act="preview-rule">Предпросмотр</button><button class="btn ghost" data-act="close">Отмена</button></div>
+  ${d.preview?`<div class="md" style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px">${md(d.body)}</div>`:""}`;
+}
+function readRuleForm(){
+  const d = sheet.draft;
+  d.title = $("#f-rt").value.trim(); d.body = $("#f-rb").value; d.tags = $("#f-rtags").value.split(",").map(t=>t.trim()).filter(Boolean); d.check = $("#f-rcheck").checked;
+  return d;
+}
+
+/* ---------- training ---------- */
+function startTrain(kind){
+  let pool = wordsFiltered();
+  if (kind==="article") pool = pool.filter(w=>w.pos==="n" && ARTS.includes(w.art));
+  if (kind==="translate") pool = pool.filter(w=>w.ru);
+  if (pool.length < (kind==="translate"?4:1)) { toast(kind==="translate" ? "Для теста нужно хотя бы 4 слова в списке" : "В этом списке нет подходящих слов"); return; }
+  pool = shuffle(pool).sort((a,b)=>(a.box||0)-(b.box||0)).slice(0,20);
+  pool = shuffle(pool);
+  const titles = {cards:"Карточки", article:"der, die или das?", translate:"Тест на перевод"};
+  openSheet({kind:"train", mode:kind, title:titles[kind], deck:pool.map(w=>w.id), i:0, right:0, wrong:[], flipped:false, answered:null, dir:"de"});
+}
+function trainBody(s){
+  const n = s.deck.length;
+  if (s.i >= n) {
+    return `<div class="stage"><div class="score">${s.right} / ${n}</div>
+      <p style="text-align:center" class="hint">${s.wrong.length ? "Ошибки: "+s.wrong.map(id=>esc((S.words.get(id)||{}).w||"")).join(", ") : "Без ошибок."}</p>
+      <div class="actions" style="justify-content:center">${s.wrong.length?`<button class="btn" data-act="redo-wrong">Повторить ошибки</button>`:""}<button class="btn ghost" data-act="train-again">Ещё раз</button><button class="btn ghost" data-act="close">Готово</button></div></div>`;
+  }
+  const w = S.words.get(s.deck[s.i]);
+  if (!w) { s.i++; return trainBody(s); }
+  const prog = `<div class="progress" aria-label="Прогресс"><i style="width:${(s.i/n)*100}%"></i></div><div class="meta"><span>${s.i+1} из ${n}</span><span>верно: ${s.right}</span></div>`;
+  if (s.mode==="cards") {
+    const front = s.dir==="de" ? `<span class="de">${artHTML(w)}${esc(w.w)}</span>` : `<span class="ru">${esc(w.ru)}</span>`;
+    const back = s.dir==="de" ? `<span class="ru">${esc(w.ru)}</span>` : `<span class="de">${artHTML(w)}${esc(w.w)}</span>`;
+    return `<div class="stage">${prog}
+      <div class="seg" style="align-self:center"><button data-act="dir-de" aria-pressed="${s.dir==="de"}">DE → RU</button><button data-act="dir-ru" aria-pressed="${s.dir==="ru"}">RU → DE</button></div>
+      <button class="flash ${s.flipped?gClass(w):""}" data-act="flip">${front}${s.flipped?back+(plText(w)?`<span class="hint">${esc(plText(w))}</span>`:""):`<span class="hint">нажми, чтобы перевернуть</span>`}</button>
+      ${s.flipped?`<div class="two"><button class="btn ghost" data-act="card-no">Ещё учить</button><button class="btn" data-act="card-yes">Знаю</button></div>`:""}</div>`;
+  }
+  if (s.mode==="article") {
+    const a = s.answered;
+    return `<div class="stage">${prog}
+      <div class="flash ${a?gClass(w):""}"><span class="de">${a?artHTML(w):"___ "}${esc(w.w)}</span><span class="hint">${esc(w.ru)}</span></div>
+      <div class="big3">${ARTS.map(x=>`<button class="${x}" data-pick="${x}" ${a?"disabled":""}>${x}</button>`).join("")}</div>
+      <div class="verdict ${a?(a===w.art?"ok":"no"):""}">${a?(a===w.art?"Верно!":`Нет, правильно: ${w.art} ${esc(w.w)}`):""}</div>
+      ${a?`<button class="btn" data-act="next">Дальше</button>`:""}</div>`;
+  }
+  // translate
+  if (!s.opts || s.optsFor !== w.id) {
+    const others = shuffle([...S.words.values()].filter(x=>x.id!==w.id && x.pos===w.pos)).slice(0,3);
+    const fill = others.length<3 ? shuffle([...S.words.values()].filter(x=>x.id!==w.id && !others.includes(x))).slice(0,3-others.length) : [];
+    s.opts = shuffle([w, ...others, ...fill].map(x=>x.id)); s.optsFor = w.id;
+  }
+  const a = s.answered;
+  return `<div class="stage">${prog}
+    <div class="flash"><span class="ru">${esc(w.ru)}</span></div>
+    <div class="opts">${s.opts.map(id=>{const o=S.words.get(id)||{}; const cls = a ? (id===w.id?"right":(id===a?"wrong":"")) : ""; return `<button class="${cls}" data-opt="${esc(id)}" ${a?"disabled":""}>${artHTML(o)}${esc(o.w)}</button>`;}).join("")}</div>
+    <div class="verdict ${a?(a===w.id?"ok":"no"):""}">${a?(a===w.id?"Верно!":"Не то слово"):""}</div>
+    ${a?`<button class="btn" data-act="next">Дальше</button>`:""}</div>`;
+}
+function grade(s, ok){
+  const w = S.words.get(s.deck[s.i]);
+  if (ok) s.right++; else s.wrong.push(w.id);
+  const box = Math.max(0, Math.min(5, (w.box||0) + (ok?1:-1)));
+  if (box !== (w.box||0)) save("words", {...w, box});
+}
+
+/* ---------- data / backup ---------- */
+function exportObj(){ const o = {app:"deutsch-heft", version:1, exported:new Date().toISOString()}; for (const c of COLLS) o[c] = [...S[c].values()]; return o; }
+function dataBody(s){
+  const counts = COLLS.map(c=>S[c].size);
+  return `<div class="note-box" style="background:var(--card);color:var(--ink);border:1px solid var(--line)">
+     <strong>Всё хранится на этом устройстве</strong>, без аккаунтов и серверов. На другой телефон слова переносятся через резервную копию: сохрани файл здесь и загрузи его там. Делай копию раз в неделю, на всякий случай.</div>
+   <dl class="kv"><dt>Слов</dt><dd>${counts[0]}</dd><dt>Глаголов</dt><dd>${counts[1]}</dd><dt>Правил</dt><dd>${counts[2]}</dd></dl>
+   <span class="lbl">Резервная копия</span>
+   <div class="actions"><button class="btn" data-act="export">Сохранить файл .json</button><button class="btn ghost" data-act="export-text">Показать как текст</button></div>
+   ${s.text!=null?`<div class="field"><textarea id="f-export" rows="8" readonly>${esc(s.text)}</textarea><div><button class="btn small ghost" data-act="copy-export">Скопировать</button></div></div>`:""}
+   <span class="lbl">Восстановить</span>
+   <div class="field"><input type="file" id="f-file" accept=".json,application/json"><span class="hint">или вставь текст копии:</span><textarea id="f-import" rows="4" placeholder='{"app":"deutsch-heft", ...}'></textarea></div>
+   <div class="actions"><button class="btn ghost" data-act="import">Загрузить</button><span class="hint">Записи с тем же id заменятся, остальное останется.</span></div>
+   <span class="lbl">Установить как приложение</span>
+   <p class="hint" style="margin:0">iPhone: открой адрес в Safari → «Поделиться» → «На экран Домой». Android: меню Chrome → «Установить приложение». После этого Heft работает и без интернета; интернет нужен только для перевода новых слов.</p>`;
+}
+async function doImport(text){
+  let o; try { o = JSON.parse(text); } catch { toast("Это не похоже на файл копии"); return; }
+  let n = 0;
+  for (const c of COLLS) for (const x of (o[c]||[])) { if (x && x.id) { await save(c, x); n++; } }
+  toast(n ? `Загружено записей: ${n}` : "В копии нет записей");
+}
+
+/* ---------- events ---------- */
+document.addEventListener("input", e => {
+  const id = e.target.id;
+  if (id==="q") { st.q = e.target.value; render(); }
+  else if (id==="vq") { st.vq = e.target.value; render(); }
+  else if (id==="rq") { st.rq = e.target.value; render(); }
+  else if (id==="tq") { st.tq = e.target.value; }
+});
+document.addEventListener("keydown", e => {
+  if (e.target.id==="tq" && e.key==="Enter" && !st.tr.busy) { e.preventDefault(); translate(); }
+});
+document.addEventListener("change", async e => {
+  if (e.target.id==="f-file" && e.target.files[0]) { const t = await e.target.files[0].text(); await doImport(t); }
+});
+document.addEventListener("keydown", e => { if (e.key==="Escape" && sheet) closeSheet(); });
+document.addEventListener("click", async e => {
+  const t = e.target.closest("button"); if (!t) return;
+  const d = t.dataset;
+  if (d.tab) { st.tab = d.tab; $("#main").scrollTop = 0; render(); return; }
+  if (d.filter) { st.filter = st.filter===d.filter && d.filter!=="all" ? "all" : d.filter; render(); return; }
+  if (d.word) { openSheet({kind:"word", id:d.word}); return; }
+  if (d.verb) { openSheet({kind:"verb", id:d.verb}); return; }
+  if (d.rule) { openSheet({kind:"rule", id:d.rule}); return; }
+  if (d.train) { startTrain(d.train); return; }
+  if (d.art !== undefined && sheet && sheet.kind==="word-edit") { readWordForm(); sheet.draft.art = d.art; if (d.art && d.art!=="") sheet.draft.pos="n"; drawSheet(); return; }
+  if (d.pick && sheet) { sheet.answered = d.pick; grade(sheet, d.pick===S.words.get(sheet.deck[sheet.i]).art); drawSheet(); return; }
+  if (d.opt && sheet) { sheet.answered = d.opt; grade(sheet, d.opt===sheet.deck[sheet.i]); drawSheet(); return; }
+  const act = d.act; if (!act) return;
+  const s = sheet;
+  switch (act) {
+    case "close": closeSheet(); break;
+    case "translate": translate(); break;
+    case "tr-stop": if (trCtl) trCtl.abort(); break;
+    case "tr-drop": st.tr.items.splice(+d.i, 1); render(); break;
+    case "tr-open": { const it = st.tr.items[+d.i]; const w = it && (it._saved && S.words.get(it._saved) ? S.words.get(it._saved) : findWord(it.w)); if (w) openSheet({kind:"word", id:w.id}); break; }
+    case "tr-save": { const it = st.tr.items[+d.i]; if (!it || it._saved) return; await saveTrItem(it); toast(it.verb ? "Сохранено в словарь и глаголы" : "Сохранено в словарь"); render(); break; }
+    case "tr-save-all": { let k = 0; for (const it of st.tr.items) { if (!it._saved && !findWord(it.w)) { await saveTrItem(it); k++; } } toast("Сохранено слов: " + k); render(); break; }
+    case "tr-edit": { const it = st.tr.items[+d.i]; if (!it) return; openSheet({kind:"word-edit", id:null, trItem:it, draft:{w:it.w,art:it.art,pl:it.pl,ru:it.ru,pos:it.pos,note:it.note,src:"перевод " + new Date().toLocaleDateString("ru-RU"),check:it.check,checkNote:it.checkNote}}); break; }
+    case "add-word": openSheet({kind:"word-edit", id:null, draft:{w:"",art:"",pl:"",ru:"",pos:"n",note:"",src:"",check:false}}); setTimeout(()=>$("#f-quick")&&$("#f-quick").focus(),50); break;
+    case "parse": { readWordForm(); Object.assign(s.draft, parseQuick($("#f-quick").value)); drawSheet(); break; }
+    case "edit-word": { const w = S.words.get(s.id); openSheet({kind:"word-edit", id:w.id, draft:{...w}}); break; }
+    case "save-word": {
+      const w = readWordForm();
+      if (!w.w) { toast("Впиши слово"); return; }
+      const id = s.id || uid("w");
+      const obj = {...w, id, added: w.added || Date.now(), box: w.box||0};
+      if (!obj.check) delete obj.checkNote;
+      await save("words", obj);
+      const ti = s.trItem;
+      if (ti) { ti._saved = id; if (ti.verb && obj.pos==="v" && !findVerb(obj.w)) await save("verbs", {id:uid("v"), inf:obj.w, ru:obj.ru, ...ti.verb, note:obj.note, check:obj.check}); }
+      toast("Сохранено"); openSheet({kind:"word", id}); break;
+    }
+    case "confirm-word": { const w = S.words.get(s.id); const o = {...w, check:false}; delete o.checkNote; await save("words", o); toast("Отмечено как проверенное"); break; }
+    case "del-word": case "del-verb": case "del-rule": s.confirmDel = true; drawSheet(); break;
+    case "del-no": s.confirmDel = false; drawSheet(); break;
+    case "del-word-yes": await del("words", s.id); closeSheet(); toast("Удалено"); break;
+    case "del-verb-yes": await del("verbs", s.id); closeSheet(); toast("Удалено"); break;
+    case "del-rule-yes": await del("rules", s.id); closeSheet(); toast("Удалено"); break;
+    case "add-verb": openSheet({kind:"verb-edit", id:null, draft:{inf:"",sep:"",ru:"",aux:"haben",p2:"",praes:[],praet:[],k2:[],note:"",strong:false,check:false}}); break;
+    case "edit-verb": { const v = S.verbs.get(s.id); openSheet({kind:"verb-edit", id:v.id, draft:JSON.parse(JSON.stringify(v))}); break; }
+    case "gen-weak": { const v = readVerbForm(); if (!v.inf) { toast("Сначала впиши инфинитив"); return; } const f = weakForms(v.inf, v.sep); v.praes=f.praes; v.praet=f.praet; v.p2=f.p2; drawSheet(); break; }
+    case "save-verb": {
+      const v = readVerbForm(); if (!v.inf) { toast("Впиши инфинитив"); return; }
+      if (!v.praes.some(Boolean)) { const f = weakForms(v.inf, v.sep); v.praes=f.praes; v.praet=v.praet.some(Boolean)?v.praet:f.praet; v.p2=v.p2||f.p2; }
+      if (!v.k2.some(Boolean)) v.k2 = null;
+      const id = s.id || uid("v"); await save("verbs", {...v, id}); toast("Сохранено"); openSheet({kind:"verb", id}); break;
+    }
+    case "confirm-verb": { const v = S.verbs.get(s.id); const o={...v, check:false}; delete o.checkNote; await save("verbs", o); toast("Отмечено как проверенное"); break; }
+    case "add-rule": openSheet({kind:"rule-edit", id:null, draft:{title:"",body:"## \n\n| Kasus | m | f | n | Pl |\n|---|---|---|---|---|\n| Nom | | | | |\n\n> Beispiel\n",tags:[],check:false}}); break;
+    case "edit-rule": { const r = S.rules.get(s.id); openSheet({kind:"rule-edit", id:r.id, draft:{...r}}); break; }
+    case "preview-rule": { readRuleForm(); s.draft.preview = !s.draft.preview; drawSheet(); break; }
+    case "save-rule": {
+      const r = readRuleForm(); if (!r.title) { toast("Добавь заголовок"); return; }
+      const id = s.id || uid("r"); const o = {...r, id}; delete o.preview; if (o.order==null) o.order = 100 + S.rules.size;
+      await save("rules", o); toast("Сохранено"); openSheet({kind:"rule", id}); break;
+    }
+    case "confirm-rule": { const r = S.rules.get(s.id); const o={...r, check:false}; delete o.checkNote; await save("rules", o); toast("Отмечено как проверенное"); break; }
+    case "flip": s.flipped = !s.flipped; drawSheet(); break;
+    case "dir-de": s.dir="de"; s.flipped=false; drawSheet(); break;
+    case "dir-ru": s.dir="ru"; s.flipped=false; drawSheet(); break;
+    case "card-yes": case "card-no": grade(s, act==="card-yes"); s.i++; s.flipped=false; drawSheet(); break;
+    case "next": s.i++; s.answered=null; drawSheet(); break;
+    case "redo-wrong": openSheet({...s, deck:shuffle(s.wrong), i:0, right:0, wrong:[], answered:null, flipped:false, keepScroll:false}); break;
+    case "train-again": closeSheet(); startTrain(s.mode); break;
+    case "export": {
+      const data = JSON.stringify(exportObj(), null, 1);
+      const name = "deutsch-heft-" + new Date().toISOString().slice(0,10) + ".json";
+      const file = new File([data], name, {type:"application/json"});
+      try {
+        if (navigator.canShare && navigator.canShare({files:[file]})) { await navigator.share({files:[file], title:name}); toast("Копия готова"); }
+        else { const a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();}, 1000); toast("Файл сохранён в «Загрузки»"); }
+      } catch (err) { if (!err || err.name !== "AbortError") { s.text = data; drawSheet(); toast("Файл не сохранился, скопируй текст"); } }
+      break;
+    }
+    case "export-text": s.text = JSON.stringify(exportObj()); drawSheet(); break;
+    case "copy-export": { const ta = $("#f-export"); try { await navigator.clipboard.writeText(ta.value); toast("Скопировано"); } catch { ta.focus(); ta.select(); toast("Выделено: скопируй вручную"); } break; }
+    case "import": { const v = $("#f-import").value.trim(); if (!v) { toast("Выбери файл или вставь текст"); return; } await doImport(v); break; }
+  }
+});
+$("#btn-settings").addEventListener("click", () => openSheet({kind:"data", text:null}));
+initStore();
+</script>
+<script>
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+</script>
+</body>
+</html>
