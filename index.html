@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Deutsch-Heft</title>
-<meta name="description" content="Личная тетрадь по немецкому: словарь, спряжения, грамматика.">
-<meta name="theme-color" content="#f4f6f8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#11161c" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Личная тетрадь по немецкому: словарь, спряжения, грамматика, тренировки.">
+<meta name="theme-color" content="#f1eff7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f0f13" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -15,217 +15,310 @@
 <link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: a school notebook on Karopapier. Header + scrolling sheet + bottom tab bar; edits open in full-height sheets. */
+/* Layout: one phone-width column, pastel tiles on a soft lavender ground, floating black pill navigation. */
 :root{
-  --paper:#f4f6f8; --grid:#e3e8ee; --card:#ffffff; --ink:#18212b; --muted:#5b6876; --line:#d4dce5;
-  --btn:#18212b; --btn-ink:#ffffff;
-  --der:#2360c4; --die:#c3383b; --das:#1d8449; --pl:#a5620a;
-  --der-bg:#e8effb; --die-bg:#fbeaea; --das-bg:#e6f4ec; --pl-bg:#f8efe2;
-  --mark:#fbe48c; --mark-ink:#4d3b00; --ok:#1d8449; --bad:#c3383b;
-  --font-de:"Literata",Georgia,"Times New Roman",serif;
-  --font-ui:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --bg:#f1eff7; --surface:#ffffff; --surface-2:#f6f5fa; --ink:#121216; --muted:#6b6977; --line:#e2dfeb;
+  --nav:#121216; --nav-ink:#cfcdd8; --nav-on:#ffffff; --nav-on-ink:#121216; --on-pastel:#121216;
+  --lav:#b9abf8; --orange:#ffbf5c; --blue:#aecbfb; --pink:#f3b0ee; --green:#c2e6ab; --rose:#f8b2c8;
+  --der:#aecbfb; --die:#f8b2c8; --das:#c2e6ab; --pl:#ffd28f;
+  --ok:#24742a; --bad:#c22a4e; --mark:#ffe28f; --on-mark:#3b2e00;
+  --r-xl:30px; --r-lg:24px; --r-md:18px; --r-sm:12px;
+  --font:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#11161c; --grid:#1a2129; --card:#18202a; --ink:#e6ebf0; --muted:#97a3b0; --line:#2a3440;
-  --btn:#e6ebf0; --btn-ink:#11161c;
-  --der:#79a8ff; --die:#ff8285; --das:#5fd292; --pl:#f0b25c;
-  --der-bg:#1b2840; --die-bg:#3a1d21; --das-bg:#163024; --pl-bg:#33261a;
-  --mark:#5c4c12; --mark-ink:#fbe48c; --ok:#5fd292; --bad:#ff8285; color-scheme:dark }}
+  --bg:#0f0f13; --surface:#1a1921; --surface-2:#22212a; --ink:#f2f1f7; --muted:#a3a0ae; --line:#2e2d37;
+  --nav:#f2f1f7; --nav-ink:#5d5b68; --nav-on:#121216; --nav-on-ink:#ffffff;
+  --ok:#93d77e; --bad:#ff8ea8; --mark:#5c4a12; --on-mark:#ffe28f; color-scheme:dark }}
 :root[data-theme="dark"]{
-  --paper:#11161c; --grid:#1a2129; --card:#18202a; --ink:#e6ebf0; --muted:#97a3b0; --line:#2a3440;
-  --btn:#e6ebf0; --btn-ink:#11161c;
-  --der:#79a8ff; --die:#ff8285; --das:#5fd292; --pl:#f0b25c;
-  --der-bg:#1b2840; --die-bg:#3a1d21; --das-bg:#163024; --pl-bg:#33261a;
-  --mark:#5c4c12; --mark-ink:#fbe48c; --ok:#5fd292; --bad:#ff8285; color-scheme:dark }
-html,body{height:100%}
-body{background:var(--paper);color:var(--ink);font:15px/1.5 var(--font-ui);display:flex;flex-direction:column;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px}
+  --bg:#0f0f13; --surface:#1a1921; --surface-2:#22212a; --ink:#f2f1f7; --muted:#a3a0ae; --line:#2e2d37;
+  --nav:#f2f1f7; --nav-ink:#5d5b68; --nav-on:#121216; --nav-on-ink:#ffffff;
+  --ok:#93d77e; --bad:#ff8ea8; --mark:#5c4a12; --on-mark:#ffe28f; color-scheme:dark }
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 15px/1.45 var(--font);-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
 button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer}
-:focus-visible{outline:2px solid var(--der);outline-offset:2px}
-.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-header.top{flex:none;background:var(--paper);border-bottom:1px solid var(--line);padding-block:12px 10px}
-.top-row{display:flex;align-items:center;gap:12px;max-width:760px;margin:0 auto}
-.top h1{font:700 22px/1.1 var(--font-de);margin:0;flex:1;letter-spacing:-.01em}
-.top h1 small{display:block;font:500 12px var(--font-ui);color:var(--muted);letter-spacing:.02em;margin-top:3px}
-.icon-btn{border:1px solid var(--line);background:var(--card);border-radius:10px;height:38px;min-width:38px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;font-size:14px}
-main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.wrap{max-width:760px;margin:0 auto;padding-block:14px 28px;display:flex;flex-direction:column;gap:12px}
-nav.tabs{flex:none;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
-nav.tabs button{flex:1;border:0;background:none;padding:9px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:12px;font-weight:500}
-nav.tabs button b{font:700 17px/1 var(--font-de);color:inherit}
-nav.tabs button[aria-selected="true"]{color:var(--ink)}
-nav.tabs button[aria-selected="true"] b{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px;text-decoration-color:var(--mark)}
+button{cursor:pointer;-webkit-user-select:none;user-select:none}
+:focus-visible{outline:2.5px solid var(--ink);outline-offset:2px}
+svg{display:block}
 
-.search{display:flex;gap:8px}
-.search input{flex:1;min-width:0;height:44px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:0 14px;font-size:16px}
-.btn{height:44px;border-radius:12px;border:0;background:var(--btn);color:var(--btn-ink);padding:0 16px;font-weight:600;white-space:nowrap}
-.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
-.btn.small{height:34px;border-radius:9px;padding:0 12px;font-size:14px}
-.btn.danger{background:none;color:var(--bad);border:1px solid var(--line)}
-.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.app{max-width:540px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-top:calc(14px + env(safe-area-inset-top,0px));padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+.stack{display:flex;flex-direction:column;gap:16px}
+
+/* header */
+.hdr{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:12px;margin-bottom:16px}
+.round-btn{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);display:grid;place-items:center;padding:0;flex:none}
+.round-btn svg{width:22px;height:22px}
+.round-btn.dark{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.avatar{background:var(--lav);border:0;color:var(--on-pastel);font-weight:700;font-size:18px}
+.hdr-mid{text-align:center;min-width:0}
+.hdr-mid b{display:block;font-size:17px;font-weight:700;letter-spacing:-.01em}
+.hdr-mid span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* nav */
+.nav{position:fixed;z-index:20;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(500px,calc(100% - 36px));background:var(--nav);border-radius:999px;padding:7px;display:flex;justify-content:space-between;box-shadow:0 10px 30px rgba(18,18,22,.18)}
+.nav button{width:58px;height:58px;border-radius:50%;border:0;background:none;color:var(--nav-ink);display:grid;place-items:center;padding:0}
+.nav button svg{width:24px;height:24px}
+.nav button[aria-current="page"]{background:var(--nav-on);color:var(--nav-on-ink)}
+
+/* type */
+h2.sec{font-size:22px;font-weight:600;letter-spacing:-.015em;margin:0}
+.sec-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:6px}
+.hint{font-size:13px;color:var(--muted);margin:0}
+.lbl{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.err{color:var(--bad)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;width:100%;border:0;text-align:left;background:var(--lav);color:var(--on-pastel);border-radius:var(--r-xl);padding:22px 20px 20px;min-height:178px;display:block}
+.hero-txt{position:relative;z-index:1;display:flex;flex-direction:column;gap:8px;max-width:64%}
+.hero-txt strong{font-size:31px;line-height:1.02;font-weight:700;letter-spacing:-.03em;display:block}
+.hero-txt span.p{font-size:13px;font-weight:500;display:block}
+.bubbles{display:flex;margin-top:6px}
+.bubbles i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:11.5px;letter-spacing:-.02em;border:2.5px solid var(--lav);margin-left:-9px;color:var(--on-pastel)}
+.bubbles i:first-child{margin-left:0}
+.bubbles .more{background:#7e6be6;color:#fff}
+.discs{position:absolute;right:-6px;top:4px;width:150px;height:170px;pointer-events:none}
+.disc{position:absolute;width:88px;height:56px;border-radius:50%;background:radial-gradient(ellipse at 34% 28%,rgba(255,255,255,.75),rgba(255,255,255,0) 46%),var(--c);box-shadow:inset 0 -9px 14px rgba(0,0,0,.28),0 6px 12px rgba(30,20,60,.18)}
+
+/* stats */
+.card{background:var(--surface);border-radius:var(--r-lg);padding:16px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.stat b{display:block;font-size:34px;line-height:1.05;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.bar{grid-column:1/-1;height:10px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--ink);border-radius:999px;transition:width .3s}
+.stats-foot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.link{border:0;background:none;padding:0;font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+
+/* week */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day{border:1.5px solid var(--line);background:transparent;border-radius:999px;padding:9px 0 11px;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.day .wd{font-size:13px;color:var(--muted)}
+.day b{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.day .dot{width:6px;height:6px;border-radius:50%;background:var(--ink)}
+.day .dot.off{background:transparent}
+.day.today{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.day.today .wd{color:var(--bg);opacity:.8}
+.day.today .dot{background:var(--bg)}
+.day.today .dot.off{background:transparent}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{border:0;border-radius:var(--r-lg);padding:16px;text-align:left;color:var(--on-pastel);display:flex;flex-direction:column;gap:6px;min-height:128px;position:relative;overflow:hidden}
+.tile.big{grid-row:span 2;min-height:268px}
+.tile .pill{align-self:flex-start;background:rgba(255,255,255,.55);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:600}
+.tile .t{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.1;margin-top:6px}
+.tile .d{font-size:13px;font-weight:500}
+.tile .foot{margin-top:auto;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600}
+.tile .foot i{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.6);display:grid;place-items:center;font-style:normal}
+.orange{background:var(--orange)} .blue{background:var(--blue)} .pink{background:var(--pink)} .green{background:var(--green)} .lavender{background:var(--lav)}
+
+/* chips */
+.chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin:0 -18px;padding-left:18px;padding-right:18px}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:500}
-.chip[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
-.chip.der[aria-pressed="true"]{background:var(--der);border-color:var(--der);color:#fff}
-.chip.die[aria-pressed="true"]{background:var(--die);border-color:var(--die);color:#fff}
-.chip.das[aria-pressed="true"]{background:var(--das);border-color:var(--das);color:#fff}
-.chip.chk[aria-pressed="true"]{background:var(--mark);border-color:var(--mark);color:var(--mark-ink)}
-.meta{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.chips.wrap{flex-wrap:wrap;overflow:visible;margin:0;padding:0}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;white-space:nowrap}
+.chip small{font-weight:500;color:var(--muted);margin-left:5px}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.chip.c-der[aria-pressed="true"]{background:var(--der);border-color:var(--der);color:var(--on-pastel)}
+.chip.c-die[aria-pressed="true"]{background:var(--die);border-color:var(--die);color:var(--on-pastel)}
+.chip.c-das[aria-pressed="true"]{background:var(--das);border-color:var(--das);color:var(--on-pastel)}
+.chip.act{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip.sugg{background:var(--surface)}
 
-.list{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.row{display:grid;grid-template-columns:4px 1fr auto;gap:0 12px;align-items:center;padding:10px 12px 10px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;width:100%}
+/* search */
+.search-row{display:flex;gap:10px;align-items:center}
+.search{flex:1;min-width:0;position:relative;display:block}
+.search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--muted)}
+.search input{width:100%;height:52px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);padding:0 16px 0 46px;font-size:16px;font-weight:500}
+.search-row .round-btn{width:52px;height:52px}
+.sug{display:flex;flex-direction:column;gap:8px}
+.sug-chips{display:flex;flex-wrap:wrap;gap:7px}
+
+/* segmented */
+.seg{display:inline-flex;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:none;border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.row-between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+/* word list */
+.list{background:var(--surface);border-radius:var(--r-lg);overflow:hidden}
+.row{display:flex;align-items:center;gap:10px;width:100%;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;padding:12px 16px}
 .row:last-child{border-bottom:0}
-.row .bar{align-self:stretch;border-radius:0 3px 3px 0;background:var(--line)}
-.row.g-der .bar{background:var(--der)} .row.g-die .bar{background:var(--die)} .row.g-das .bar{background:var(--das)} .row.g-pl .bar{background:var(--pl)}
-.row .main{min-width:0}
-.de{font-family:var(--font-de);font-weight:500;font-size:18px;line-height:1.25}
-.art{font-weight:700}
-.a-der{color:var(--der)} .a-die{color:var(--die)} .a-das{color:var(--das)} .a-pl{color:var(--pl)}
+.row .main{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.row .de{font-size:16.5px;font-weight:600;letter-spacing:-.01em;overflow-wrap:anywhere}
 .row .sub{font-size:13.5px;color:var(--muted);overflow-wrap:anywhere}
-.row .sub .plf{font-family:var(--font-de)}
-.flag{display:inline-block;background:var(--mark);color:var(--mark-ink);font-size:11px;font-weight:600;border-radius:5px;padding:1px 6px;vertical-align:2px;margin-left:6px;letter-spacing:.02em}
-.tag{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 6px;white-space:nowrap}
-.empty{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:22px 18px;text-align:center;color:var(--muted)}
-.empty strong{display:block;color:var(--ink);font:700 18px var(--font-de);margin-bottom:4px}
+.row .side{display:flex;gap:6px;align-items:center;flex:none}
+.apill{display:inline-block;border-radius:999px;padding:1px 9px;font-size:12px;font-weight:700;color:var(--on-pastel);margin-right:7px;vertical-align:2px;background:var(--line)}
+.a-der{background:var(--der)} .a-die{background:var(--die)} .a-das{background:var(--das)} .a-pl{background:var(--pl)}
+.g-der{background:var(--der)} .g-die{background:var(--die)} .g-das{background:var(--das)} .g-pl{background:var(--pl)}
+.flag{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;background:var(--mark);color:var(--on-mark);font-size:12px;font-weight:700;padding:0 7px}
+.known{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg)}
+.known svg{width:14px;height:14px}
+.day-h{font-size:14px;font-weight:600;color:var(--muted);margin:6px 6px -6px;display:flex;justify-content:space-between}
+.active-filter{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border-radius:var(--r-md);padding:10px 14px;font-weight:600;font-size:14px}
+.empty{background:var(--surface);border-radius:var(--r-lg);padding:24px 18px;text-align:center;color:var(--muted)}
+.empty strong{display:block;color:var(--ink);font-size:18px;margin-bottom:4px}
+.mini-train{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mini-train button{border:0;border-radius:var(--r-md);padding:11px 12px;text-align:left;color:var(--on-pastel);font-weight:600;font-size:14px;display:flex;flex-direction:column;gap:1px}
+.mini-train span{font-size:11.5px;font-weight:500;opacity:.85}
 
-.train-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.train-bar button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 8px;text-align:left;display:flex;flex-direction:column;gap:2px}
-.train-bar b{font:700 15px var(--font-de)}
-.train-bar span{font-size:12px;color:var(--muted)}
+/* translator results */
+.found{display:flex;flex-direction:column;gap:10px}
+.found-item{border-radius:var(--r-md);padding:14px;display:flex;flex-direction:column;gap:5px;background:var(--surface-2)}
+.found-item.g-der,.found-item.g-die,.found-item.g-das,.found-item.g-pl{color:var(--on-pastel)}
+.found-item .de{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.found-item .ex{font-size:13.5px;font-style:italic}
+.found-item .vforms{font-size:13px}
+.found-item .why{font-size:12.5px;background:rgba(255,255,255,.7);color:#3b2e00;border-radius:8px;padding:4px 9px;align-self:flex-start}
+.found-item .actions .btn.ghost{background:rgba(255,255,255,.65);color:var(--on-pastel);border-color:transparent}
+.done{font-size:14px;font-weight:700}
+
+/* buttons, forms */
+.btn{height:48px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);padding:0 20px;font-weight:600;font-size:15px;white-space:nowrap}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1.5px solid var(--line)}
+.btn.small{height:36px;padding:0 14px;font-size:13.5px}
+.btn.danger{background:none;color:var(--bad);border:1.5px solid var(--line)}
+.btn[disabled]{opacity:.5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.grow{flex:1}
+.field{display:flex;flex-direction:column;gap:6px}
+.field>label,.field>.lbl{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.field input,.field select,.field textarea{border:1.5px solid var(--line);background:var(--surface);border-radius:var(--r-md);padding:12px 14px;font-size:16px;min-width:0;width:100%}
+.field textarea{resize:vertical;line-height:1.55}
+textarea.mono{font-family:ui-monospace,Menlo,monospace;font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.segbig{display:flex;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.segbig button{flex:1;border:0;background:none;border-radius:999px;padding:9px 4px;font-weight:700;color:var(--muted)}
+.segbig button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.segbig button.der[aria-pressed="true"]{background:var(--der);color:var(--on-pastel)}
+.segbig button.die[aria-pressed="true"]{background:var(--die);color:var(--on-pastel)}
+.segbig button.das[aria-pressed="true"]{background:var(--das);color:var(--on-pastel)}
+.segbig button.pl[aria-pressed="true"]{background:var(--pl);color:var(--on-pastel)}
+.check{display:flex;align-items:center;gap:10px;font-weight:600}
+.check input{width:20px;height:20px;accent-color:var(--ink)}
+.note-box{background:var(--mark);color:var(--on-mark);border-radius:var(--r-md);padding:12px 14px;font-size:14px}
 
 /* sheets */
-.sheet{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;background:var(--paper)}
-.sheet-head{flex:none;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:var(--paper);padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:10px}
-.sheet-head h2{flex:1;margin:0;font:700 19px var(--font-de);min-width:0;overflow-wrap:anywhere}
-.sheet-body{flex:1;overflow-y:auto}
-.sheet-body .wrap{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
-.field{display:flex;flex-direction:column;gap:5px}
-.field label,.lbl{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
-.field input,.field select,.field textarea{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;font-size:16px;min-width:0;width:100%}
-.field textarea{min-height:120px;resize:vertical;font-family:var(--font-mono);font-size:14px;line-height:1.55}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
-.seg button{flex:1;border:0;background:none;padding:9px 4px;font-weight:600;border-right:1px solid var(--line)}
-.seg button:last-child{border-right:0}
-.seg button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink)}
-.seg button.der[aria-pressed="true"]{background:var(--der);color:#fff}
-.seg button.die[aria-pressed="true"]{background:var(--die);color:#fff}
-.seg button.das[aria-pressed="true"]{background:var(--das);color:#fff}
-.seg button.pl[aria-pressed="true"]{background:var(--pl);color:#fff}
-.check{display:flex;align-items:center;gap:10px;font-weight:500}
-.check input{width:20px;height:20px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.actions .grow{flex:1}
-.hint{font-size:13px;color:var(--muted)}
-.note-box{background:var(--mark);color:var(--mark-ink);border-radius:10px;padding:10px 12px;font-size:14px}
-
-/* word detail */
-.word-hero{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:6px}
-.word-hero .de{font-size:30px}
-.word-hero.g-der{background:var(--der-bg)} .word-hero.g-die{background:var(--die-bg)} .word-hero.g-das{background:var(--das-bg)} .word-hero.g-pl{background:var(--pl-bg)}
-.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px}
+.sheet{position:fixed;inset:0;z-index:30;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sheet-in{max-width:540px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-top:calc(14px + env(safe-area-inset-top,0px));padding-bottom:calc(40px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
+.sheet-head{display:flex;align-items:center;gap:12px}
+.sheet-head h2{flex:1;margin:0;font-size:20px;font-weight:700;letter-spacing:-.015em;min-width:0;overflow-wrap:anywhere}
+.word-hero{border-radius:var(--r-xl);padding:22px 20px;display:flex;flex-direction:column;gap:6px;background:var(--surface);color:var(--on-pastel)}
+.word-hero:not(.g-der):not(.g-die):not(.g-das):not(.g-pl){color:var(--ink)}
+.word-hero .art{font-size:15px;font-weight:700;background:rgba(255,255,255,.6);border-radius:999px;padding:3px 12px;align-self:flex-start}
+.word-hero .big{font-size:32px;font-weight:700;letter-spacing:-.025em;line-height:1.1;overflow-wrap:anywhere}
+.word-hero .ru{font-size:18px;font-weight:500}
+.word-hero .pl{font-size:14px;opacity:.8}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:15px;margin:0}
 .kv dt{color:var(--muted)} .kv dd{margin:0;overflow-wrap:anywhere}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1.5px solid var(--bad);border-radius:var(--r-md);padding:10px 12px}
 
 /* verbs */
 .conj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media (max-width:560px){.conj-grid{grid-template-columns:1fr}}
-.conj{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0}
-.conj h3{margin:0 0 6px;font:600 12px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:480px){.conj-grid{grid-template-columns:1fr}}
+.conj{background:var(--surface);border-radius:var(--r-md);padding:14px 16px;min-width:0}
+.conj h3{margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .conj table{border-collapse:collapse;width:100%}
 .conj td{padding:3px 0;font-size:15px;vertical-align:top}
 .conj td:first-child{color:var(--muted);width:6.5em;font-size:13.5px;padding-top:5px}
-.conj td.f{font-family:var(--font-de)}
-.conj td.irr{font-weight:700}
-.conj td.irr::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pl);margin-left:6px;vertical-align:2px}
+.conj td.f{font-weight:600}
+.conj td.irr::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--orange);margin-left:7px;vertical-align:2px}
 .legend{font-size:13px;color:var(--muted)}
-.legend i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pl);margin-right:6px;vertical-align:2px}
+.legend i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--orange);margin-right:6px;vertical-align:1px}
 .formtable{width:100%;border-collapse:collapse}
 .formtable th{font-size:12px;color:var(--muted);text-align:left;font-weight:600;padding:4px}
 .formtable td{padding:3px}
 .formtable td:first-child{font-size:13px;color:var(--muted);white-space:nowrap}
-.formtable input{width:100%;min-width:0;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 8px;font-family:var(--font-de);font-size:15px}
+.formtable input{width:100%;min-width:0;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:8px;font-size:15px}
 .scroll-x{overflow-x:auto}
 
 /* grammar */
-.rule-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-align:left;width:100%;display:flex;flex-direction:column;gap:6px}
-.rule-card h3{margin:0;font:700 17px/1.3 var(--font-de);text-wrap:balance}
+.rule-card{background:var(--surface);border:0;border-radius:var(--r-lg);padding:16px;text-align:left;width:100%;display:flex;flex-direction:column;gap:6px}
+.rule-card h3{margin:0;font-size:17px;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
 .rule-card p{margin:0;font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tag{font-size:12px;font-weight:600;color:var(--muted);background:var(--surface-2);border-radius:999px;padding:2px 10px;white-space:nowrap}
 .tags{display:flex;gap:5px;flex-wrap:wrap}
-.md{font-size:15.5px;line-height:1.6;max-width:68ch}
-.md h2{font:700 21px/1.3 var(--font-de);margin:18px 0 6px;text-wrap:balance}
-.md h3{font:600 13px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+.md{font-size:15.5px;line-height:1.6;background:var(--surface);border-radius:var(--r-lg);padding:4px 18px 12px}
+.md h2{font-size:20px;font-weight:700;letter-spacing:-.015em;margin:18px 0 6px;text-wrap:balance}
+.md h3{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
 .md p{margin:6px 0}
 .md ul{margin:6px 0;padding-left:20px}
 .md li{margin:3px 0}
-.md code{font-family:var(--font-mono);font-size:.9em;background:var(--grid);padding:1px 5px;border-radius:4px}
-.md .ex{border-left:3px solid var(--mark);background:var(--card);padding:8px 12px;margin:8px 0;border-radius:0 8px 8px 0;font-family:var(--font-de)}
-.md .tw{overflow-x:auto;margin:10px 0;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.md code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+.md .ex{background:var(--surface-2);padding:9px 13px;margin:8px 0;border-radius:var(--r-sm);font-style:italic}
+.md .tw{overflow-x:auto;margin:10px 0;border-radius:var(--r-sm);border:1px solid var(--line)}
 .md table{border-collapse:collapse;min-width:100%;font-variant-numeric:tabular-nums}
 .md th,.md td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left;white-space:nowrap;font-size:14.5px}
-.md th{font-family:var(--font-ui);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:var(--paper)}
-.md td{font-family:var(--font-de)}
+.md th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--surface-2)}
 .md tr:last-child td{border-bottom:0}
-.md .m{color:var(--der);font-weight:700} .md .f{color:var(--die);font-weight:700} .md .n{color:var(--das);font-weight:700} .md .p{color:var(--pl);font-weight:700}
-.md mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:3px}
+.md .m{background:var(--der)} .md .f{background:var(--die)} .md .n{background:var(--das)} .md .p{background:var(--pl)}
+.md .m,.md .f,.md .n,.md .p{color:var(--on-pastel);font-weight:700;border-radius:6px;padding:0 5px}
+.md mark{background:var(--mark);color:var(--on-mark);padding:0 3px;border-radius:4px}
 
 /* training */
-.stage{display:flex;flex-direction:column;gap:14px;align-items:stretch}
-.progress{height:6px;background:var(--grid);border-radius:3px;overflow:hidden}
+.progress{height:8px;background:var(--surface);border-radius:999px;overflow:hidden}
 .progress i{display:block;height:100%;background:var(--ink);transition:width .2s}
-.flash{min-height:230px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;width:100%}
-.flash .de{font-size:32px}
-.flash .ru{font-size:20px}
-.flash.g-der{background:var(--der-bg)} .flash.g-die{background:var(--die-bg)} .flash.g-das{background:var(--das-bg)} .flash.g-pl{background:var(--pl-bg)}
+.meta{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.flash{min-height:260px;width:100%;border:0;background:var(--surface);color:var(--ink);border-radius:var(--r-xl);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.flash.g-der,.flash.g-die,.flash.g-das,.flash.g-pl{color:var(--on-pastel)}
+.flash .de{font-size:32px;font-weight:700;letter-spacing:-.025em;line-height:1.15;overflow-wrap:anywhere}
+.flash .ru{font-size:21px;font-weight:500}
+.flash .hint{color:inherit;opacity:.65}
 .big3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.big3 button{height:64px;border-radius:14px;border:0;font:700 22px var(--font-de);color:#fff}
+.big3 button{height:66px;border-radius:var(--r-md);border:0;font-weight:700;font-size:21px;color:var(--on-pastel)}
 .big3 .der{background:var(--der)} .big3 .die{background:var(--die)} .big3 .das{background:var(--das)}
 .opts{display:flex;flex-direction:column;gap:8px}
-.opts button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 14px;text-align:left;font-family:var(--font-de);font-size:17px}
+.opts button{border:1.5px solid var(--line);background:var(--surface);border-radius:var(--r-md);padding:14px 16px;text-align:left;font-size:17px;font-weight:600}
 .opts button.right{border-color:var(--ok);box-shadow:inset 0 0 0 2px var(--ok)}
 .opts button.wrong{border-color:var(--bad);box-shadow:inset 0 0 0 2px var(--bad)}
-.verdict{font-weight:600;text-align:center;min-height:1.5em}
+.verdict{font-weight:700;text-align:center;min-height:1.5em}
 .verdict.ok{color:var(--ok)} .verdict.no{color:var(--bad)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.two .btn{height:52px}
-.score{font:700 44px var(--font-de);text-align:center}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--btn);color:var(--btn-ink);padding:9px 16px;border-radius:10px;font-size:14px;z-index:40;max-width:calc(100% - 32px)}
-.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--die-bg);border-radius:10px;padding:10px 12px}
-.tr-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}
-.tr-box .search input{background:var(--paper)}
-.tr-item{display:grid;grid-template-columns:4px 1fr;gap:0 12px;border-top:1px solid var(--line);padding-top:10px}
-.tr-item .bar{border-radius:3px;background:var(--line)}
-.tr-item.g-der .bar{background:var(--der)} .tr-item.g-die .bar{background:var(--die)} .tr-item.g-das .bar{background:var(--das)} .tr-item.g-pl .bar{background:var(--pl)}
-.tr-item .body{min-width:0;display:flex;flex-direction:column;gap:4px}
-.tr-item .ex{font-family:var(--font-de);font-size:14px;color:var(--muted);overflow-wrap:anywhere}
-.tr-item .vforms{font-size:13px;color:var(--muted);font-family:var(--font-de)}
-.tr-item .why{font-size:13px;background:var(--mark);color:var(--mark-ink);border-radius:6px;padding:3px 8px;align-self:flex-start}
-.done{font-size:14px;font-weight:600;color:var(--ok)}
-.err{color:var(--bad)}
+.two .btn{height:56px}
+.score{font-size:52px;font-weight:700;letter-spacing:-.03em;text-align:center}
+
+/* writing */
+.w-words{display:flex;flex-wrap:wrap;gap:8px}
+.w-chip{border-radius:var(--r-md);padding:10px 14px;font-weight:600;font-size:15px;color:var(--on-pastel);background:var(--lav);display:flex;flex-direction:column}
+.w-chip small{font-size:12.5px;font-weight:500;opacity:.8}
+.uses{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.uses li{display:flex;gap:10px;align-items:baseline;font-size:14.5px}
+.uses li b{width:20px;flex:none;text-align:center}
+.uses li.ok b{color:var(--ok)} .uses li.no b{color:var(--bad)}
+.annot{margin-top:10px;font-size:16px;line-height:1.75;background:var(--surface-2);border-radius:var(--r-sm);padding:12px 14px;overflow-wrap:anywhere}
+.annot mark{background:var(--mark);color:var(--on-mark);border-radius:4px;padding:1px 2px;text-decoration:underline wavy var(--bad);text-underline-offset:4px}
+.annot sup{font-size:10px;font-weight:700;margin-left:1px}
+.errs{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.errs li{display:flex;gap:10px}
+.errs .num{flex:none;width:24px;height:24px;border-radius:50%;background:var(--mark);color:var(--on-mark);display:grid;place-items:center;font-size:12px;font-weight:700}
+.errs .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.errs .frag{font-weight:700}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:600;z-index:50;max-width:calc(100% - 36px);text-align:center}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-html{padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;-webkit-text-size-adjust:100%}
-[hidden]{display:none!important}
 </style>
 </head>
 <body>
-
-<header class="top gut">
-  <div class="top-row">
-    <h1 id="hdr">Wörter<small id="hdr-sub">Словарь</small></h1>
-    <button class="icon-btn" id="btn-settings" aria-label="Данные и резервная копия">Данные</button>
-  </div>
-</header>
-<main id="main" class="gut"><div class="wrap" id="view"></div></main>
-<nav class="tabs" role="tablist">
-  <button role="tab" data-tab="words" aria-selected="true"><b>Wörter</b>Словарь</button>
-  <button role="tab" data-tab="verbs" aria-selected="false"><b>Verben</b>Спряжения</button>
-  <button role="tab" data-tab="rules" aria-selected="false"><b>Grammatik</b>Правила</button>
+<div class="app">
+  <header class="hdr">
+    <button class="round-btn avatar" id="btn-data" aria-label="Данные и резервная копия">K</button>
+    <div class="hdr-mid"><b id="hdr-t">Hallo, Katarina</b><span id="hdr-s"></span></div>
+    <button class="round-btn" id="btn-search" aria-label="Поиск слов"></button>
+  </header>
+  <main id="view" class="stack"></main>
+</div>
+<nav class="nav" aria-label="Разделы">
+  <button data-tab="home" aria-label="Главная"></button>
+  <button data-tab="words" aria-label="Словарь"></button>
+  <button data-tab="verbs" aria-label="Глаголы"></button>
+  <button data-tab="rules" aria-label="Грамматика"></button>
 </nav>
+<datalist id="dl-topics"></datalist>
 <div id="sheets"></div>
 <div id="toast" class="toast" hidden></div>
 
@@ -240,16 +333,27 @@ const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Mat
 const norm = s => String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ß/g,"ss");
 const ARTS = ["der","die","das"];
 const PERS = ["ich","du","er/sie/es","wir","ihr","sie/Sie"];
-const POS = {n:"сущ.", v:"глагол", adj:"прил.", adv:"нареч.", phr:"выражение", other:"другое"};
+const POS = {n:"существительное", v:"глагол", adj:"прилагательное", adv:"наречие", phr:"выражение", other:"другое"};
+const IC = (p, w=1.8) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const ICON = {
+  home: IC('<path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/>'),
+  words: IC('<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'),
+  verbs: IC('<path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.8" cy="6.5" r="1.1"/><circle cx="4.8" cy="12" r="1.1"/><circle cx="4.8" cy="17.5" r="1.1"/>'),
+  rules: IC('<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/>'),
+  search: IC('<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>', 2),
+  back: IC('<path d="M15 5l-7 7 7 7"/>', 2.2),
+  plus: IC('<path d="M12 5v14M5 12h14"/>', 2.2),
+  check: IC('<path d="m5 12.5 4.5 4.5L19 7.5"/>', 3),
+  arrow: IC('<path d="M5 12h14M13 6l6 6-6 6"/>', 2),
+};
 let toastT;
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2200); }
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2400); }
 function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch{ return null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} }
 
-/* ---------- storage: page database if available, else this browser ---------- */
+/* ---------- storage: this device only ---------- */
 const COLLS = ["words","verbs","rules"];
 const S = { words:new Map(), verbs:new Map(), rules:new Map() };
-let dbReady = true, readOnly = false;
 const LS_KEY = "heft-local";
 function loadLocal(){
   const d = lsGet(LS_KEY);
@@ -262,22 +366,41 @@ function persistLocal(){
   try { localStorage.setItem(LS_KEY, JSON.stringify(out)); return true; }
   catch { toast("Не удалось сохранить на устройстве. Сделай резервную копию"); return false; }
 }
+/* Older words have no topic yet: derive one from where they came from. */
+const SRC_TOPIC = [[/реклам/i,"Реклама"],[/професси/i,"Профессии"],[/подработк/i,"Подработки"],[/работа/i,"Работа"],[/заявлен|bewerbung/i,"Bewerbung"],[/гороскоп/i,"Гороскоп"],[/вещи/i,"Вещи и покупки"],[/отношени/i,"Отношения"],[/разговор/i,"Повседневное"],[/07\.10/,"Разное"]];
+function topicFromSrc(src){ for (const [re,t] of SRC_TOPIC) if (re.test(src||"")) return t; return ""; }
+function migrate(){
+  let n = 0;
+  for (const w of S.words.values()) {
+    if (w.topic === undefined) { w.topic = topicFromSrc(w.src); n++; }
+    if (!w.added) { w.added = w.updated || Date.now(); n++; }
+  }
+  if (n) persistLocal();
+}
 function initStore(){
   if (!loadLocal() && window.HEFT_SEED) {
     for (const c of COLLS) S[c] = new Map((window.HEFT_SEED[c]||[]).map(x=>[x.id,x]));
-    persistLocal();
   }
+  migrate();
+  persistLocal();
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch {}
   render();
 }
-async function save(c, obj){
-  const data = {...obj}; delete data.id;
-  data.updated = Date.now();
-  S[c].set(obj.id, {...data, id:obj.id});
-  persistLocal(); scheduleRender();
-}
-async function del(c, id){
-  S[c].delete(id); persistLocal(); scheduleRender();
+function put(c, obj){ const data = {...obj, updated:Date.now()}; S[c].set(obj.id, data); }
+async function save(c, obj){ put(c, obj); persistLocal(); scheduleRender(); }
+function saveMany(c, objs){ objs.forEach(o=>put(c,o)); persistLocal(); scheduleRender(); }
+async function del(c, id){ S[c].delete(id); persistLocal(); scheduleRender(); }
+
+/* ---------- dates ---------- */
+const pad = n => String(n).padStart(2,"0");
+function dayKey(ts){ const d = new Date(ts); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function keyDate(k){ const [y,m,d] = k.split("-").map(Number); return new Date(y, m-1, d, 12); }
+function dayLabel(k){
+  const today = dayKey(Date.now()), yest = dayKey(Date.now()-864e5);
+  if (k===today) return "Сегодня";
+  if (k===yest) return "Вчера";
+  const d = keyDate(k);
+  return d.toLocaleDateString("ru-RU", d.getFullYear()===new Date().getFullYear() ? {day:"numeric", month:"long"} : {day:"numeric", month:"long", year:"numeric"});
 }
 
 /* ---------- verb forms ---------- */
@@ -306,122 +429,246 @@ const AUX = { haben:["habe","hast","hat","haben","habt","haben"], sein:["bin","b
 const WUERDE = ["würde","würdest","würde","würden","würdet","würden"];
 function k2Forms(v){ return (v.k2 && v.k2.some(Boolean)) ? v.k2 : WUERDE.map(w=>w+" "+v.inf); }
 
-/* ---------- state ---------- */
-const st = { tab:"words", q:"", filter:"all", vq:"", rq:"", tq:"", tr:{busy:false, err:"", items:[]} };
-let rT; function scheduleRender(){ cancelAnimationFrame(rT); rT=requestAnimationFrame(render); }
-const tabMeta = { words:["Wörter","Словарь"], verbs:["Verben","Спряжения"], rules:["Grammatik","Правила"] };
-
-function render(){
-  $("#hdr").innerHTML = esc(tabMeta[st.tab][0]) + "<small>" + esc(tabMeta[st.tab][1]) + "</small>";
-  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===st.tab));
-  const v = $("#view");
-  const keepFocus = document.activeElement && document.activeElement.id;
-  const pos = keepFocus && document.activeElement.selectionStart;
-  if (st.tab==="words") v.innerHTML = viewWords();
-  else if (st.tab==="verbs") v.innerHTML = viewVerbs();
-  else v.innerHTML = viewRules();
-  if (keepFocus) { const el = document.getElementById(keepFocus); if (el && el.closest("#view")) { el.focus(); try{ el.setSelectionRange(pos,pos);}catch{} } }
-  refreshOpenSheet();
-}
-function loadingOrEmpty(what, how){
-  if (!dbReady) return `<div class="empty"><strong>Открываю тетрадь…</strong>Загружаю ${what}.</div>`;
-  return `<div class="empty"><strong>Пока пусто</strong>${how}</div>`;
-}
-
-/* ---------- words ---------- */
-function gClass(w){ return w.art==="der"||w.art==="die"||w.art==="das" ? "g-"+w.art : (w.art==="pl" ? "g-pl" : (w.art==="der/das" ? "g-der" : "")); }
-function artHTML(w){
+/* ---------- word helpers ---------- */
+function findWord(w){ const k = norm(w); return [...S.words.values()].find(x => norm(x.w) === k); }
+function findVerb(inf){ const k = norm(inf); return [...S.verbs.values()].find(x => norm(x.inf) === k); }
+function firstArt(w){ return (w.art||"").split("/")[0]; }
+function gClass(w){ const a = firstArt(w); return a==="der"||a==="die"||a==="das" ? "g-"+a : a==="pl" ? "g-pl" : ""; }
+function apill(w){
   if (!w.art) return "";
-  if (w.art==="pl") return `<span class="art a-pl">die</span> `;
-  if (w.art.includes("/")) return w.art.split("/").map(a=>`<span class="art a-${a}">${a}</span>`).join("/")+" ";
-  return `<span class="art a-${w.art}">${w.art}</span> `;
+  if (w.art==="pl") return `<span class="apill a-pl">die · мн.</span>`;
+  return `<span class="apill a-${firstArt(w)}">${esc(w.art)}</span>`;
 }
+function artText(w){ return !w.art ? "" : (w.art==="pl" ? "die " : w.art+" "); }
 function plText(w){
   if (w.pos!=="n") return "";
   if (w.art==="pl") return "только мн. ч.";
   if (!w.pl) return "";
   if (w.pl==="—") return "без мн. ч.";
-  return "die " + w.pl;
+  return "мн.: die " + w.pl;
 }
-function wordsFiltered(){
-  const q = norm(st.q.trim());
-  let list = [...S.words.values()];
-  if (st.filter==="check") list = list.filter(w=>w.check);
-  else if (ARTS.includes(st.filter)) list = list.filter(w=>(w.art||"").split("/").includes(st.filter));
-  else if (st.filter==="other") list = list.filter(w=>w.pos!=="n");
-  if (q) list = list.filter(w => norm(w.w).includes(q) || norm(w.ru).includes(q) || norm(w.pl).includes(q) || norm(w.src).includes(q));
-  return list.sort((a,b)=> norm(a.w).localeCompare(norm(b.w),"de"));
+function topicsList(){
+  const m = new Map();
+  for (const w of S.words.values()) { const t = (w.topic||"").trim(); if (t) m.set(t, (m.get(t)||0)+1); }
+  return [...m.entries()].sort((a,b)=>a[0].localeCompare(b[0],"ru")).map(([t,n])=>({t,n}));
 }
-function viewWords(){
+const knownIn = list => list.filter(w=>w.known).length;
+function poolFor(topic){
   const all = [...S.words.values()];
-  const nCheck = all.filter(w=>w.check).length;
-  const list = wordsFiltered();
-  const chip = (id,label,cls="") => `<button class="chip ${cls}" data-filter="${id}" aria-pressed="${st.filter===id}">${label}</button>`;
-  let h = viewTranslator() + `<div class="search"><input id="q" type="search" placeholder="Поиск: слово или перевод" value="${esc(st.q)}" autocomplete="off"><button class="btn" data-act="add-word">+ Слово</button></div>
-  <div class="chips">${chip("all","Все")}${chip("der","der","der")}${chip("die","die","die")}${chip("das","das","das")}${chip("other","Глаголы и др.")}${nCheck?chip("check","Проверить · "+nCheck,"chk"):""}</div>`;
-  if (all.length) h += `<div class="train-bar">
-      <button data-train="cards"><b>Карточки</b><span>слово → перевод</span></button>
-      <button data-train="article"><b>der/die/das</b><span>угадай артикль</span></button>
-      <button data-train="translate"><b>Тест</b><span>перевод → слово</span></button></div>`;
-  if (!all.length) return h + loadingOrEmpty("слова", "Добавь первое слово кнопкой «+ Слово» или загрузи резервную копию в разделе «Данные».");
-  h += `<div class="meta"><span>${list.length} из ${all.length}</span>${st.filter!=="all"||st.q?`<span>тренировка возьмёт этот список</span>`:""}</div>`;
-  if (!list.length) return h + `<div class="empty">Ничего не нашлось.</div>`;
-  h += `<div class="list">` + list.map(w => `<button class="row ${gClass(w)}" data-word="${esc(w.id)}">
-      <span class="bar"></span>
-      <span class="main"><span class="de">${artHTML(w)}${esc(w.w)}</span>${w.check?'<span class="flag">проверить</span>':""}
-      <span class="sub" style="display:block">${esc(w.ru)}${plText(w)?` · <span class="plf">${esc(plText(w))}</span>`:""}</span></span>
-      <span class="tag">${esc(POS[w.pos]||"")}</span></button>`).join("") + `</div>`;
-  return h;
+  if (!topic) return all;
+  if (topic==="__none") return all.filter(w=>!(w.topic||"").trim());
+  return all.filter(w=>(w.topic||"").trim()===topic);
+}
+const topicLabel = t => !t ? "Все темы" : t==="__none" ? "Без темы" : t;
+
+/* ---------- state ---------- */
+const st = {
+  tab: lsGet("heft-tab") || "home", q:"", filter:"all", topic:"", sort:"date", day:"", vq:"", rq:"",
+  homeTopic: lsGet("heft-home-topic") || "", trTopic: lsGet("heft-tr-topic") || "",
+  sug:{q:"", wiki:[], busy:false}, tr:{busy:false, err:"", items:[]}
+};
+if (!["home","words","verbs","rules"].includes(st.tab)) st.tab = "home";
+let rT; function scheduleRender(){ cancelAnimationFrame(rT); rT=requestAnimationFrame(render); }
+
+function render(){
+  renderHeader();
+  document.querySelectorAll(".nav button").forEach(b => { if (b.dataset.tab===st.tab) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
+  const v = $("#view");
+  const ae = document.activeElement, keep = ae && v.contains(ae) && ae.id, pos = keep && ae.selectionStart;
+  if (st.tab==="home") v.innerHTML = viewHome();
+  else if (st.tab==="words") { v.innerHTML = viewWords(); fillWords(); fillTr(); }
+  else if (st.tab==="verbs") { v.innerHTML = viewVerbs(); fillVerbs(); }
+  else { v.innerHTML = viewRules(); fillRules(); }
+  if (keep) { const el = document.getElementById(keep); if (el) { el.focus(); try{ el.setSelectionRange(pos,pos); }catch{} } }
+  $("#dl-topics").innerHTML = topicsList().map(t=>`<option value="${esc(t.t)}">`).join("");
+  refreshOpenSheet();
+}
+function renderHeader(){
+  const all = [...S.words.values()];
+  let t, s;
+  if (st.tab==="home") { t = "Hallo, Katarina"; s = "Heute · " + new Date().toLocaleDateString("de-DE",{weekday:"long", day:"numeric", month:"long"}); }
+  else if (st.tab==="words") { t = "Wörter"; s = `${all.length} слов · ${knownIn(all)} выучено`; }
+  else if (st.tab==="verbs") { t = "Verben"; s = `${S.verbs.size} глаголов`; }
+  else { t = "Grammatik"; s = `${S.rules.size} правил`; }
+  $("#hdr-t").textContent = t; $("#hdr-s").textContent = s;
 }
 
-/* ---------- translator (asks Claude, saves to the notebook) ---------- */
-let trCtl = null;
-function findWord(w){ const k = norm(w); return [...S.words.values()].find(x => norm(x.w) === k); }
-function findVerb(inf){ const k = norm(inf); return [...S.verbs.values()].find(x => norm(x.inf) === k); }
-function viewTranslator(){
-  const t = st.tr;
-  let h = `<div class="tr-box"><span class="lbl">Перевести и сохранить</span>
-    <div class="search"><input id="tq" type="text" enterkeyhint="go" placeholder="Kühlschrank, сковородка, sich erholen" value="${esc(st.tq)}" autocomplete="off" autocapitalize="off">
-    ${t.busy ? `<button class="btn ghost" data-act="tr-stop">Стоп</button>` : `<button class="btn" data-act="translate">Перевести</button>`}</div>`;
-  if (t.busy) h += `<span class="hint">Ищу в Викисловаре…</span>`;
-  else if (!t.items.length && !t.err) h += `<span class="hint">Немецкое или русское слово, можно несколько через запятую. Найду в Викисловаре артикль, мн. число, перевод и пример, а у глаголов формы. Нужен интернет.</span>`;
-  if (t.err) h += `<span class="hint err">${esc(t.err)}</span>`;
-  t.items.forEach((it, i) => {
-    const dup = !it._saved && findWord(it.w);
-    const v = it.verb;
-    h += `<div class="tr-item ${gClass(it)}"><span class="bar"></span><div class="body">
-      <span class="de">${artHTML(it)}${esc(it.w)}${it.input && norm(it.input)!==norm(it.w) ? ` <span class="hint" style="font-family:var(--font-ui)">← ${esc(it.input)}</span>` : ""}</span>
-      <span>${esc(it.ru)}${plText(it) ? ` · <span class="hint" style="font-family:var(--font-de)">${esc(plText(it))}</span>` : ""}</span>
-      ${it.note ? `<span class="ex">${esc(it.note)}</span>` : ""}
-      ${v ? `<span class="vforms">${esc(v.praes[2]||"")} · ${esc(v.praet[2]||"")} · ${esc(AUX[v.aux][2])} ${esc(v.p2)}${v.strong?" · неправ.":""}</span>` : ""}
-      ${it.check ? `<span class="why">проверить: ${esc(it.checkNote||"не уверена")}</span>` : ""}
-      <div class="actions">${it._saved ? `<span class="done">Сохранено</span><button class="btn small ghost" data-act="tr-open" data-i="${i}">Открыть</button>`
-        : dup ? `<span class="hint">Уже есть в словаре</span><button class="btn small ghost" data-act="tr-open" data-i="${i}">Открыть</button><button class="btn small ghost" data-act="tr-save" data-i="${i}">Всё равно добавить</button>`
-        : `<button class="btn small" data-act="tr-save" data-i="${i}">Сохранить</button><button class="btn small ghost" data-act="tr-edit" data-i="${i}">Изменить</button>`}
-        <span class="grow"></span><button class="btn small ghost" data-act="tr-drop" data-i="${i}" aria-label="Убрать из списка">✕</button></div>
-    </div></div>`;
-  });
-  const left = t.items.filter(it => !it._saved && !findWord(it.w)).length;
-  if (t.items.length > 1 && left) h += `<div class="actions"><button class="btn" data-act="tr-save-all">Сохранить все новые (${left})</button></div>`;
-  return h + `</div>`;
+/* ---------- home ---------- */
+function viewHome(){
+  const all = [...S.words.values()];
+  const total = all.length, known = knownIn(all), check = all.filter(w=>w.check).length;
+  const pct = total ? Math.round(known/total*100) : 0;
+  const counts = {}; all.forEach(w => { const k = dayKey(w.added||0); counts[k] = (counts[k]||0)+1; });
+  const todayK = dayKey(Date.now());
+  const days = []; for (let i=6;i>=0;i--){ const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate()-i); days.push(d); }
+  const pool = poolFor(st.homeTopic);
+  const nouns = pool.filter(w=>w.pos==="n" && ARTS.includes(w.art)).length;
+  const tl = topicsList();
+  const noneN = poolFor("__none").length;
+  const chip = (id, label, n) => `<button class="chip" data-htopic="${esc(id)}" aria-pressed="${st.homeTopic===id}">${esc(label)}${n!=null?`<small>${n}</small>`:""}</button>`;
+  const discs = [["#7fb2ff",44,0,-14],["#f1eee6",56,22,8],["#ff8f4d",36,52,-6],["#f27aa8",12,70,10],["#2a2f45",44,92,-10],["#e9e5df",62,104,6],["#3f7a62",30,128,-4]]
+    .map(([c,x,y,r]) => `<i class="disc" style="--c:${c};left:${x}px;top:${y}px;transform:rotate(${r}deg)"></i>`).join("");
+  const todayN = counts[todayK]||0;
+  return `
+  <button class="hero" data-act="write">
+    <span class="discs" aria-hidden="true">${discs}</span>
+    <span class="hero-txt">
+      <strong>Schreib-<br>Challenge</strong>
+      <span class="p">5 слов по-русски → твой текст на немецком → проверка ошибок</span>
+      <span class="bubbles"><i class="a-der">der</i><i class="a-die">die</i><i class="a-das">das</i><i class="more">+5</i></span>
+    </span>
+  </button>
+
+  <section class="card stats" aria-label="Статистика">
+    <div class="stat"><b>${total}</b><span>слов в тетради</span></div>
+    <div class="stat"><b>${known}</b><span>выучено</span></div>
+    <div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+    <div class="stats-foot"><span>${pct}% выучено · ${todayN ? "сегодня +"+todayN : "сегодня новых нет"}</span>${check?`<button class="link" data-act="go-check">${check} проверить</button>`:""}</div>
+  </section>
+
+  <div class="sec-row"><h2 class="sec">Неделя</h2><span class="hint">${new Date().toLocaleDateString("de-DE",{month:"long", year:"numeric"})}</span></div>
+  <div class="week">${days.map(d => { const k = dayKey(d), n = counts[k]||0;
+    return `<button class="day ${k===todayK?"today":""}" data-day="${k}" aria-label="${esc(dayLabel(k))}: ${n} слов"><i class="dot ${n?"":"off"}"></i><span class="wd">${d.toLocaleDateString("de-DE",{weekday:"short"}).replace(".","")}</span><b>${d.getDate()}</b></button>`; }).join("")}</div>
+  <p class="hint">Точка = в этот день добавлены слова. Нажми на день, чтобы увидеть их.</p>
+
+  <div class="sec-row"><h2 class="sec">Тренировка</h2><span class="hint">${knownIn(pool)} из ${pool.length} выучено</span></div>
+  <div class="chips">${chip("","Все темы",total)}${tl.map(t=>chip(t.t,t.t,t.n)).join("")}${noneN?chip("__none","Без темы",noneN):""}</div>
+  <div class="tiles">
+    <button class="tile orange big" data-train="cards" data-src="home">
+      <span class="pill">${Math.min(20,pool.length)} карточек</span>
+      <span class="t">Karteikarten</span>
+      <span class="d">Слово → перевод. «Знаю» отмечает слово выученным.</span>
+      <span class="foot"><i>${ICON.arrow}</i>${esc(topicLabel(st.homeTopic))}</span>
+    </button>
+    <button class="tile blue" data-train="article" data-src="home">
+      <span class="pill">${nouns} сущ.</span>
+      <span class="t">der · die · das</span>
+      <span class="d">угадай артикль</span>
+    </button>
+    <button class="tile pink" data-train="translate" data-src="home">
+      <span class="pill">тест</span>
+      <span class="t">Перевод</span>
+      <span class="d">выбери немецкое слово</span>
+    </button>
+  </div>`;
 }
-function cleanForms(a){ return Array.isArray(a) && a.length === 6 ? a.map(x => String(x||"").trim()) : null; }
-function cleanItem(r){
-  if (!r || typeof r !== "object" || !r.w) return null;
-  const pos = POS[r.pos] ? r.pos : "other";
-  const art = ["der","die","das","pl","der/die","der/das","die/das"].includes(r.art) ? r.art : "";
-  const it = { input:String(r.input||""), w:String(r.w).trim(), art: pos==="n" ? art : "", pl: pos==="n" ? String(r.pl||"").trim() : "",
-    ru:String(r.ru||"").trim(), pos, note:String(r.note||"").trim(), check:!!r.check, checkNote:String(r.checkNote||"").trim() };
-  const v = r.verb;
-  if (pos === "v" && v && typeof v === "object") {
-    const praes = cleanForms(v.praes), praet = cleanForms(v.praet);
-    if (praes && praet && v.p2) it.verb = { praes, praet, p2:String(v.p2).trim(), aux: v.aux==="sein" ? "sein" : "haben", strong:!!v.strong, sep:String(v.sep||"").trim(), k2: cleanForms(v.k2) };
+
+/* ---------- words ---------- */
+function wordsFiltered(){
+  const q = norm(st.q.trim());
+  let list = poolFor(st.topic);
+  const f = st.filter;
+  if (f==="check") list = list.filter(w=>w.check);
+  else if (f==="known") list = list.filter(w=>w.known);
+  else if (f==="learn") list = list.filter(w=>!w.known);
+  else if (ARTS.includes(f)) list = list.filter(w=>(w.art||"").split("/").includes(f));
+  else if (f==="other") list = list.filter(w=>w.pos!=="n");
+  if (st.day) list = list.filter(w=>dayKey(w.added||0)===st.day);
+  if (q) {
+    const scored = [];
+    for (const w of list) {
+      const nw = norm(w.w), nr = norm(w.ru);
+      let s = -1;
+      if (nw.startsWith(q)) s = 0;
+      else if (nr.split(/[,;\s]+/).some(x=>x.startsWith(q))) s = 1;
+      else if (nw.includes(q)) s = 2;
+      else if (nr.includes(q) || norm(w.pl).includes(q) || norm(w.note).includes(q)) s = 3;
+      if (s >= 0) scored.push([s, w]);
+    }
+    return scored.sort((a,b)=>a[0]-b[0] || a[1].w.length-b[1].w.length).map(x=>x[1]);
   }
-  return it;
+  if (st.sort==="alpha") return list.sort((a,b)=>norm(a.w).localeCompare(norm(b.w),"de"));
+  return list.sort((a,b)=>(b.added||0)-(a.added||0));
 }
-/* Wiktionary (de) for gender, plural, verb forms, Russian translation, example.
-   MyMemory for Russian → German and as a fallback. Both are free and need no key. */
+function viewWords(){
+  const tl = topicsList(), noneN = poolFor("__none").length;
+  const fc = (id,label,cls="") => `<button class="chip ${cls}" data-filter="${id}" aria-pressed="${st.filter===id}">${label}</button>`;
+  const tc = (id,label,n) => `<button class="chip" data-topic="${esc(id)}" aria-pressed="${st.topic===id}">${esc(label)}${n!=null?`<small>${n}</small>`:""}</button>`;
+  return `
+  <div class="search-row">
+    <label class="search">${ICON.search}<input id="q" type="search" enterkeyhint="search" placeholder="Найти или перевести слово" value="${esc(st.q)}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Поиск"></label>
+    <button class="round-btn dark" data-act="add-word" aria-label="Добавить слово вручную">${ICON.plus}</button>
+  </div>
+  <div id="sug"></div>
+  <div id="tr"></div>
+  <div class="chips">${fc("all","Все")}${fc("der","der","c-der")}${fc("die","die","c-die")}${fc("das","das","c-das")}${fc("other","Глаголы и др.")}${fc("learn","Учить")}${fc("known","Выучено")}${fc("check","Проверить")}</div>
+  <div class="chips">${tc("","Все темы")}${tl.map(t=>tc(t.t,t.t,t.n)).join("")}${noneN?tc("__none","Без темы",noneN):""}</div>
+  ${st.day ? `<div class="active-filter"><span>Добавлены: ${esc(dayLabel(st.day))}</span><button class="btn small ghost" data-act="clear-day">Показать все</button></div>` : ""}
+  <div class="row-between"><div class="seg" role="group" aria-label="Сортировка"><button data-sort="date" aria-pressed="${st.sort==="date"}">По дате</button><button data-sort="alpha" aria-pressed="${st.sort==="alpha"}">А–Я</button></div><span id="wmeta" class="hint"></span></div>
+  <div class="mini-train">
+    <button class="orange" data-train="cards" data-src="list">Карточки<span>этот список</span></button>
+    <button class="blue" data-train="article" data-src="list">Артикли<span>der/die/das</span></button>
+    <button class="pink" data-train="translate" data-src="list">Тест<span>перевод</span></button>
+  </div>
+  <div id="wl" class="stack" style="gap:14px"></div>`;
+}
+function wordRow(w){
+  return `<button class="row" data-word="${esc(w.id)}">
+    <span class="main"><span class="de">${apill(w)}${esc(w.w)}</span><span class="sub">${esc(w.ru)}${plText(w)?` · ${esc(plText(w))}`:""}</span></span>
+    <span class="side">${w.check?'<span class="flag" title="проверить">?</span>':""}${w.known?`<span class="known" title="выучено">${ICON.check}</span>`:""}</span></button>`;
+}
+function fillWords(){
+  const el = $("#wl"); if (!el) return;
+  const all = S.words.size, list = wordsFiltered();
+  const meta = $("#wmeta"); if (meta) meta.textContent = `${list.length} из ${all}`;
+  fillSug();
+  if (!all) { el.innerHTML = `<div class="empty"><strong>Пока пусто</strong>Найди слово в поиске или добавь кнопкой «+».</div>`; return; }
+  if (!list.length) { el.innerHTML = `<div class="empty">${st.q ? "В словаре такого нет. Подсказки для нового слова — над списком." : "Ничего не нашлось."}</div>`; return; }
+  if (st.sort==="date" && !st.q) {
+    const groups = [];
+    for (const w of list) { const k = dayKey(w.added||0); if (!groups.length || groups[groups.length-1].k!==k) groups.push({k, ws:[]}); groups[groups.length-1].ws.push(w); }
+    el.innerHTML = groups.map(g => `<div class="stack" style="gap:8px"><h3 class="day-h"><span>${esc(dayLabel(g.k))}</span><span>${g.ws.length}</span></h3><div class="list">${g.ws.map(wordRow).join("")}</div></div>`).join("");
+  } else {
+    el.innerHTML = `<div class="list">${list.map(wordRow).join("")}</div>`;
+  }
+}
+
+/* ---------- live suggestions (Wiktionary prefix search) ---------- */
 const WIKI = "https://de.wiktionary.org/w/api.php";
+let sugT = null, sugCtl = null;
+function scheduleSug(){
+  clearTimeout(sugT);
+  const q = st.q.trim();
+  if (q.length < 2 || /[а-яё]/i.test(q) || q.includes(",")) { st.sug = {q, wiki:[], busy:false}; fillSug(); return; }
+  st.sug = {q, wiki: st.sug.q && q.startsWith(st.sug.q) ? st.sug.wiki.filter(t=>norm(t).startsWith(norm(q))) : [], busy:true};
+  fillSug();
+  sugT = setTimeout(() => fetchSug(q), 220);
+}
+async function fetchSug(q){
+  if (navigator.onLine === false) { st.sug.busy = false; fillSug(); return; }
+  if (sugCtl) sugCtl.abort();
+  sugCtl = new AbortController();
+  const vars = [...new Set([q, q[0].toUpperCase()+q.slice(1), q[0].toLowerCase()+q.slice(1)])];
+  try {
+    const res = await Promise.all(vars.map(v => fetch(WIKI+"?action=opensearch&format=json&namespace=0&limit=8&origin=*&search="+encodeURIComponent(v), {signal:sugCtl.signal})
+      .then(r => r.ok ? r.json() : [null,[]]).catch(e => { if (e && e.name==="AbortError") throw e; return [null,[]]; })));
+    const seen = new Set(); const titles = [];
+    res.forEach(r => (r[1]||[]).forEach(t => { const k = t.toLowerCase(); if (!seen.has(k) && !/[:()]/.test(t) && t.split(" ").length <= 3) { seen.add(k); titles.push(t); } }));
+    titles.sort((a,b) => (norm(a)===norm(q) ? -1 : 0) - (norm(b)===norm(q) ? -1 : 0) || a.length - b.length);
+    if (st.q.trim() === q) { st.sug = {q, wiki:titles.slice(0,8), busy:false}; fillSug(); }
+  } catch (e) { if (!(e && e.name==="AbortError")) { st.sug.busy = false; fillSug(); } }
+}
+function fillSug(){
+  const el = $("#sug"); if (!el) return;
+  const q = st.q.trim();
+  if (q.length < 2) { el.innerHTML = ""; return; }
+  const ru = /[а-яё]/i.test(q);
+  const chips = [];
+  if (q.includes(",")) {
+    const n = q.split(/[,;]+/).map(s=>s.trim()).filter(Boolean).length;
+    chips.push(`<button class="chip act" data-act="lookup-all">Перевести все (${n})</button>`);
+  } else if (ru) {
+    chips.push(`<button class="chip act" data-act="lookup" data-term="${esc(q)}">Перевести «${esc(q)}» на немецкий</button>`);
+  } else {
+    const wiki = st.sug.q === q || q.startsWith(st.sug.q) ? st.sug.wiki : [];
+    wiki.forEach(t => { const have = findWord(t); chips.push(`<button class="chip ${have?"":"sugg"}" data-act="${have?"open-word":"lookup"}" data-term="${esc(t)}">${esc(t)}${have?"<small>в словаре</small>":""}</button>`); });
+    if (!findWord(q) && !wiki.some(t => norm(t)===norm(q))) chips.push(`<button class="chip act" data-act="lookup" data-term="${esc(q)}">Найти «${esc(q)}»</button>`);
+  }
+  if (!chips.length) { el.innerHTML = ""; return; }
+  el.innerHTML = `<div class="sug"><span class="lbl">${ru ? "Новое слово" : st.sug.busy ? "Ищу подсказки…" : "Подсказки · нажми, чтобы найти и сохранить"}</span><div class="sug-chips">${chips.join("")}</div></div>`;
+}
+
+/* ---------- dictionary lookup: Wiktionary + MyMemory, both free, no key ---------- */
 async function wikiText(title, signal){
   const u = WIKI + "?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&origin=*&page=" + encodeURIComponent(title);
   const r = await fetch(u, {signal});
@@ -533,72 +780,107 @@ async function lookup(term, signal){
   }
   it.input = term;
   if (refl) it.note = "sich " + it.w + (it.note ? " · " + it.note : "");
-  if (fromRu) { it.check = true; it.checkNote = "немецкое слово подобрал автопереводчик, проверь, что это то значение"; if (!it.ru) it.ru = fromRu; }
+  if (fromRu) { it.check = true; it.checkNote = "немецкое слово подобрал автопереводчик, проверь значение"; if (!it.ru) it.ru = fromRu; }
   if (!it.ru) { it.ru = await myMemory(it.w, "de|ru", signal); it.check = true; it.checkNote = it.checkNote || "перевод из автопереводчика"; }
   return it;
 }
-async function translate(){
-  const raw = st.tq.trim();
-  if (!raw) { toast("Впиши слово"); return; }
-  if (navigator.onLine === false) { st.tr.err = "Нет интернета. Перевод работает только онлайн, а словарь и тренировки доступны всегда."; render(); return; }
-  const terms = raw.split(/[,;\n]+/).map(s => s.trim()).filter(Boolean).slice(0, 15);
-  st.tr = { busy:true, err:"", items: st.tr.items };
-  render();
+let trCtl = null;
+async function runLookup(terms){
+  terms = terms.map(s=>s.trim()).filter(Boolean).slice(0, 15);
+  if (!terms.length) return;
+  if (navigator.onLine === false) { st.tr.err = "Нет интернета. Поиск новых слов работает только онлайн, словарь и тренировки доступны всегда."; fillTr(); return; }
+  st.tr.busy = true; st.tr.err = ""; st.q = ""; st.sug = {q:"", wiki:[], busy:false};
+  const qi = $("#q"); if (qi) qi.value = "";
+  fillWords(); fillTr();
+  if (trCtl) trCtl.abort();
   trCtl = new AbortController();
   const found = [];
   try {
-    for (const term of terms) { found.push(await lookup(term, trCtl.signal)); }
-    st.tq = "";
-    st.tr = { busy:false, err:"", items:[...found, ...st.tr.items.filter(x => !x._saved)].slice(0, 30) };
+    for (const term of terms) found.push(await lookup(term, trCtl.signal));
+    st.tr.items = [...found, ...st.tr.items.filter(x => !x._saved)].slice(0, 20);
   } catch (e) {
-    st.tr = { busy:false, err: e && e.name==="AbortError" ? "" : "Не получилось связаться со словарём. Проверь интернет и попробуй ещё раз.", items:[...found, ...st.tr.items] };
+    if (!(e && e.name==="AbortError")) st.tr.err = "Не получилось связаться со словарём. Проверь интернет и попробуй ещё раз.";
+    st.tr.items = [...found, ...st.tr.items];
   }
-  render();
+  st.tr.busy = false;
+  fillTr();
+  const box = $("#tr"); if (box && box.scrollIntoView) box.scrollIntoView({block:"nearest", behavior:"smooth"});
+}
+function fillTr(){
+  const el = $("#tr"); if (!el) return;
+  const t = st.tr;
+  if (!t.busy && !t.items.length && !t.err) { el.innerHTML = ""; return; }
+  let h = `<section class="card found">`;
+  h += `<div class="row-between"><span class="lbl">${t.busy ? "Ищу в словаре…" : "Найдено"}</span>${t.busy ? `<button class="btn small ghost" data-act="tr-stop">Стоп</button>` : `<button class="btn small ghost" data-act="tr-clear">Очистить</button>`}</div>`;
+  if (t.err) h += `<p class="hint err">${esc(t.err)}</p>`;
+  if (t.items.some(it=>!it._saved)) h += `<div class="field"><label for="tr-topic">Тема для новых слов</label><input id="tr-topic" list="dl-topics" value="${esc(st.trTopic)}" placeholder="например, Работа" autocomplete="off"></div>`;
+  t.items.forEach((it, i) => {
+    const dup = !it._saved && findWord(it.w);
+    const v = it.verb;
+    h += `<div class="found-item ${gClass(it)}">
+      <span class="de">${it.art ? esc(artText(it)) : ""}${esc(it.w)}${it.input && norm(it.input)!==norm(it.w) ? ` <span class="hint" style="color:inherit;opacity:.7;font-weight:500">← ${esc(it.input)}</span>` : ""}</span>
+      <span>${esc(it.ru) || "<i>перевода нет</i>"}${plText(it) ? ` · ${esc(plText(it))}` : ""}</span>
+      ${it.note ? `<span class="ex">${esc(it.note)}</span>` : ""}
+      ${v ? `<span class="vforms">${esc(v.praes[2]||"")} · ${esc(v.praet[2]||"")} · ${esc(AUX[v.aux][2])} ${esc(v.p2)}${v.strong?" · неправильный":""}</span>` : ""}
+      ${it.check ? `<span class="why">проверить: ${esc(it.checkNote||"есть сомнения")}</span>` : ""}
+      <div class="actions">${it._saved ? `<span class="done">Сохранено${it._topic ? " · "+esc(it._topic) : ""}</span><button class="btn small ghost" data-act="tr-open" data-i="${i}">Открыть</button>`
+        : dup ? `<span class="done">Уже в словаре</span><button class="btn small ghost" data-act="tr-open" data-i="${i}">Открыть</button>`
+        : `<button class="btn small" data-act="tr-save" data-i="${i}">Сохранить</button><button class="btn small ghost" data-act="tr-edit" data-i="${i}">Изменить</button>`}
+        <span class="grow"></span><button class="btn small ghost" data-act="tr-drop" data-i="${i}" aria-label="Убрать">✕</button></div>
+    </div>`;
+  });
+  const left = t.items.filter(it => !it._saved && !findWord(it.w)).length;
+  if (left > 1) h += `<button class="btn" data-act="tr-save-all">Сохранить все новые (${left})</button>`;
+  el.innerHTML = h + `</section>`;
 }
 async function saveTrItem(it){
-  const src = "перевод " + new Date().toLocaleDateString("ru-RU");
-  const w = { w:it.w, art:it.art, pl:it.pl, ru:it.ru, pos:it.pos, note:it.note, src, check:it.check, added:Date.now(), box:0, id:uid("w") };
+  const topic = (st.trTopic||"").trim();
+  const w = { id:uid("w"), w:it.w, art:it.art, pl:it.pl, ru:it.ru, pos:it.pos, note:it.note, topic, src:"поиск " + new Date().toLocaleDateString("ru-RU"), check:it.check, added:Date.now(), box:0 };
   if (it.check && it.checkNote) w.checkNote = it.checkNote;
-  await save("words", w);
-  if (it.verb && !findVerb(it.w)) {
-    await save("verbs", { id:uid("v"), inf:it.w, ru:it.ru, ...it.verb, note: it.note, check: it.check, ...(it.check && it.checkNote ? {checkNote:it.checkNote} : {}) });
-  }
-  it._saved = w.id;
+  put("words", w);
+  if (it.verb && !findVerb(it.w)) put("verbs", { id:uid("v"), inf:it.w, ru:it.ru, ...it.verb, note:it.note, check:it.check, ...(it.check && it.checkNote ? {checkNote:it.checkNote} : {}) });
+  it._saved = w.id; it._topic = topic;
 }
 
 /* ---------- verbs ---------- */
 function viewVerbs(){
-  const all = [...S.verbs.values()];
+  return `<div class="search-row"><label class="search">${ICON.search}<input id="vq" type="search" placeholder="Найти глагол" value="${esc(st.vq)}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Поиск глагола"></label>
+    <button class="round-btn dark" data-act="add-verb" aria-label="Добавить глагол">${ICON.plus}</button></div>
+    <p class="legend"><i></i>неправильный глагол или форма</p>
+    <div id="vl"></div>`;
+}
+function fillVerbs(){
+  const el = $("#vl"); if (!el) return;
   const q = norm(st.vq.trim());
-  const list = all.filter(v=>!q || norm(v.inf).includes(q) || norm(v.ru).includes(q) || norm(v.p2).includes(q))
-                  .sort((a,b)=>norm(a.inf).localeCompare(norm(b.inf),"de"));
-  let h = `<div class="search"><input id="vq" type="search" placeholder="Поиск глагола" value="${esc(st.vq)}" autocomplete="off"><button class="btn" data-act="add-verb">+ Глагол</button></div>`;
-  if (!all.length) return h + loadingOrEmpty("глаголы","Добавь глагол: обычные формы я заполню по правилу, неправильные впишешь сама.");
-  h += `<div class="meta"><span>${list.length} глаголов</span><span>● неправильная форма</span></div>`;
-  h += `<div class="list">` + list.map(v=>`<button class="row ${v.strong?"g-pl":""}" data-verb="${esc(v.id)}">
-     <span class="bar"></span>
-     <span class="main"><span class="de">${esc(v.inf)}</span>${v.check?'<span class="flag">проверить</span>':""}
-     <span class="sub" style="display:block">${esc(v.ru)} · <span class="plf">${esc(AUX[v.aux||"haben"][2])} ${esc(v.p2||"")}</span></span></span>
-     <span class="tag">${v.strong?"неправ.":"правильный"}</span></button>`).join("") + `</div>`;
-  return h;
+  const list = [...S.verbs.values()].filter(v=>!q || norm(v.inf).includes(q) || norm(v.ru).includes(q) || norm(v.p2).includes(q)).sort((a,b)=>norm(a.inf).localeCompare(norm(b.inf),"de"));
+  if (!S.verbs.size) { el.innerHTML = `<div class="empty"><strong>Пока пусто</strong>Добавь глагол кнопкой «+» или найди его в словаре.</div>`; return; }
+  if (!list.length) { el.innerHTML = `<div class="empty">Ничего не нашлось.</div>`; return; }
+  el.innerHTML = `<div class="list">` + list.map(v=>`<button class="row" data-verb="${esc(v.id)}">
+     <span class="main"><span class="de">${v.strong?'<span class="apill" style="background:var(--orange)">неправ.</span>':""}${esc(v.inf)}</span>
+     <span class="sub">${esc(v.ru)} · ${esc(AUX[v.aux||"haben"][2])} ${esc(v.p2||"")}</span></span>
+     <span class="side">${v.check?'<span class="flag">?</span>':""}</span></button>`).join("") + `</div>`;
 }
 
 /* ---------- rules ---------- */
-function plainOf(md){ return String(md||"").replace(/^\|.*$/gm,"").replace(/[#>*`|\-]/g," ").replace(/\{[mfnp]:([^}]*)\}/g,"$1").replace(/\s+/g," ").trim(); }
+function plainOf(mdt){ return String(mdt||"").replace(/^\|.*$/gm,"").replace(/[#>*`|\-=]/g," ").replace(/\{[mfnp]:([^}]*)\}/g,"$1").replace(/\s+/g," ").trim(); }
 function viewRules(){
-  const all = [...S.rules.values()];
+  return `<div class="search-row"><label class="search">${ICON.search}<input id="rq" type="search" placeholder="Поиск по правилам" value="${esc(st.rq)}" autocomplete="off" spellcheck="false" aria-label="Поиск по правилам"></label>
+    <button class="round-btn dark" data-act="add-rule" aria-label="Добавить правило">${ICON.plus}</button></div>
+    <div id="rl" class="stack" style="gap:10px"></div>`;
+}
+function fillRules(){
+  const el = $("#rl"); if (!el) return;
   const q = norm(st.rq.trim());
-  const list = all.filter(r=>!q || norm(r.title).includes(q) || norm(r.body).includes(q) || (r.tags||[]).some(t=>norm(t).includes(q)))
-                  .sort((a,b)=>(a.order??999)-(b.order??999) || norm(a.title).localeCompare(norm(b.title)));
-  let h = `<div class="search"><input id="rq" type="search" placeholder="Поиск по правилам" value="${esc(st.rq)}" autocomplete="off"><button class="btn" data-act="add-rule">+ Правило</button></div>`;
-  if (!all.length) return h + loadingOrEmpty("правила","Добавь своё первое правило: заголовок, объяснение, таблица и примеры.");
-  h += list.map(r=>`<button class="rule-card" data-rule="${esc(r.id)}"><h3>${esc(r.title)}${r.check?'<span class="flag">проверить</span>':""}</h3>
-      <p>${esc(plainOf(r.body).slice(0,180))}</p>
-      ${(r.tags||[]).length?`<span class="tags">${r.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</span>`:""}</button>`).join("");
-  return h;
+  const list = [...S.rules.values()].filter(r=>!q || norm(r.title).includes(q) || norm(r.body).includes(q) || (r.tags||[]).some(t=>norm(t).includes(q)))
+    .sort((a,b)=>(a.order??999)-(b.order??999) || norm(a.title).localeCompare(norm(b.title)));
+  if (!S.rules.size) { el.innerHTML = `<div class="empty"><strong>Пока пусто</strong>Добавь своё первое правило кнопкой «+».</div>`; return; }
+  if (!list.length) { el.innerHTML = `<div class="empty">Ничего не нашлось.</div>`; return; }
+  const colors = ["lav","orange","blue","pink","green"];
+  el.innerHTML = list.map((r,i)=>`<button class="rule-card" data-rule="${esc(r.id)}"><span class="tags"><span class="tag" style="background:var(--${colors[i%colors.length]});color:var(--on-pastel)">${esc((r.tags||[])[0]||"правило")}</span>${r.check?'<span class="flag">проверить</span>':""}</span><h3>${esc(r.title)}</h3>
+      <p>${esc(plainOf(r.body).slice(0,180))}</p></button>`).join("");
 }
 
-/* ---------- mini markdown ---------- */
+/* ---------- mini markdown for rules ---------- */
 function inline(s){
   return esc(s)
     .replace(/\{(m|f|n|p):([^}]*)\}/g,'<span class="$1">$2</span>')
@@ -644,35 +926,47 @@ function md(src){
 }
 
 /* ---------- sheets ---------- */
-let sheet = null; // {kind, id, ...}
-function openSheet(s){ sheet = s; drawSheet(); }
-function closeSheet(){ sheet = null; $("#sheets").innerHTML = ""; }
-function refreshOpenSheet(){ if (sheet && (sheet.kind==="word" || sheet.kind==="verb" || sheet.kind==="rule")) drawSheet(); }
-function shell(title, body, extra=""){
-  return `<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}">
-    <div class="sheet-head gut"><button class="icon-btn" data-act="close" aria-label="Закрыть">← Назад</button><h2>${esc(title)}</h2>${extra}</div>
-    <div class="sheet-body gut"><div class="wrap">${body}</div></div></div>`;
+let sheet = null;
+function openSheet(s){ sheet = s; drawSheet(true); }
+function closeSheet(){ sheet = null; $("#sheets").innerHTML = ""; document.body.style.overflow = ""; }
+function refreshOpenSheet(){ if (sheet && ["word","verb","rule","data"].includes(sheet.kind)) drawSheet(); }
+function shell(title, body){
+  return `<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="sheet-in">
+    <div class="sheet-head"><button class="round-btn" data-act="close" aria-label="Назад">${ICON.back}</button><h2>${esc(title)}</h2></div>
+    ${body}</div></div>`;
 }
-function drawSheet(){
+function drawSheet(fresh){
   const s = sheet; if (!s) return;
   const host = $("#sheets");
-  const scroller = host.querySelector(".sheet-body"); const top = scroller ? scroller.scrollTop : 0;
+  const sc = host.querySelector(".sheet"); const top = sc && !fresh ? sc.scrollTop : 0;
   let html = "";
   if (s.kind==="word") {
     const w = S.words.get(s.id); if (!w) return closeSheet();
-    const conf = s.confirmDel ? `<div class="confirm"><span class="grow">Удалить «${esc(w.w)}»?</span><button class="btn small danger" data-act="del-word-yes">Удалить</button><button class="btn small ghost" data-act="del-no">Отмена</button></div>` : "";
+    const tl = topicsList();
     html = shell(w.w, `
-      <div class="word-hero ${gClass(w)}"><span class="de">${artHTML(w)}${esc(w.w)}</span>
-        <span style="font-size:19px">${esc(w.ru)}</span></div>
-      ${w.check?`<div class="note-box"><strong>Проверь:</strong> ${esc(w.checkNote||"я не уверена в этой записи")}</div>`:""}
-      <dl class="kv">
-        ${w.pos==="n"?`<dt>Мн. число</dt><dd class="de" style="font-size:16px">${esc(plText(w)||"—")}</dd>`:""}
+      <div class="word-hero ${gClass(w)}">
+        ${w.art ? `<span class="art">${w.art==="pl" ? "die · только мн. ч." : esc(w.art)}</span>` : ""}
+        <span class="big">${esc(w.w)}</span>
+        <span class="ru">${esc(w.ru)}</span>
+        ${plText(w) ? `<span class="pl">${esc(plText(w))}</span>` : ""}
+      </div>
+      <div class="actions">
+        <button class="chip" data-act="toggle-known" aria-pressed="${!!w.known}">${w.known ? "✓ Выучено" : "Отметить выученным"}</button>
+        <button class="chip" data-act="topic-open" aria-pressed="${!!s.pickTopic}">${w.topic ? "Тема: "+esc(w.topic) : "+ Добавить тему"}</button>
+      </div>
+      ${s.pickTopic ? `<div class="card stack" style="gap:10px"><span class="lbl">Выбери тему</span>
+        <div class="chips wrap">${tl.map(t=>`<button class="chip" data-act="set-topic" data-t="${esc(t.t)}" aria-pressed="${w.topic===t.t}">${esc(t.t)}</button>`).join("")}${w.topic?`<button class="chip" data-act="set-topic" data-t="">Без темы</button>`:""}</div>
+        <div class="search-row"><div class="field" style="flex:1"><input id="f-newtopic" placeholder="Новая тема" autocomplete="off"></div><button class="btn small" data-act="set-topic-new">Готово</button></div></div>` : ""}
+      ${w.check ? `<div class="note-box"><strong>Проверь:</strong> ${esc(w.checkNote||"есть сомнения в этой записи")}</div>` : ""}
+      <dl class="kv card">
         <dt>Часть речи</dt><dd>${esc(POS[w.pos]||"")}</dd>
-        ${w.note?`<dt>Заметка</dt><dd>${esc(w.note)}</dd>`:""}
-        ${w.src?`<dt>Источник</dt><dd>${esc(w.src)}</dd>`:""}
-        <dt>Знаю</dt><dd>${"●".repeat(w.box||0)}${"○".repeat(5-(w.box||0))}</dd>
+        ${w.note ? `<dt>Пример</dt><dd>${esc(w.note)}</dd>` : ""}
+        <dt>Добавлено</dt><dd>${esc(dayLabel(dayKey(w.added||0)))}</dd>
+        ${w.src ? `<dt>Источник</dt><dd>${esc(w.src)}</dd>` : ""}
+        <dt>Тренировки</dt><dd>${"●".repeat(w.box||0)}${"○".repeat(Math.max(0,5-(w.box||0)))}</dd>
       </dl>
-      <div class="actions">${w.check?`<button class="btn" data-act="confirm-word">Всё верно</button>`:""}<button class="btn ghost" data-act="edit-word">Изменить</button><span class="grow"></span><button class="btn danger" data-act="del-word">Удалить</button></div>${conf}`);
+      <div class="actions">${w.check?`<button class="btn" data-act="confirm-word">Всё верно</button>`:""}<button class="btn ghost" data-act="edit-word">Изменить</button><span class="grow"></span><button class="btn danger" data-act="del-word">Удалить</button></div>
+      ${s.confirmDel ? `<div class="confirm"><span class="grow">Удалить «${esc(w.w)}»?</span><button class="btn small danger" data-act="del-word-yes">Удалить</button><button class="btn small ghost" data-act="del-no">Отмена</button></div>` : ""}`);
   } else if (s.kind==="word-edit") {
     html = shell(s.id ? "Изменить слово" : "Новое слово", wordForm(s.draft));
   } else if (s.kind==="verb") {
@@ -682,7 +976,7 @@ function drawSheet(){
     html = shell(s.id ? "Изменить глагол" : "Новый глагол", verbForm(s.draft));
   } else if (s.kind==="rule") {
     const r = S.rules.get(s.id); if (!r) return closeSheet();
-    html = shell(r.title, `${r.check?`<div class="note-box"><strong>Проверь:</strong> ${esc(r.checkNote||"собрано по фото, сверь с конспектом")}</div>`:""}
+    html = shell(r.title, `${r.check?`<div class="note-box"><strong>Проверь:</strong> ${esc(r.checkNote||"сверь с конспектом")}</div>`:""}
       <div class="md">${md(r.body)}</div>
       ${(r.tags||[]).length?`<div class="tags">${r.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>`:""}
       <div class="actions">${r.check?`<button class="btn" data-act="confirm-rule">Всё верно</button>`:""}<button class="btn ghost" data-act="edit-rule">Редактировать</button><span class="grow"></span><button class="btn danger" data-act="del-rule">Удалить</button></div>
@@ -691,26 +985,32 @@ function drawSheet(){
     html = shell(s.id ? "Редактировать правило" : "Новое правило", ruleForm(s.draft));
   } else if (s.kind==="train") {
     html = shell(s.title, trainBody(s));
+  } else if (s.kind==="write") {
+    html = shell("Schreib-Challenge", writeBody(s));
   } else if (s.kind==="data") {
     html = shell("Данные", dataBody(s));
   }
   host.innerHTML = html;
-  const sc = host.querySelector(".sheet-body"); if (sc && s.keepScroll) sc.scrollTop = top;
-  s.keepScroll = true;
+  document.body.style.overflow = "hidden";
+  const nsc = host.querySelector(".sheet"); if (nsc) nsc.scrollTop = top;
+  if (s.kind==="write") fillWriteRes(s);
 }
 
 /* ---------- word form ---------- */
 function wordForm(d){
-  const segA = ["der","die","das","pl",""].map(a=>`<button type="button" class="${a}" data-art="${a}" aria-pressed="${(d.art||"")===a}">${a==="pl"?"мн.":a||"—"}</button>`).join("");
-  return `<div class="field"><label for="f-quick">Быстрый ввод</label><input id="f-quick" placeholder="der Tisch, -e — стол" autocomplete="off"><span class="hint">Напиши строку целиком и нажми «Разобрать», или заполни поля ниже.</span><div><button type="button" class="btn small ghost" data-act="parse">Разобрать</button></div></div>
-  <div class="field"><span class="lbl">Артикль</span><div class="seg">${segA}</div></div>
-  <div class="field"><label for="f-w">Слово</label><input id="f-w" value="${esc(d.w)}" autocomplete="off" autocapitalize="off"></div>
+  const segA = [["der","der"],["die","die"],["das","das"],["pl","мн."],["","—"]].map(([a,l])=>`<button type="button" class="${a}" data-art="${a}" aria-pressed="${(d.art||"")===a}">${l}</button>`).join("");
+  const tl = topicsList();
+  return `<div class="field"><label for="f-quick">Быстрый ввод</label><input id="f-quick" placeholder="der Tisch, -e — стол" autocomplete="off"><div><button type="button" class="btn small ghost" data-act="parse">Разобрать</button></div></div>
+  <div class="field"><span class="lbl">Артикль</span><div class="segbig">${segA}</div></div>
+  <div class="field"><label for="f-w">Слово</label><input id="f-w" value="${esc(d.w)}" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
   <div class="grid2">
     <div class="field"><label for="f-pl">Мн. число</label><input id="f-pl" value="${esc(d.pl)}" placeholder="Tische или —"></div>
     <div class="field"><label for="f-pos">Часть речи</label><select id="f-pos">${Object.entries(POS).map(([k,v])=>`<option value="${k}" ${d.pos===k?"selected":""}>${v}</option>`).join("")}</select></div>
   </div>
   <div class="field"><label for="f-ru">Перевод</label><input id="f-ru" value="${esc(d.ru)}"></div>
-  <div class="field"><label for="f-note">Заметка или пример</label><input id="f-note" value="${esc(d.note)}"></div>
+  <div class="field"><label for="f-topic">Тема</label><input id="f-topic" list="dl-topics" value="${esc(d.topic)}" placeholder="например, Работа" autocomplete="off">
+    ${tl.length?`<div class="chips wrap">${tl.slice(0,14).map(t=>`<button type="button" class="chip" data-act="fill-topic" data-t="${esc(t.t)}">${esc(t.t)}</button>`).join("")}</div>`:""}</div>
+  <div class="field"><label for="f-note">Пример или заметка</label><input id="f-note" value="${esc(d.note)}"></div>
   <div class="field"><label for="f-src">Источник</label><input id="f-src" value="${esc(d.src)}" placeholder="урок 15.10, KB S. 88"></div>
   <label class="check"><input type="checkbox" id="f-check" ${d.check?"checked":""}> Нужно проверить</label>
   <div class="actions"><button class="btn" data-act="save-word">Сохранить</button><button class="btn ghost" data-act="close">Отмена</button></div>`;
@@ -719,6 +1019,7 @@ function readWordForm(){
   const d = sheet.draft;
   d.w = $("#f-w").value.trim(); d.pl = $("#f-pl").value.trim(); d.pos = $("#f-pos").value;
   d.ru = $("#f-ru").value.trim(); d.note = $("#f-note").value.trim(); d.src = $("#f-src").value.trim(); d.check = $("#f-check").checked;
+  d.topic = $("#f-topic").value.trim();
   return d;
 }
 function parseQuick(str){
@@ -747,9 +1048,8 @@ function verbDetail(v){
   const tbl = (title, forms, ref) => `<div class="conj"><h3>${title}</h3><table>${PERS.map((p,i)=>`<tr><td>${p}</td><td class="f ${ref && forms[i] && ref[i]!==forms[i] ? "irr":""}">${esc(forms[i]||"")}</td></tr>`).join("")}</table></div>`;
   const aux = AUX[v.aux||"haben"];
   const perf = aux.map(a=>a+" "+(v.p2||""));
-  const p2irr = v.p2 && v.p2 !== wf.p2;
-  return `<div class="word-hero ${v.strong?"g-pl":""}"><span class="de">${esc(v.inf)}</span><span style="font-size:18px">${esc(v.ru)}</span>
-    <span class="hint">Partizip II: <strong class="de" style="font-size:16px">${esc(v.p2||"")}</strong>${p2irr?" ●":""} · вспом. глагол <strong>${esc(v.aux||"haben")}</strong>${v.sep?` · отделяемая приставка <strong>${esc(v.sep)}-</strong>`:""}</span></div>
+  return `<div class="word-hero ${v.strong?"":"g-der"}" style="${v.strong?"background:var(--orange);color:var(--on-pastel)":""}"><span class="art">${v.strong?"неправильный":"правильный"}</span><span class="big">${esc(v.inf)}</span><span class="ru">${esc(v.ru)}</span>
+    <span class="pl">Partizip II: <b>${esc(v.p2||"")}</b> · Perfekt с <b>${esc(v.aux||"haben")}</b>${v.sep?` · приставка <b>${esc(v.sep)}-</b> отделяется`:""}</span></div>
     ${v.check?`<div class="note-box"><strong>Проверь:</strong> ${esc(v.checkNote||"сверь формы")}</div>`:""}
     ${v.note?`<p class="hint">${esc(v.note)}</p>`:""}
     <div class="conj-grid">${tbl("Präsens", v.praes||[], wf.praes)}${tbl("Präteritum", v.praet||[], wf.praet)}${tbl("Perfekt", perf, null)}${tbl("Konjunktiv II", k2Forms(v), null)}</div>
@@ -757,17 +1057,17 @@ function verbDetail(v){
     <div class="actions">${v.check?`<button class="btn" data-act="confirm-verb">Всё верно</button>`:""}<button class="btn ghost" data-act="edit-verb">Изменить</button><span class="grow"></span><button class="btn danger" data-act="del-verb">Удалить</button></div>`;
 }
 function verbForm(d){
-  const row = (i) => `<tr><td>${PERS[i]}</td>${["praes","praet","k2"].map(k=>`<td><input id="f-${k}-${i}" value="${esc((d[k]||[])[i]||"")}" autocapitalize="off" autocomplete="off"></td>`).join("")}</tr>`;
-  return `<div class="grid2"><div class="field"><label for="f-inf">Инфинитив</label><input id="f-inf" value="${esc(d.inf)}" autocapitalize="off" autocomplete="off"></div>
+  const row = (i) => `<tr><td>${PERS[i]}</td>${["praes","praet","k2"].map(k=>`<td><input id="f-${k}-${i}" value="${esc((d[k]||[])[i]||"")}" autocapitalize="off" autocomplete="off" spellcheck="false"></td>`).join("")}</tr>`;
+  return `<div class="grid2"><div class="field"><label for="f-inf">Инфинитив</label><input id="f-inf" value="${esc(d.inf)}" autocapitalize="off" autocomplete="off" spellcheck="false"></div>
     <div class="field"><label for="f-sep">Отдел. приставка</label><input id="f-sep" value="${esc(d.sep)}" placeholder="ab, auf…" autocapitalize="off"></div></div>
   <div class="field"><label for="f-vru">Перевод</label><input id="f-vru" value="${esc(d.ru)}"></div>
-  <div class="actions"><button class="btn small ghost" data-act="gen-weak">Заполнить по правилу</button><span class="hint">для правильных глаголов; неправильные формы поправь вручную</span></div>
+  <div class="actions"><button class="btn small ghost" data-act="gen-weak">Заполнить по правилу</button><span class="hint">для правильных глаголов</span></div>
   <div class="grid2"><div class="field"><label for="f-aux">Perfekt с</label><select id="f-aux"><option value="haben" ${d.aux!=="sein"?"selected":""}>haben</option><option value="sein" ${d.aux==="sein"?"selected":""}>sein</option></select></div>
-    <div class="field"><label for="f-p2">Partizip II</label><input id="f-p2" value="${esc(d.p2)}" autocapitalize="off"></div></div>
-  <div class="scroll-x"><table class="formtable"><thead><tr><th></th><th>Präsens</th><th>Präteritum</th><th>Konj. II</th></tr></thead><tbody>${PERS.map((_,i)=>row(i)).join("")}</tbody></table></div>
-  <p class="hint">Konjunktiv II можно оставить пустым: тогда покажу «würde + инфинитив».</p>
+    <div class="field"><label for="f-p2">Partizip II</label><input id="f-p2" value="${esc(d.p2)}" autocapitalize="off" spellcheck="false"></div></div>
+  <div class="scroll-x card" style="padding:10px"><table class="formtable"><thead><tr><th></th><th>Präsens</th><th>Präteritum</th><th>Konj. II</th></tr></thead><tbody>${PERS.map((_,i)=>row(i)).join("")}</tbody></table></div>
+  <p class="hint">Konjunktiv II можно оставить пустым: тогда будет «würde + инфинитив».</p>
   <div class="field"><label for="f-vnote">Заметка</label><input id="f-vnote" value="${esc(d.note)}"></div>
-  <label class="check"><input type="checkbox" id="f-strong" ${d.strong?"checked":""}> Неправильный (сильный) глагол</label>
+  <label class="check"><input type="checkbox" id="f-strong" ${d.strong?"checked":""}> Неправильный глагол</label>
   <label class="check"><input type="checkbox" id="f-vcheck" ${d.check?"checked":""}> Нужно проверить</label>
   <div class="actions"><button class="btn" data-act="save-verb">Сохранить</button><button class="btn ghost" data-act="close">Отмена</button></div>`;
 }
@@ -783,12 +1083,12 @@ function readVerbForm(){
 /* ---------- rule form ---------- */
 function ruleForm(d){
   return `<div class="field"><label for="f-rt">Заголовок</label><input id="f-rt" value="${esc(d.title)}"></div>
-  <div class="field"><label for="f-rb">Текст правила</label><textarea id="f-rb" rows="14">${esc(d.body)}</textarea>
-  <span class="hint">## заголовок · - пункт списка · &gt; пример · **жирный** · ==выделить== · таблица: | Kasus | m | f | · цвет рода: {m:der} {f:die} {n:das} {p:die}</span></div>
+  <div class="field"><label for="f-rb">Текст правила</label><textarea id="f-rb" class="mono" rows="14">${esc(d.body)}</textarea>
+  <span class="hint">## заголовок · - пункт · &gt; пример · **жирный** · ==выделить== · таблица: | Kasus | m | f | · цвет рода: {m:der} {f:die} {n:das} {p:die}</span></div>
   <div class="field"><label for="f-rtags">Теги через запятую</label><input id="f-rtags" value="${esc((d.tags||[]).join(", "))}"></div>
   <label class="check"><input type="checkbox" id="f-rcheck" ${d.check?"checked":""}> Нужно проверить</label>
   <div class="actions"><button class="btn" data-act="save-rule">Сохранить</button><button class="btn ghost" data-act="preview-rule">Предпросмотр</button><button class="btn ghost" data-act="close">Отмена</button></div>
-  ${d.preview?`<div class="md" style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px">${md(d.body)}</div>`:""}`;
+  ${d.preview?`<div class="md">${md(d.body)}</div>`:""}`;
 }
 function readRuleForm(){
   const d = sheet.draft;
@@ -797,143 +1097,275 @@ function readRuleForm(){
 }
 
 /* ---------- training ---------- */
-function startTrain(kind){
-  let pool = wordsFiltered();
+function startTrain(kind, src){
+  let pool = src==="list" ? wordsFiltered() : poolFor(st.homeTopic);
+  const label = src==="list" ? "этот список" : topicLabel(st.homeTopic);
   if (kind==="article") pool = pool.filter(w=>w.pos==="n" && ARTS.includes(w.art));
   if (kind==="translate") pool = pool.filter(w=>w.ru);
-  if (pool.length < (kind==="translate"?4:1)) { toast(kind==="translate" ? "Для теста нужно хотя бы 4 слова в списке" : "В этом списке нет подходящих слов"); return; }
+  if (pool.length < (kind==="translate"?4:1)) { toast(kind==="translate" ? "Для теста нужно хотя бы 4 слова" : "Здесь нет подходящих слов"); return; }
+  if (kind==="cards") { const fresh = pool.filter(w=>!w.known); if (fresh.length >= 5) pool = fresh; }
   pool = shuffle(pool).sort((a,b)=>(a.box||0)-(b.box||0)).slice(0,20);
   pool = shuffle(pool);
-  const titles = {cards:"Карточки", article:"der, die или das?", translate:"Тест на перевод"};
-  openSheet({kind:"train", mode:kind, title:titles[kind], deck:pool.map(w=>w.id), i:0, right:0, wrong:[], flipped:false, answered:null, dir:"de"});
+  const titles = {cards:"Karteikarten", article:"der, die или das?", translate:"Тест на перевод"};
+  openSheet({kind:"train", mode:kind, title:titles[kind], label, deck:pool.map(w=>w.id), i:0, right:0, wrong:[], learned:0, flipped:false, answered:null, dir:"de"});
 }
 function trainBody(s){
   const n = s.deck.length;
   if (s.i >= n) {
-    return `<div class="stage"><div class="score">${s.right} / ${n}</div>
-      <p style="text-align:center" class="hint">${s.wrong.length ? "Ошибки: "+s.wrong.map(id=>esc((S.words.get(id)||{}).w||"")).join(", ") : "Без ошибок."}</p>
-      <div class="actions" style="justify-content:center">${s.wrong.length?`<button class="btn" data-act="redo-wrong">Повторить ошибки</button>`:""}<button class="btn ghost" data-act="train-again">Ещё раз</button><button class="btn ghost" data-act="close">Готово</button></div></div>`;
+    return `<div class="card stack" style="align-items:center;text-align:center;gap:10px">
+      <span class="lbl">${esc(s.label)}</span>
+      <div class="score">${s.right} / ${n}</div>
+      ${s.mode==="cards" ? `<p class="hint">Отмечено выученными: ${s.learned}. Всего выучено: ${knownIn([...S.words.values()])} из ${S.words.size}.</p>` : ""}
+      <p class="hint">${s.wrong.length ? "Повторить: "+s.wrong.map(id=>esc((S.words.get(id)||{}).w||"")).join(", ") : "Без ошибок."}</p></div>
+      <div class="actions">${s.wrong.length?`<button class="btn" data-act="redo-wrong">Повторить ошибки</button>`:""}<button class="btn ghost" data-act="train-again">Ещё раз</button><button class="btn ghost" data-act="close">Готово</button></div>`;
   }
   const w = S.words.get(s.deck[s.i]);
   if (!w) { s.i++; return trainBody(s); }
-  const prog = `<div class="progress" aria-label="Прогресс"><i style="width:${(s.i/n)*100}%"></i></div><div class="meta"><span>${s.i+1} из ${n}</span><span>верно: ${s.right}</span></div>`;
+  const prog = `<div class="progress" aria-label="Прогресс"><i style="width:${(s.i/n)*100}%"></i></div><div class="meta"><span>${s.i+1} из ${n} · ${esc(s.label)}</span><span>верно: ${s.right}</span></div>`;
   if (s.mode==="cards") {
-    const front = s.dir==="de" ? `<span class="de">${artHTML(w)}${esc(w.w)}</span>` : `<span class="ru">${esc(w.ru)}</span>`;
-    const back = s.dir==="de" ? `<span class="ru">${esc(w.ru)}</span>` : `<span class="de">${artHTML(w)}${esc(w.w)}</span>`;
-    return `<div class="stage">${prog}
+    const de = `<span class="de">${esc(artText(w))}${esc(w.w)}</span>`, ru = `<span class="ru">${esc(w.ru)}</span>`;
+    return `${prog}
       <div class="seg" style="align-self:center"><button data-act="dir-de" aria-pressed="${s.dir==="de"}">DE → RU</button><button data-act="dir-ru" aria-pressed="${s.dir==="ru"}">RU → DE</button></div>
-      <button class="flash ${s.flipped?gClass(w):""}" data-act="flip">${front}${s.flipped?back+(plText(w)?`<span class="hint">${esc(plText(w))}</span>`:""):`<span class="hint">нажми, чтобы перевернуть</span>`}</button>
-      ${s.flipped?`<div class="two"><button class="btn ghost" data-act="card-no">Ещё учить</button><button class="btn" data-act="card-yes">Знаю</button></div>`:""}</div>`;
+      <button class="flash ${s.flipped?gClass(w):""}" data-act="flip">${s.dir==="de"?de:ru}${s.flipped ? (s.dir==="de"?ru:de) + (plText(w)?`<span class="hint">${esc(plText(w))}</span>`:"") : `<span class="hint">нажми, чтобы перевернуть</span>`}</button>
+      ${s.flipped?`<div class="two"><button class="btn ghost" data-act="card-no">Ещё учить</button><button class="btn" data-act="card-yes">Знаю</button></div>`:""}`;
   }
   if (s.mode==="article") {
     const a = s.answered;
-    return `<div class="stage">${prog}
-      <div class="flash ${a?gClass(w):""}"><span class="de">${a?artHTML(w):"___ "}${esc(w.w)}</span><span class="hint">${esc(w.ru)}</span></div>
+    return `${prog}
+      <div class="flash ${a?gClass(w):""}"><span class="de">${a?esc(w.art)+" ":"___ "}${esc(w.w)}</span><span class="hint">${esc(w.ru)}</span></div>
       <div class="big3">${ARTS.map(x=>`<button class="${x}" data-pick="${x}" ${a?"disabled":""}>${x}</button>`).join("")}</div>
-      <div class="verdict ${a?(a===w.art?"ok":"no"):""}">${a?(a===w.art?"Верно!":`Нет, правильно: ${w.art} ${esc(w.w)}`):""}</div>
-      ${a?`<button class="btn" data-act="next">Дальше</button>`:""}</div>`;
+      <div class="verdict ${a?(a===w.art?"ok":"no"):""}">${a?(a===w.art?"Richtig!":`Нет: ${esc(w.art)} ${esc(w.w)}`):""}</div>
+      ${a?`<button class="btn" data-act="next">Дальше</button>`:""}`;
   }
-  // translate
   if (!s.opts || s.optsFor !== w.id) {
     const others = shuffle([...S.words.values()].filter(x=>x.id!==w.id && x.pos===w.pos)).slice(0,3);
     const fill = others.length<3 ? shuffle([...S.words.values()].filter(x=>x.id!==w.id && !others.includes(x))).slice(0,3-others.length) : [];
     s.opts = shuffle([w, ...others, ...fill].map(x=>x.id)); s.optsFor = w.id;
   }
   const a = s.answered;
-  return `<div class="stage">${prog}
-    <div class="flash"><span class="ru">${esc(w.ru)}</span></div>
-    <div class="opts">${s.opts.map(id=>{const o=S.words.get(id)||{}; const cls = a ? (id===w.id?"right":(id===a?"wrong":"")) : ""; return `<button class="${cls}" data-opt="${esc(id)}" ${a?"disabled":""}>${artHTML(o)}${esc(o.w)}</button>`;}).join("")}</div>
-    <div class="verdict ${a?(a===w.id?"ok":"no"):""}">${a?(a===w.id?"Верно!":"Не то слово"):""}</div>
-    ${a?`<button class="btn" data-act="next">Дальше</button>`:""}</div>`;
+  return `${prog}
+    <div class="flash" style="background:var(--lav);color:var(--on-pastel)"><span class="ru">${esc(w.ru)}</span></div>
+    <div class="opts">${s.opts.map(id=>{const o=S.words.get(id)||{}; const cls = a ? (id===w.id?"right":(id===a?"wrong":"")) : ""; return `<button class="${cls}" data-opt="${esc(id)}" ${a?"disabled":""}>${apill(o)}${esc(o.w)}</button>`;}).join("")}</div>
+    <div class="verdict ${a?(a===w.id?"ok":"no"):""}">${a?(a===w.id?"Richtig!":"Не то слово"):""}</div>
+    ${a?`<button class="btn" data-act="next">Дальше</button>`:""}`;
 }
 function grade(s, ok){
-  const w = S.words.get(s.deck[s.i]);
+  const w = S.words.get(s.deck[s.i]); if (!w) return;
   if (ok) s.right++; else s.wrong.push(w.id);
-  const box = Math.max(0, Math.min(5, (w.box||0) + (ok?1:-1)));
-  if (box !== (w.box||0)) save("words", {...w, box});
+  const upd = {...w, box: Math.max(0, Math.min(5, (w.box||0) + (ok?1:-1)))};
+  if (s.mode==="cards") {
+    if (ok && !w.known) s.learned++;
+    upd.known = ok; if (ok) upd.knownAt = Date.now();
+  }
+  save("words", upd);
+}
+
+/* ---------- writing challenge ---------- */
+const LT = "https://api.languagetool.org/v2/check";
+function startWrite(){
+  const pool = poolFor(st.homeTopic).filter(w=>w.ru && w.pos!=="other");
+  if (pool.length < 3) { toast("В этой теме мало слов для задания"); return; }
+  openSheet({kind:"write", ids: shuffle(pool).slice(0,5).map(w=>w.id), text:"", showDe:false, busy:false, result:null, label:topicLabel(st.homeTopic)});
+}
+function writeBody(s){
+  const ws = s.ids.map(id=>S.words.get(id)).filter(Boolean);
+  return `<p class="hint">Тема: ${esc(s.label)}. Напиши 4–8 предложений на немецком и используй все слова. Форма слова может быть любой.</p>
+  <div class="w-words">${ws.map(w=>`<span class="w-chip ${s.showDe?gClass(w):""}">${esc(w.ru)}${s.showDe?`<small>${esc(artText(w))}${esc(w.w)}</small>`:""}</span>`).join("")}</div>
+  <div class="actions"><button class="btn small ghost" data-act="w-hint">${s.showDe?"Скрыть немецкий":"Подсказка: по-немецки"}</button><button class="btn small ghost" data-act="w-new">Другие слова</button></div>
+  <div class="field"><label for="f-write">Твой текст</label><textarea id="f-write" rows="9" lang="de" spellcheck="false" autocorrect="off" autocapitalize="sentences" placeholder="Gestern habe ich …">${esc(s.text)}</textarea></div>
+  <button class="btn" data-act="w-check">Проверить</button>
+  <div id="write-res" class="stack"></div>`;
+}
+function formsOf(w){
+  const out = new Set(); const add = x => { x = norm(x).trim(); if (x.length >= 2) out.add(x); };
+  add(w.w); if (w.pl && w.pl!=="—") add(w.pl);
+  if (w.pos==="v") {
+    const v = findVerb(w.w);
+    const f = v ? v : {...weakForms(w.w, ""), k2:null};
+    [...(f.praes||[]), ...(f.praet||[]), ...(f.k2||[])].forEach(x => add(String(x).split(" ")[0]));
+    add(f.p2||"");
+  }
+  return out;
+}
+function usesWord(text, w){
+  const tokens = norm(text).split(/[^a-z]+/).filter(Boolean);
+  const parts = norm(w.w).split(/[^a-z]+/).filter(x => x.length > 2 && !["sich","der","die","das","ein","eine","den","dem"].includes(x));
+  const stemOf = p => p.length > 5 ? p.slice(0, p.length-2) : p.length > 3 ? p.slice(0, p.length-1) : p;
+  if (parts.length > 1) return parts.every(p => tokens.some(t => t.startsWith(stemOf(p))));
+  const forms = formsOf(w);
+  if (tokens.some(t => forms.has(t))) return true;
+  const stem = stemOf(parts[0] || norm(w.w));
+  return tokens.some(t => t.startsWith(stem) || (w.pos==="v" && t.startsWith("ge"+stem)) || (stem.length > 4 && t.includes(stem)));
+}
+async function checkWrite(s){
+  const ta = $("#f-write"); const text = ta ? ta.value : s.text; s.text = text;
+  if (text.trim().split(/\s+/).length < 4) { toast("Напиши хотя бы пару предложений"); return; }
+  s.busy = true; fillWriteRes(s);
+  const usage = s.ids.map(id => S.words.get(id)).filter(Boolean).map(w => ({id:w.id, w:w.w, art:w.art, ru:w.ru, used:usesWord(text, w)}));
+  let matches = null, err = "";
+  if (navigator.onLine === false) err = "Нет интернета: проверка ошибок работает только онлайн. Использование слов я проверила.";
+  else {
+    try {
+      const r = await fetch(LT, {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:new URLSearchParams({text, language:"de-DE", motherTongue:"ru"})});
+      if (r.status === 429) throw new Error("rate");
+      if (!r.ok) throw new Error("http");
+      const j = await r.json();
+      matches = (j.matches||[]).map(m => ({offset:m.offset, length:m.length, message:m.message, reps:(m.replacements||[]).slice(0,4).map(x=>x.value), type:(m.rule&&m.rule.issueType)||"", fixed:false}));
+    } catch (e) {
+      err = e && e.message==="rate" ? "Слишком много проверок подряд. Подожди минуту и нажми ещё раз." : "Сервис проверки не ответил. Проверь интернет и попробуй ещё раз.";
+    }
+  }
+  s.busy = false; s.result = {text, usage, matches, err};
+  fillWriteRes(s);
+  const el = $("#write-res"); if (el && el.scrollIntoView) el.scrollIntoView({block:"start", behavior:"smooth"});
+}
+const ISSUE = {misspelling:"орфография", grammar:"грамматика", typographical:"пунктуация", style:"стиль", uncategorized:"", whitespace:"пробелы", duplication:"повтор"};
+function fillWriteRes(s){
+  const el = $("#write-res"); if (!el) return;
+  if (s.busy) { el.innerHTML = `<p class="hint">Проверяю…</p>`; return; }
+  const r = s.result; if (!r) { el.innerHTML = ""; return; }
+  const usedN = r.usage.filter(u=>u.used).length;
+  let h = `<section class="card"><span class="lbl">Слова · ${usedN} из ${r.usage.length}</span><ul class="uses">${r.usage.map(u=>`<li class="${u.used?"ok":"no"}"><b>${u.used?"✓":"✕"}</b><span>${esc(u.ru)} → <strong>${esc(artText(u))}${esc(u.w)}</strong>${u.used?"":` <span class="hint">не нашла в тексте</span>`}</span></li>`).join("")}</ul>
+    <p class="hint" style="margin-top:8px">Слова ищу по формам и основе, поэтому редкие формы могу не узнать.</p></section>`;
+  if (r.err) h += `<p class="hint err">${esc(r.err)}</p>`;
+  if (r.matches) {
+    const open = r.matches.map((m,i)=>({m,i})).filter(x=>!x.m.fixed).sort((a,b)=>a.m.offset-b.m.offset);
+    let ann = "", pos = 0;
+    open.forEach((x,n) => { const m = x.m; if (m.offset < pos) return; ann += esc(r.text.slice(pos, m.offset)); ann += `<mark>${esc(r.text.slice(m.offset, m.offset+m.length)) || "&nbsp;"}<sup>${n+1}</sup></mark>`; pos = m.offset + m.length; });
+    ann += esc(r.text.slice(pos));
+    h += `<section class="card"><span class="lbl">${open.length ? "Ошибки: "+open.length : "Ошибок не нашла"}</span>
+      <div class="annot">${ann.replace(/\n/g,"<br>")}</div>
+      ${open.length ? `<ol class="errs">${open.map((x,n)=>{ const m = x.m; const frag = r.text.slice(m.offset, m.offset+m.length);
+        return `<li><span class="num">${n+1}</span><div class="body"><span><span class="frag">«${esc(frag)}»</span>${ISSUE[m.type]?` <span class="tag">${ISSUE[m.type]}</span>`:""}</span><span>${esc(m.message)}</span>
+          <div class="actions">${m.reps.map((v,j)=>`<button class="chip act" data-act="w-fix" data-m="${x.i}" data-r="${j}">${esc(v)||"удалить"}</button>`).join("")}<button class="chip" data-act="w-skip" data-m="${x.i}">Пропустить</button></div></div></li>`; }).join("")}</ol>` : `<p class="hint" style="margin-top:8px">Сервис LanguageTool находит не всё: смысл и порядок слов лучше перепроверить самой.</p>`}
+    </section>`;
+  }
+  el.innerHTML = h;
+}
+function applyFix(s, mi, ri){
+  const r = s.result; const m = r && r.matches && r.matches[mi]; if (!m) return;
+  const ta = $("#f-write");
+  if (ta && ta.value !== r.text) { toast("Текст изменился. Нажми «Проверить» ещё раз"); return; }
+  const rep = m.reps[ri] ?? "";
+  r.text = r.text.slice(0, m.offset) + rep + r.text.slice(m.offset + m.length);
+  const delta = rep.length - m.length;
+  m.fixed = true;
+  r.matches.forEach(o => { if (!o.fixed && o.offset > m.offset) o.offset += delta; });
+  s.text = r.text; if (ta) ta.value = r.text;
+  fillWriteRes(s);
 }
 
 /* ---------- data / backup ---------- */
-function exportObj(){ const o = {app:"deutsch-heft", version:1, exported:new Date().toISOString()}; for (const c of COLLS) o[c] = [...S[c].values()]; return o; }
+function exportObj(){ const o = {app:"deutsch-heft", version:2, exported:new Date().toISOString()}; for (const c of COLLS) o[c] = [...S[c].values()]; return o; }
 function dataBody(s){
-  const counts = COLLS.map(c=>S[c].size);
-  return `<div class="note-box" style="background:var(--card);color:var(--ink);border:1px solid var(--line)">
-     <strong>Всё хранится на этом устройстве</strong>, без аккаунтов и серверов. На другой телефон слова переносятся через резервную копию: сохрани файл здесь и загрузи его там. Делай копию раз в неделю, на всякий случай.</div>
-   <dl class="kv"><dt>Слов</dt><dd>${counts[0]}</dd><dt>Глаголов</dt><dd>${counts[1]}</dd><dt>Правил</dt><dd>${counts[2]}</dd></dl>
+  const all = [...S.words.values()];
+  const tl = topicsList();
+  return `<section class="card stats"><div class="stat"><b>${all.length}</b><span>слов</span></div><div class="stat"><b>${knownIn(all)}</b><span>выучено</span></div>
+    <div class="stats-foot" style="margin-top:6px"><span>${S.verbs.size} глаголов · ${S.rules.size} правил</span></div></section>
+   <div class="note-box" style="background:var(--surface);color:var(--ink)"><strong>Всё хранится на этом устройстве</strong>, без аккаунтов и серверов. На другой телефон слова переносятся через резервную копию. Делай копию раз в неделю.</div>
    <span class="lbl">Резервная копия</span>
    <div class="actions"><button class="btn" data-act="export">Сохранить файл .json</button><button class="btn ghost" data-act="export-text">Показать как текст</button></div>
-   ${s.text!=null?`<div class="field"><textarea id="f-export" rows="8" readonly>${esc(s.text)}</textarea><div><button class="btn small ghost" data-act="copy-export">Скопировать</button></div></div>`:""}
+   ${s.text!=null?`<div class="field"><textarea id="f-export" class="mono" rows="7" readonly>${esc(s.text)}</textarea><div><button class="btn small ghost" data-act="copy-export">Скопировать</button></div></div>`:""}
    <span class="lbl">Восстановить</span>
-   <div class="field"><input type="file" id="f-file" accept=".json,application/json"><span class="hint">или вставь текст копии:</span><textarea id="f-import" rows="4" placeholder='{"app":"deutsch-heft", ...}'></textarea></div>
+   <div class="field"><input type="file" id="f-file" accept=".json,application/json"><span class="hint">или вставь текст копии:</span><textarea id="f-import" class="mono" rows="3" placeholder='{"app":"deutsch-heft", ...}'></textarea></div>
    <div class="actions"><button class="btn ghost" data-act="import">Загрузить</button><span class="hint">Записи с тем же id заменятся, остальное останется.</span></div>
+   ${tl.length ? `<span class="lbl">Темы</span><div class="card stack" style="gap:8px">${tl.map((t,i)=>`<div class="search-row"><div class="field" style="flex:1"><input id="tp-${i}" value="${esc(t.t)}" aria-label="Название темы"></div><span class="hint">${t.n}</span><button class="btn small ghost" data-act="rename-topic" data-i="${i}" data-old="${esc(t.t)}">Сохранить</button></div>`).join("")}<p class="hint">Переименуй тему, и она поменяется у всех её слов. Пустое название убирает тему.</p></div>` : ""}
    <span class="lbl">Установить как приложение</span>
-   <p class="hint" style="margin:0">iPhone: открой адрес в Safari → «Поделиться» → «На экран Домой». Android: меню Chrome → «Установить приложение». После этого Heft работает и без интернета; интернет нужен только для перевода новых слов.</p>`;
+   <p class="hint">iPhone: Safari → «Поделиться» → «На экран Домой». Android: Chrome → меню → «Установить приложение». Интернет нужен только для поиска новых слов и проверки текста.</p>`;
 }
 async function doImport(text){
   let o; try { o = JSON.parse(text); } catch { toast("Это не похоже на файл копии"); return; }
   let n = 0;
-  for (const c of COLLS) for (const x of (o[c]||[])) { if (x && x.id) { await save(c, x); n++; } }
+  for (const c of COLLS) for (const x of (o[c]||[])) { if (x && x.id) { put(c, x); n++; } }
+  migrate(); persistLocal(); scheduleRender();
   toast(n ? `Загружено записей: ${n}` : "В копии нет записей");
 }
 
 /* ---------- events ---------- */
+function setTab(t){ st.tab = t; lsSet("heft-tab", t); window.scrollTo(0,0); render(); }
 document.addEventListener("input", e => {
   const id = e.target.id;
-  if (id==="q") { st.q = e.target.value; render(); }
-  else if (id==="vq") { st.vq = e.target.value; render(); }
-  else if (id==="rq") { st.rq = e.target.value; render(); }
-  else if (id==="tq") { st.tq = e.target.value; }
-});
-document.addEventListener("keydown", e => {
-  if (e.target.id==="tq" && e.key==="Enter" && !st.tr.busy) { e.preventDefault(); translate(); }
+  if (id==="q") { st.q = e.target.value; fillWords(); scheduleSug(); }
+  else if (id==="vq") { st.vq = e.target.value; fillVerbs(); }
+  else if (id==="rq") { st.rq = e.target.value; fillRules(); }
+  else if (id==="tr-topic") { st.trTopic = e.target.value; lsSet("heft-tr-topic", st.trTopic); }
+  else if (id==="f-write" && sheet) { sheet.text = e.target.value; }
 });
 document.addEventListener("change", async e => {
   if (e.target.id==="f-file" && e.target.files[0]) { const t = await e.target.files[0].text(); await doImport(t); }
 });
-document.addEventListener("keydown", e => { if (e.key==="Escape" && sheet) closeSheet(); });
+document.addEventListener("keydown", e => {
+  if (e.key==="Escape" && sheet) { closeSheet(); return; }
+  if (e.target.id==="q" && e.key==="Enter") {
+    e.preventDefault();
+    const q = st.q.trim(); if (!q) return;
+    if (q.includes(",")) { runLookup(q.split(/[,;]+/)); return; }
+    const have = findWord(q);
+    if (have) { e.target.blur(); openSheet({kind:"word", id:have.id}); } else runLookup([q]);
+  }
+});
 document.addEventListener("click", async e => {
   const t = e.target.closest("button"); if (!t) return;
   const d = t.dataset;
-  if (d.tab) { st.tab = d.tab; $("#main").scrollTop = 0; render(); return; }
+  if (d.tab) { setTab(d.tab); return; }
   if (d.filter) { st.filter = st.filter===d.filter && d.filter!=="all" ? "all" : d.filter; render(); return; }
+  if (d.topic !== undefined) { st.topic = d.topic; render(); return; }
+  if (d.htopic !== undefined) { st.homeTopic = d.htopic; lsSet("heft-home-topic", d.htopic); render(); return; }
+  if (d.sort) { st.sort = d.sort; render(); return; }
+  if (d.day) { st.day = d.day; st.sort = "date"; st.q = ""; st.filter = "all"; st.topic = ""; setTab("words"); return; }
   if (d.word) { openSheet({kind:"word", id:d.word}); return; }
   if (d.verb) { openSheet({kind:"verb", id:d.verb}); return; }
   if (d.rule) { openSheet({kind:"rule", id:d.rule}); return; }
-  if (d.train) { startTrain(d.train); return; }
-  if (d.art !== undefined && sheet && sheet.kind==="word-edit") { readWordForm(); sheet.draft.art = d.art; if (d.art && d.art!=="") sheet.draft.pos="n"; drawSheet(); return; }
+  if (d.train) { startTrain(d.train, d.src); return; }
+  if (d.art !== undefined && sheet && sheet.kind==="word-edit") { readWordForm(); sheet.draft.art = d.art; if (d.art) sheet.draft.pos = "n"; drawSheet(); return; }
   if (d.pick && sheet) { sheet.answered = d.pick; grade(sheet, d.pick===S.words.get(sheet.deck[sheet.i]).art); drawSheet(); return; }
   if (d.opt && sheet) { sheet.answered = d.opt; grade(sheet, d.opt===sheet.deck[sheet.i]); drawSheet(); return; }
   const act = d.act; if (!act) return;
   const s = sheet;
   switch (act) {
     case "close": closeSheet(); break;
-    case "translate": translate(); break;
+    case "go-check": st.filter = "check"; st.topic = ""; st.day = ""; setTab("words"); break;
+    case "clear-day": st.day = ""; render(); break;
+    case "write": startWrite(); break;
+    /* lookup */
+    case "lookup": runLookup([d.term]); break;
+    case "lookup-all": runLookup(st.q.split(/[,;]+/)); break;
+    case "open-word": { const w = findWord(d.term); if (w) openSheet({kind:"word", id:w.id}); break; }
     case "tr-stop": if (trCtl) trCtl.abort(); break;
-    case "tr-drop": st.tr.items.splice(+d.i, 1); render(); break;
-    case "tr-open": { const it = st.tr.items[+d.i]; const w = it && (it._saved && S.words.get(it._saved) ? S.words.get(it._saved) : findWord(it.w)); if (w) openSheet({kind:"word", id:w.id}); break; }
-    case "tr-save": { const it = st.tr.items[+d.i]; if (!it || it._saved) return; await saveTrItem(it); toast(it.verb ? "Сохранено в словарь и глаголы" : "Сохранено в словарь"); render(); break; }
-    case "tr-save-all": { let k = 0; for (const it of st.tr.items) { if (!it._saved && !findWord(it.w)) { await saveTrItem(it); k++; } } toast("Сохранено слов: " + k); render(); break; }
-    case "tr-edit": { const it = st.tr.items[+d.i]; if (!it) return; openSheet({kind:"word-edit", id:null, trItem:it, draft:{w:it.w,art:it.art,pl:it.pl,ru:it.ru,pos:it.pos,note:it.note,src:"перевод " + new Date().toLocaleDateString("ru-RU"),check:it.check,checkNote:it.checkNote}}); break; }
-    case "add-word": openSheet({kind:"word-edit", id:null, draft:{w:"",art:"",pl:"",ru:"",pos:"n",note:"",src:"",check:false}}); setTimeout(()=>$("#f-quick")&&$("#f-quick").focus(),50); break;
+    case "tr-clear": st.tr = {busy:false, err:"", items:[]}; fillTr(); break;
+    case "tr-drop": st.tr.items.splice(+d.i, 1); fillTr(); break;
+    case "tr-open": { const it = st.tr.items[+d.i]; const w = it && ((it._saved && S.words.get(it._saved)) || findWord(it.w)); if (w) openSheet({kind:"word", id:w.id}); break; }
+    case "tr-save": { const it = st.tr.items[+d.i]; if (!it || it._saved) return; await saveTrItem(it); persistLocal(); toast(it.verb ? "Сохранено в словарь и глаголы" : "Сохранено"); render(); break; }
+    case "tr-save-all": { let k = 0; for (const it of st.tr.items) { if (!it._saved && !findWord(it.w)) { await saveTrItem(it); k++; } } persistLocal(); toast("Сохранено слов: " + k); render(); break; }
+    case "tr-edit": { const it = st.tr.items[+d.i]; if (!it) return; openSheet({kind:"word-edit", id:null, trItem:it, draft:{w:it.w,art:it.art,pl:it.pl,ru:it.ru,pos:it.pos,note:it.note,topic:st.trTopic,src:"поиск " + new Date().toLocaleDateString("ru-RU"),check:it.check,checkNote:it.checkNote}}); break; }
+    /* words */
+    case "add-word": openSheet({kind:"word-edit", id:null, draft:{w:"",art:"",pl:"",ru:"",pos:"n",note:"",src:"",topic: st.topic && st.topic!=="__none" ? st.topic : st.trTopic, check:false}}); setTimeout(()=>{ const q = $("#f-quick"); if (q) q.focus(); },60); break;
     case "parse": { readWordForm(); Object.assign(s.draft, parseQuick($("#f-quick").value)); drawSheet(); break; }
-    case "edit-word": { const w = S.words.get(s.id); openSheet({kind:"word-edit", id:w.id, draft:{...w}}); break; }
+    case "fill-topic": { const el = $("#f-topic"); if (el) el.value = d.t; break; }
+    case "edit-word": { const w = S.words.get(s.id); openSheet({kind:"word-edit", id:w.id, draft:{...w, topic:w.topic||""}}); break; }
     case "save-word": {
       const w = readWordForm();
       if (!w.w) { toast("Впиши слово"); return; }
       const id = s.id || uid("w");
-      const obj = {...w, id, added: w.added || Date.now(), box: w.box||0};
+      const old = s.id ? S.words.get(s.id) : null;
+      const obj = {...(old||{}), ...w, id, added: (old && old.added) || Date.now(), box: (old && old.box) || 0};
       if (!obj.check) delete obj.checkNote;
-      await save("words", obj);
+      put("words", obj);
       const ti = s.trItem;
-      if (ti) { ti._saved = id; if (ti.verb && obj.pos==="v" && !findVerb(obj.w)) await save("verbs", {id:uid("v"), inf:obj.w, ru:obj.ru, ...ti.verb, note:obj.note, check:obj.check}); }
-      toast("Сохранено"); openSheet({kind:"word", id}); break;
+      if (ti) { ti._saved = id; ti._topic = obj.topic; if (ti.verb && obj.pos==="v" && !findVerb(obj.w)) put("verbs", {id:uid("v"), inf:obj.w, ru:obj.ru, ...ti.verb, note:obj.note, check:obj.check}); }
+      persistLocal(); toast("Сохранено"); openSheet({kind:"word", id}); render(); break;
     }
     case "confirm-word": { const w = S.words.get(s.id); const o = {...w, check:false}; delete o.checkNote; await save("words", o); toast("Отмечено как проверенное"); break; }
+    case "toggle-known": { const w = S.words.get(s.id); await save("words", {...w, known:!w.known, knownAt: !w.known ? Date.now() : undefined}); break; }
+    case "topic-open": s.pickTopic = !s.pickTopic; drawSheet(); break;
+    case "set-topic": { const w = S.words.get(s.id); s.pickTopic = false; await save("words", {...w, topic:d.t}); toast(d.t ? "Тема: "+d.t : "Тема убрана"); break; }
+    case "set-topic-new": { const v = ($("#f-newtopic")||{}).value; if (!v || !v.trim()) { toast("Впиши название темы"); return; } const w = S.words.get(s.id); s.pickTopic = false; await save("words", {...w, topic:v.trim()}); toast("Тема: "+v.trim()); break; }
     case "del-word": case "del-verb": case "del-rule": s.confirmDel = true; drawSheet(); break;
     case "del-no": s.confirmDel = false; drawSheet(); break;
     case "del-word-yes": await del("words", s.id); closeSheet(); toast("Удалено"); break;
     case "del-verb-yes": await del("verbs", s.id); closeSheet(); toast("Удалено"); break;
     case "del-rule-yes": await del("rules", s.id); closeSheet(); toast("Удалено"); break;
+    /* verbs */
     case "add-verb": openSheet({kind:"verb-edit", id:null, draft:{inf:"",sep:"",ru:"",aux:"haben",p2:"",praes:[],praet:[],k2:[],note:"",strong:false,check:false}}); break;
     case "edit-verb": { const v = S.verbs.get(s.id); openSheet({kind:"verb-edit", id:v.id, draft:JSON.parse(JSON.stringify(v))}); break; }
     case "gen-weak": { const v = readVerbForm(); if (!v.inf) { toast("Сначала впиши инфинитив"); return; } const f = weakForms(v.inf, v.sep); v.praes=f.praes; v.praet=f.praet; v.p2=f.p2; drawSheet(); break; }
@@ -944,6 +1376,7 @@ document.addEventListener("click", async e => {
       const id = s.id || uid("v"); await save("verbs", {...v, id}); toast("Сохранено"); openSheet({kind:"verb", id}); break;
     }
     case "confirm-verb": { const v = S.verbs.get(s.id); const o={...v, check:false}; delete o.checkNote; await save("verbs", o); toast("Отмечено как проверенное"); break; }
+    /* rules */
     case "add-rule": openSheet({kind:"rule-edit", id:null, draft:{title:"",body:"## \n\n| Kasus | m | f | n | Pl |\n|---|---|---|---|---|\n| Nom | | | | |\n\n> Beispiel\n",tags:[],check:false}}); break;
     case "edit-rule": { const r = S.rules.get(s.id); openSheet({kind:"rule-edit", id:r.id, draft:{...r}}); break; }
     case "preview-rule": { readRuleForm(); s.draft.preview = !s.draft.preview; drawSheet(); break; }
@@ -953,13 +1386,21 @@ document.addEventListener("click", async e => {
       await save("rules", o); toast("Сохранено"); openSheet({kind:"rule", id}); break;
     }
     case "confirm-rule": { const r = S.rules.get(s.id); const o={...r, check:false}; delete o.checkNote; await save("rules", o); toast("Отмечено как проверенное"); break; }
+    /* training */
     case "flip": s.flipped = !s.flipped; drawSheet(); break;
     case "dir-de": s.dir="de"; s.flipped=false; drawSheet(); break;
     case "dir-ru": s.dir="ru"; s.flipped=false; drawSheet(); break;
     case "card-yes": case "card-no": grade(s, act==="card-yes"); s.i++; s.flipped=false; drawSheet(); break;
     case "next": s.i++; s.answered=null; drawSheet(); break;
-    case "redo-wrong": openSheet({...s, deck:shuffle(s.wrong), i:0, right:0, wrong:[], answered:null, flipped:false, keepScroll:false}); break;
-    case "train-again": closeSheet(); startTrain(s.mode); break;
+    case "redo-wrong": openSheet({...s, deck:shuffle(s.wrong), i:0, right:0, wrong:[], learned:0, answered:null, flipped:false}); break;
+    case "train-again": { const m = s.mode; closeSheet(); startTrain(m, "home"); break; }
+    /* writing */
+    case "w-hint": s.showDe = !s.showDe; drawSheet(); break;
+    case "w-new": { const pool = poolFor(st.homeTopic).filter(w=>w.ru && w.pos!=="other"); s.ids = shuffle(pool).slice(0,5).map(w=>w.id); s.result = null; drawSheet(); break; }
+    case "w-check": checkWrite(s); break;
+    case "w-fix": applyFix(s, +d.m, +d.r); break;
+    case "w-skip": { const m = s.result && s.result.matches[+d.m]; if (m) { m.fixed = true; fillWriteRes(s); } break; }
+    /* data */
     case "export": {
       const data = JSON.stringify(exportObj(), null, 1);
       const name = "deutsch-heft-" + new Date().toISOString().slice(0,10) + ".json";
@@ -973,13 +1414,28 @@ document.addEventListener("click", async e => {
     case "export-text": s.text = JSON.stringify(exportObj()); drawSheet(); break;
     case "copy-export": { const ta = $("#f-export"); try { await navigator.clipboard.writeText(ta.value); toast("Скопировано"); } catch { ta.focus(); ta.select(); toast("Выделено: скопируй вручную"); } break; }
     case "import": { const v = $("#f-import").value.trim(); if (!v) { toast("Выбери файл или вставь текст"); return; } await doImport(v); break; }
+    case "rename-topic": {
+      const nv = ($("#tp-"+d.i)||{}).value; if (nv == null) return;
+      const nt = nv.trim(), old = d.old;
+      if (nt === old) return;
+      saveMany("words", [...S.words.values()].filter(w=>(w.topic||"").trim()===old).map(w=>({...w, topic:nt})));
+      if (st.homeTopic===old) { st.homeTopic = nt; lsSet("heft-home-topic", nt); }
+      if (st.topic===old) st.topic = nt;
+      toast(nt ? `Тема переименована: ${nt}` : "Тема убрана"); break;
+    }
   }
 });
-$("#btn-settings").addEventListener("click", () => openSheet({kind:"data", text:null}));
+$("#btn-data").addEventListener("click", () => openSheet({kind:"data", text:null}));
+$("#btn-search").addEventListener("click", () => { if (st.tab!=="words") setTab("words"); const q = $("#q"); if (q) q.focus(); });
+$("#btn-search").innerHTML = ICON.search;
+document.querySelectorAll(".nav button").forEach(b => b.innerHTML = ICON[b.dataset.tab]);
 initStore();
 </script>
 <script>
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  const hadController = !!navigator.serviceWorker.controller;
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => { if (hadController && !reloaded) { reloaded = true; location.reload(); } });
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 }
 </script>
